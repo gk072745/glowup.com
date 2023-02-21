@@ -7,11 +7,13 @@ const productRouter = require("./Routes/product.routes");
 const adminRouter = require("./Routes/admin.routes");
 const userRouter = require("./Routes/user.routes");
 const adminAuthenticate = require("./Middlewares/AdminAuthenticator.middleware");
+const userAuthenticate = require("./Middlewares/Userauthenticate.middleware");
 // * middleware
 app.use(cors());
 app.use(express.json());
 
 app.use("/admin", adminAuthenticate);
+app.use("/cart", userAuthenticate);
 
 // * routes
 app.use("/admin", adminRouter);
