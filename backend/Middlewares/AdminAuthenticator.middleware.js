@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const UserModel = require("../Models/User.model");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const adminAuthenticate = async (req, res, next) => {
@@ -9,10 +10,11 @@ const adminAuthenticate = async (req, res, next) => {
 		jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
 			if (err) res.send(err);
 			else if (decoded) {
-				console.log(decoded);
+				// console.log(decoded);
 				req.body.email = decoded.email;
 				let user = await UserModel.find({ email: decoded.email });
-				if (user.isAdmin) {
+				// console.log(user);
+				if (user[0].isAdmin) {
 					next();
 				} else {
 					res.send({

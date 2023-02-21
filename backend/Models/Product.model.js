@@ -15,7 +15,7 @@ const productSchema = mongoose.Schema({
 		type: [
 			{
 				hex_value: String,
-				color_name: String,
+				colour_name: String,
 			},
 		],
 	},

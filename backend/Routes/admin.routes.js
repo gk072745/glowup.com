@@ -7,19 +7,23 @@ require("dotenv").config();
 const adminRouter = express.Router();
 
 adminRouter.get("/products", async (req, res) => {
-	const { category, brand, sort, order } = req.query;
+	const { category, brand, sort, order, product_type } = req.query;
 	try {
-		let tmp = "";
+		let tmp = {};
 		if (category && brand) {
 			tmp = {
 				$and: [
 					{
-						$regex: category,
-						$options: "i",
+						category: {
+							$regex: category,
+							$options: "i",
+						},
 					},
 					{
-						$regex: brand,
-						$options: "i",
+						brand: {
+							$regex: brand,
+							$options: "i",
+						},
 					},
 				],
 			};
@@ -28,6 +32,13 @@ adminRouter.get("/products", async (req, res) => {
 		} else if (brand) {
 			tmp = { brand: { $regex: brand, $options: "i" } };
 		}
+		if (product_type) {
+			tmp = {
+				...tmp,
+				product_type: { $regex: product_type, $options: "i" },
+			};
+		}
+		console.log(tmp);
 		let data = [];
 		if (sort) {
 			data = await ProductModel.find(tmp).sort(
@@ -44,6 +55,30 @@ adminRouter.get("/products", async (req, res) => {
 		});
 	} catch (error) {
 		res.send({ status: 400, error: error });
+	}
+});
+
+// * admin search route
+
+adminRouter.get("/search", async (req, res) => {
+	const { q } = req.query;
+	if (!q) {
+		res.send({ status: 400, message: "Please enter a valid search term" });
+	} else {
+		let tmp = {};
+		tmp = {
+			$or: [
+				{ name: { $regex: q, $options: "i" } },
+				{ brand: { $regex: q, $options: "i" } },
+				{ product_type: { $regex: q, $options: "i" } },
+			],
+		};
+		try {
+			let data = await ProductModel.find(tmp);
+			res.send({ status: 200, data: data });
+		} catch (error) {
+			res.send({ status: 400, error: error });
+		}
 	}
 });
 
@@ -72,6 +107,16 @@ adminRouter.post("/addproduct", async (req, res) => {
 		});
 	} catch (error) {
 		res.send({ status: 400, message: error.message });
+	}
+});
+
+// *add multiple
+adminRouter.post("/addmultiple", async (req, res) => {
+	try {
+		await ProductModel.insertMany(req.body);
+		res.send({ message: "Success" });
+	} catch (error) {
+		res.send({ message: error.message });
 	}
 });
 
@@ -124,3 +169,5 @@ adminRouter.delete("/deleteuser/:id", async (req, res) => {
 		res.send({ status: 404, error: error });
 	}
 });
+
+module.exports = adminRouter;
