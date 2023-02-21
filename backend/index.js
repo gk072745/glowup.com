@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 	res.send("Home page");
 });
 
-app.listen(process.env.PORT, async () => {
+app.listen(process.env.PORT, () => {
 	console.log("server listening on port " + process.env.PORT);
 	connectDB();
 });
