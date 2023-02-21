@@ -8,6 +8,7 @@ const adminRouter = require("./Routes/admin.routes");
 const userRouter = require("./Routes/user.routes");
 const adminAuthenticate = require("./Middlewares/AdminAuthenticator.middleware");
 const userAuthenticate = require("./Middlewares/Userauthenticate.middleware");
+const cartRouter = require("./Routes/cart.routes");
 // * middleware
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/cart", userAuthenticate);
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 app.use("/products", productRouter);
+app.use("/cart", cartRouter);
 
 app.get("/", (req, res) => {
 	res.send("Home page");
