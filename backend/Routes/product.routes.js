@@ -9,7 +9,7 @@ const productRouter = express.Router();
 productRouter.get("/", async (req, res) => {
 	const { category, brand, sort, order, product_type } = req.query;
 	try {
-		let tmp = "";
+		let tmp = {};
 		if (category && brand) {
 			tmp = {
 				$and: [
