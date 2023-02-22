@@ -23,12 +23,14 @@ cartRouter.get("/", async (req, res) => {
 				$in: tmp,
 			},
 		});
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
 			cart: cart,
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
@@ -43,6 +45,7 @@ cartRouter.post("/add/:id", async (req, res) => {
 
 		if (item.length > 0) {
 			if (item[0].quantity >= 5) {
+				res.status(403);
 				res.send({
 					status: 403,
 					message: "Cannot add anymore of this item to cart",
@@ -52,6 +55,7 @@ cartRouter.post("/add/:id", async (req, res) => {
 					{ product_id: id },
 					{ $inc: { quantity: 1 } }
 				);
+				res.status(200);
 				res.send({
 					status: 200,
 					message: "Item already exists. Increased the quantity by 1",
@@ -63,13 +67,15 @@ cartRouter.post("/add/:id", async (req, res) => {
 				email: email,
 			});
 			await new_item.save();
+			res.status(200);
 			res.send({
 				status: 200,
 				message: `${id} has been added to the cart`,
 			});
 		}
 	} catch (error) {
-		res.send({ status: 500, message: error });
+		res.status(400);
+		res.send({ status: 400, message: error });
 	}
 });
 
@@ -86,12 +92,13 @@ cartRouter.patch("/update/:id", async (req, res) => {
 			},
 			{ quantity: quantity }
 		);
-
+		res.status(200);
 		res.send({
 			status: 200,
 			message: "Item updated successfully",
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, message: error });
 	}
 });
@@ -105,12 +112,14 @@ cartRouter.delete("/delete/:id", async (req, res) => {
 		await CartModel.findOneAndDelete({
 			$and: [{ email }, { product_id: id }],
 		});
+		res.status(201);
 		res.send({
 			status: 201,
 			message: "Product deleted successfully",
 		});
 	} catch (error) {
-		res.send({ status: 404, message: error });
+		res.status(400);
+		res.send({ status: 400, message: error });
 	}
 });
 

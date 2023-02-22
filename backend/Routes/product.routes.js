@@ -61,12 +61,14 @@ productRouter.get("/", async (req, res) => {
 				.limit(limit)
 				.skip(limit * page);
 		}
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
 			totalPages: Math.ceil(totalPages.length / limit),
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
@@ -77,8 +79,10 @@ productRouter.get("/product/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
 		let product = await ProductModel.findById(id);
+		res.status(200);
 		res.send({ status: 200, data: product });
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
@@ -146,12 +150,14 @@ productRouter.get("/search", async (req, res) => {
 				.limit(limit)
 				.skip(limit * page);
 		}
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
 			totalPages: Math.ceil(totalPages.length / limit),
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
