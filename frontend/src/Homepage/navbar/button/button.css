@@ -1,0 +1,47 @@
+.button{
+    border: 1px solid #fc2779;
+    background-color: #fc2779;
+    border-radius: 8px;
+    
+}
+
+.popover{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signupbutt{
+   border: 1px solid grey; 
+    padding: 4px;
+    margin-top: 10px;
+    color: #fc2779;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+.link1{
+    text-decoration: none;
+    border: none;
+    color: #fc2779;
+    margin-right: 10px;
+    font-weight: 550;
+}
+
+.google{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid grey; 
+    padding: 4px;
+    margin-top: 5px;
+    justify-content: center;
+    color: #fc2779;
+}
+
+.layout{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    
+}
