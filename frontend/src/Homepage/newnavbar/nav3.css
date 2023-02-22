@@ -1,0 +1,47 @@
+#bottom {
+    height: 56px;
+    overflow: hidden;
+    padding-left: 150px;
+  }
+  .height {
+    overflow: visible !important;
+    border-top: none;
+    transition: 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  }
+  .li {
+    color: #f43397;
+    border-bottom: 3.2px solid #f43397;
+    transition: color 0.1s ease-in-out;
+  }
+  .pink-para {
+    color: #f43397;
+    font-weight: bold !important;
+  }
+  .pink-para:hover {
+    color: #f43397 !important;
+  }
+  @media (max-width: 1230px) {
+    #bottom li,
+    #top p {
+      font-size: 13px !important;
+    }
+  }
+  @media (max-width: 1280px) {
+    #bottom li,
+    #top p {
+      font-size: 15px !important;
+    }
+    #top p {
+      margin: 0 5px !important;
+    }
+    #bottom{
+      padding-left: 0px;
+      
+    }
+  }
+  @media (max-width: 600px) {
+   .mobilenot{
+        display: none;
+   }
+  }
+  
