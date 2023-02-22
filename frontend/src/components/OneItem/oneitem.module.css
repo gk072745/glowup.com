@@ -1,0 +1,13 @@
+.oneitem_maindiv{
+    /* width: 20%; */
+    /* height: 300px; */
+    /* border: 1px solid black; */
+    text-align: center;
+    background-color: white;
+}
+
+.oneitem_maindiv>img{
+    width: 70%;
+    height: 50%;
+    margin: auto;
+}

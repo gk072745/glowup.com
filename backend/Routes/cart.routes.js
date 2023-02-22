@@ -2,24 +2,32 @@ const express = require("express");
 const mongoose = require("mongoose");
 const CartModel = require("../Models/Cartitems.model");
 
+const ProductModel = require("../Models/Product.model");
+
+
 const cartRouter = express.Router();
 
 cartRouter.get("/", async (req, res) => {
 	const { email } = req.body;
+
 	try {
 		let cart = await CartModel.find({ email: email });
 		let ids = [];
 		for (let i = 0; i < cart.length; i++) {
 			ids.push(cart[i].product_id);
 		}
+
+		let tmp = ids.map((id) => mongoose.Types.ObjectId(id));
+		console.log(tmp);
 		let data = await ProductModel.find({
 			_id: {
-				$in: ids.map((id) => mongoose.Types.ObjectId(id)),
+				$in: tmp,
 			},
 		});
 		res.send({
 			status: 200,
 			data: data,
+			cart: cart,
 		});
 	} catch (error) {
 		res.send({ status: 400, error: error });
@@ -30,7 +38,10 @@ cartRouter.post("/add/:id", async (req, res) => {
 	const id = req.params.id;
 	const { email } = req.body;
 	try {
-		let item = await CartModel.find({ product_id: id });
+		let item = await CartModel.find({
+			$and: [{ email }, { product_id: id }],
+		});
+
 		if (item.length > 0) {
 			if (item[0].quantity >= 5) {
 				res.send({
