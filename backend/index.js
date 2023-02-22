@@ -26,7 +26,11 @@ app.get("/", (req, res) => {
 	res.send("Home page");
 });
 
-app.listen(process.env.PORT, () => {
-	console.log("server listening on port " + process.env.PORT);
+// app.listen(process.env.PORT, () => {
+// 	console.log("server listening on port " + process.env.PORT);
+// 	connectDB();
+// });
+app.listen(8080, () => {
+	console.log("server listening on port 8080") ;
 	connectDB();
 });
