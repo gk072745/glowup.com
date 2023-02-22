@@ -4,7 +4,6 @@ const CartModel = require("../Models/Cartitems.model");
 
 const ProductModel = require("../Models/Product.model");
 
-
 const cartRouter = express.Router();
 
 cartRouter.get("/", async (req, res) => {
@@ -18,7 +17,7 @@ cartRouter.get("/", async (req, res) => {
 		}
 
 		let tmp = ids.map((id) => mongoose.Types.ObjectId(id));
-		console.log(tmp);
+		// console.log(tmp);
 		let data = await ProductModel.find({
 			_id: {
 				$in: tmp,
@@ -79,11 +78,15 @@ cartRouter.post("/add/:id", async (req, res) => {
 cartRouter.patch("/update/:id", async (req, res) => {
 	const id = req.params.id;
 	const { email, quantity } = req.body;
+	console.log(req.body, id);
 	try {
 		await CartModel.findOneAndUpdate(
-			{ product_id: id },
+			{
+				$and: [{ email }, { product_id: id }],
+			},
 			{ quantity: quantity }
 		);
+
 		res.send({
 			status: 200,
 			message: "Item updated successfully",
@@ -99,7 +102,9 @@ cartRouter.delete("/delete/:id", async (req, res) => {
 	const id = req.params.id;
 	const { email } = req.body;
 	try {
-		await CartModel.findOneAndDelete({ product_id: id });
+		await CartModel.findOneAndDelete({
+			$and: [{ email }, { product_id: id }],
+		});
 		res.send({
 			status: 201,
 			message: "Product deleted successfully",

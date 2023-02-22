@@ -8,6 +8,13 @@ const adminRouter = express.Router();
 
 adminRouter.get("/products", async (req, res) => {
 	const { category, brand, sort, order, product_type } = req.query;
+	let { page, limit } = req.query;
+	if (page === undefined || page < 1) {
+		page = 1;
+	}
+	if (limit === undefined || limit < 1) {
+		limit = 10;
+	}
 	try {
 		let tmp = {};
 		if (category && brand) {
@@ -39,19 +46,26 @@ adminRouter.get("/products", async (req, res) => {
 			};
 		}
 		console.log(tmp);
+		const totalPages = await ProductModel.find(tmp);
 		let data = [];
 		if (sort) {
-			data = await ProductModel.find(tmp).sort(
-				sort === "rating"
-					? { rating: order === "asc" ? 1 : -1 }
-					: { price: order === "asc" ? 1 : -1 }
-			);
+			data = await ProductModel.find(tmp)
+				.sort(
+					sort === "rating"
+						? { rating: order === "asc" ? 1 : -1 }
+						: { price: order === "asc" ? 1 : -1 }
+				)
+				.limit(limit)
+				.skip(limit * page);
 		} else {
-			data = await ProductModel.find(tmp);
+			data = await ProductModel.find(tmp)
+				.limit(limit)
+				.skip(limit * page);
 		}
 		res.send({
 			status: 200,
 			data: data,
+			totalPages: Math.ceil(totalPages.length / limit),
 		});
 	} catch (error) {
 		res.send({ status: 400, error: error });
