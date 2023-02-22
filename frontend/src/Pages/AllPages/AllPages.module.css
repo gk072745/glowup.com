@@ -1,0 +1,29 @@
+.allpage_maindiv{
+    background-color: #f3f3f3;
+}
+
+.allpage_swiper_div{
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.allpage_product_with_sorting{
+    /* border: 1px solid black; */
+    width: 80%;
+    margin: auto;
+    display: flex;
+    gap: 1rem;
+}
+
+.allpage_sorting_div{
+    flex: 3;
+    /* border: 1px solid red; */
+}
+
+.allpage_allproducts_div{
+    flex: 8;
+    /* border: 1px solid blue; */
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+}
