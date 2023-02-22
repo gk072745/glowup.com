@@ -62,12 +62,14 @@ adminRouter.get("/products", async (req, res) => {
 				.limit(limit)
 				.skip(limit * page);
 		}
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
 			totalPages: Math.ceil(totalPages.length / limit),
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
