@@ -3,6 +3,7 @@ import "../navbar/navbar.css";
 import { IoIosApps, IoMdGift } from "react-icons/io";
 import { GrLocation } from "react-icons/gr";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 // import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 // import Buttonsign from "./button/buttonsignin";
@@ -87,7 +88,7 @@ const Topnavbar = () => {
                   <IoIosApps />
                 </i>
               </div>
-              <span>Get Apps</span>
+              <span >Get Apps</span>
             </div>
             <div className="inside1">
               <div>
@@ -95,7 +96,7 @@ const Topnavbar = () => {
                   <IoMdGift />
                 </i>
               </div>
-              <span>Gift Card</span>
+              <span >Gift Card</span>
             </div>
             <div className="inside1">
               <div>
@@ -103,7 +104,7 @@ const Topnavbar = () => {
                   <GrLocation />
                 </i>
               </div>
-              <span>Location</span>
+              <span >Location</span>
             </div>
             <div className="inside1">
               <div>
@@ -111,7 +112,7 @@ const Topnavbar = () => {
                   <MdAdminPanelSettings />
                 </i>
               </div>
-              <span>Admin</span>
+              <span><Link className="new" to="/admin">Admin</Link></span>
             </div>
           </div>
         </div>
