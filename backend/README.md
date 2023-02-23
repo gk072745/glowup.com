@@ -63,7 +63,7 @@
 # user routes (/user)
   - "/register" for registering a new user. - **POST request**
   - Details required for registering a new user :
-      - username (Must be filled)
+      - name (Must be filled)
       - email (must be filled)
       - password (must be filled)
       - phone number( optional )
