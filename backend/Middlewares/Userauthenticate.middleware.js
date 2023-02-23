@@ -17,10 +17,12 @@ const userAuthenticate = async (req, res, next) => {
 					req.body.email = decoded.email;
 					next();
 				} else {
+					res.status(401);
 					res.send("Please login first");
 				}
 			});
 		} else {
+			res.status(401);
 			res.send("Please login first");
 		}
 	}
