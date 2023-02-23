@@ -60,12 +60,12 @@
 # user routes (/user)
   - "/register" for registering a new user. - POST request
   - Details required for registering a new user :
-        - username (Must be filled)
-        - email (must be filled)
-        - password (must be filled)
-        - phone number( optional )
+      - username (Must be filled)
+      - email (must be filled)
+      - password (must be filled)
+      - phone number( optional )
         
-  - "/login" for logging in - POST request;
+  - "/login" for logging in - POST request
         - returns a cookie with the token
   - "/" returns the details of the logged in user - GET request
   
