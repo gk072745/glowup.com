@@ -79,4 +79,4 @@
   - "/update/:product_id" to update the details of product - **PATH request**
   - "/delete/:id" to delete a product from the db - **DELETE request**
   - "/users" gets the list of all the users listed in the db - **GET request**
-  - "/delteuser/:id" deltes a user from the db - **DELETE request**
+  - "/deleteuser/:id" deltes a user from the db - **DELETE request**
