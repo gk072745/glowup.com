@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/autoplay";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import styles from "./AllPages.module.css"
 import axios from "axios"
@@ -15,6 +16,8 @@ const AllPages = () => {
    const [firstimg,setFirstimg] = useState("");
    const [secondimg,setSecondimg] = useState("");
    const [thirdimg,setThirdimg] = useState("");
+   const [page,setPage] = useState(1);
+   const [tpage,setTpage] = useState(0);
    
 
    useEffect(()=>{
@@ -74,12 +77,13 @@ const AllPages = () => {
       setThirdimg("https://images-static.nykaa.com/uploads/aa8563b3-f20f-4541-a1f3-a7bace46ade0.jpg?tr=w-1200,cm-pad_resize")
     }
 
-    axios.get("https://periwinkle-sheep-hem.cyclic.app/products")
+    axios.get(`https://periwinkle-sheep-hem.cyclic.app/products?page=${page}`)
     .then((res)=>{
+      setTpage(res.data.totalPages)
       setProducts(res.data.data)})
     .catch((err)=>console.log(err))
 
-   },[category])
+   },[category,page])
 
   return (
     <div className={styles.allpage_maindiv}>
@@ -92,7 +96,8 @@ const AllPages = () => {
           clickable: true,
         }}
         navigation={true}
-        modules={[Pagination, Navigation]}
+        autoplay={true}
+        modules={[Pagination, Navigation, Autoplay]}
         className="mySwiper"
       >
         <SwiperSlide>
@@ -109,11 +114,33 @@ const AllPages = () => {
       </div>
         
       <div className={styles.allpage_product_with_sorting}>
-      <div className={styles.allpage_sorting_div}></div>
-        <div className={styles.allpage_allproducts_div}>
+      <div className={styles.allpage_sorting_div}>
+         <div>
+           <h1>Sort by...</h1>
+           <div>
+             <h2>By Name</h2>
+             
+             <input id='AtoZ' type="checkbox" name='A to Z'  onChange={(e)=>console.log(e)}/> 
+             <label for="AtoZ">A to Z </label>
+             <label>
+             <input type="checkbox" name='Z to A'  onChange={(e)=>console.log(e.target.checked)} /> Z to A 
+             </label>
+
+           </div>
+         </div>
+      </div>
+
+
+        <div className={styles.allpage_allproducts_div} >
+          <div className={styles.allpage_allproducts}>
            {products?.map((el,i)=>(
              <Oneitem key={i} item={el} />
            ))}
+           </div>
+           <div className={styles.allpage_prev_and_next_div}>
+           <button disabled={page===1} onClick={()=>setPage(page-1)}>Previous</button>
+           <button disabled={page===tpage} onClick={()=>setPage(page+1)}>Next</button>
+           </div>
         </div>
       </div>
     </div>
