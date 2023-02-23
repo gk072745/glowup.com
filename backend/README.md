@@ -59,7 +59,7 @@
   
 # user routes (/user)
   - "/register" for registering a new user. - POST request
-  - Details require for registering a new user: 
+  - Details required for registering a new user:
         - username (Must be filled)
         - email (must be filled)
         - password (must be filled)
