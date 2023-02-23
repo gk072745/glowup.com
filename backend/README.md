@@ -1,0 +1,44 @@
+# admin login 
+  - admin@gmail.com
+  - 12345678
+# user login
+  - user@gmail.com
+  - 12345678
+# products route (/products)
+  - "/" 
+    queries: 
+      - category, brand, product_type, sort ( price or rating ), order( asc or dsc), page , limit (default 10)
+      - brand:
+        - "almay"
+        - "cargo cosmetics"
+        - "benefit"
+        - "colorpop"
+        - e.l.f.
+        - nyx
+      - category : 
+        - "blush"
+        - "bronzer"
+        - "eyebrow"
+        - "eyeliner"
+        - "eyeshadow"
+        - "foundation"
+        - "lip_liner"
+        - "lipstick"
+        - "mascara"
+        - "nail_polish"
+      - product_type :
+        - "blush"
+        - "bronzer"
+        - "eyebrow"
+        - "eyeliner"
+        - "eyeshadow"
+        - "foundation"
+        - "lip_liner"
+        - "lipstick"
+        - "mascara"
+        - "nail_polish"
+  -  "/product/:id" (get the details of a specific product)
+  -  "/search" :
+        - q = "your search query here" 
+        - q is REQUIRED or else it will throw an error
+  - 
