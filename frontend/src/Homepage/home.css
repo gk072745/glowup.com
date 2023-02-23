@@ -1,0 +1,17 @@
+.headings{
+    margin:auto;
+    font-size:25px;
+    font-weight:600;
+    
+    
+}
+
+
+
+@media screen and (max-width:600px) {
+    .headings{
+        text-align:center;
+        
+    }
+    
+}
