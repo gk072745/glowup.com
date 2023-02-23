@@ -66,14 +66,14 @@
       - phone number( optional )
         
   - "/login" for logging in - POST request
-        - returns a cookie with the token
+      - returns a cookie with the token
   - "/" returns the details of the logged in user - GET request
   
 # admin routes (/admin)
   - "/products" gets the products from the db. Has the same queries as the products route - GET request
   - "/search" - GET request :
-        - q = "your search query here" 
-        - q is REQUIRED or else it will throw an error
+      - q = "your search query here" 
+      - q is REQUIRED or else it will throw an error
   - "/addproduct" to add a new product to the db _ POST request
   - "/addmultiple" to add multiple products to the db - POST request
   - "/update/:product_id" to update the details of product - PATH request
