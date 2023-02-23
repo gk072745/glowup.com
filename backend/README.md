@@ -6,37 +6,37 @@
   - 12345678
 # products route (/products)
   - "/" - GET request
-    queries: 
-      - category, brand, product_type, sort ( price or rating ), order( asc or dsc), page , limit (default 10)
-      - brand:
-        - "almay"
-        - "cargo cosmetics"
-        - "benefit"
-        - "colorpop"
-        - e.l.f.
-        - nyx
-      - category : 
-        - "blush"
-        - "bronzer"
-        - "eyebrow"
-        - "eyeliner"
-        - "eyeshadow"
-        - "foundation"
-        - "lip_liner"
-        - "lipstick"
-        - "mascara"
-        - "nail_polish"
-      - product_type :
-        - "blush"
-        - "bronzer"
-        - "eyebrow"
-        - "eyeliner"
-        - "eyeshadow"
-        - "foundation"
-        - "lip_liner"
-        - "lipstick"
-        - "mascara"
-        - "nail_polish"
+  queries: 
+    - category, brand, product_type, sort ( price or rating ), order( asc or dsc), page , limit (default 10)
+    - brand:
+      - "almay"
+      - "cargo cosmetics"
+      - "benefit"
+      - "colorpop"
+      - e.l.f.
+      - nyx
+    - category : 
+      - "blush"
+      - "bronzer"
+      - "eyebrow"
+      - "eyeliner"
+      - "eyeshadow"
+      - "foundation"
+      - "lip_liner"
+      - "lipstick"
+      - "mascara"
+      - "nail_polish"
+    - product_type :
+      - "blush"
+      - "bronzer"
+      - "eyebrow"
+      - "eyeliner"
+      - "eyeshadow"
+      - "foundation"
+      - "lip_liner"
+      - "lipstick"
+      - "mascara"
+      - "nail_polish"
   -  "/product/:id" (get the details of a specific product) - GET request
   -  "/search" - GET request :
         - q = "your search query here" 
