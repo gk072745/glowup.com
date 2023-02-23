@@ -7,7 +7,7 @@ const userAuthenticate = async (req, res, next) => {
 		jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 			if (err) res.send(err);
 			else if (decoded) {
-				console.log(decoded);
+				// console.log(decoded);
 				req.body.email = decoded.email;
 				next();
 			} else {

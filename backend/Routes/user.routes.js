@@ -32,11 +32,13 @@ userRouter.post("/login", async (req, res) => {
 						process.env.JWT_SECRET
 					);
 					res.cookie("jwt_token", token, { httpOnly: true });
+					res.status(200);
 					res.send({
 						status: 200,
 						token: token,
 					});
 				} else {
+					res.status(401);
 					res.send({
 						status: 401,
 						message: "Invalid password",
@@ -44,9 +46,13 @@ userRouter.post("/login", async (req, res) => {
 				}
 			});
 		} else {
+			res.status(401);
 			res.send({ status: 401, message: "Invalid credentials" });
 		}
-	} catch (error) {}
+	} catch (error) {
+		res.status(400);
+		res.send({ status: 400, error: error });
+	}
 });
 
 // * register route
@@ -56,6 +62,7 @@ userRouter.post("/register", async (req, res) => {
 	try {
 		let user = await UserModel.find({ email });
 		if (user.length > 0) {
+			res.status(403);
 			res.send({
 				status: 403,
 				message: "User already exists",
@@ -66,6 +73,7 @@ userRouter.post("/register", async (req, res) => {
 				else {
 					const user = new UserModel({ ...req.body, password: hash });
 					await user.save();
+					res.status(201);
 					res.send({
 						status: 201,
 						message: `${name} has been registered successfully`,
@@ -74,7 +82,8 @@ userRouter.post("/register", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		res.send(error.message);
+		res.status(400);
+		res.send({ status: 400, error: error });
 	}
 });
 
