@@ -414,7 +414,7 @@ const SingleProductPage = () => {
                         <Box w="20%" py={"60px"} position={"sticky"} top="0px">
                             <Box bgColor={"#fff"}>
                                 <VStack p={8} align="center" pt={12} justify={"center"} textAlign="center">
-                                    <Image w="200px" src="https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076"></Image>
+                                    <Image w="200px" src={image_link}></Image>
                                     <Text fontWeight={500} fontSize={"14px"} color="#001325" noOfLines={2} >
                                         {description}
                                     </Text>
