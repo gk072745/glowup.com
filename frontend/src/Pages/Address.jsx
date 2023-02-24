@@ -32,8 +32,9 @@ const Address = () => {
   return (
 <>
 <OtherNavbar/>
-<Box w="full" px="150px" py={8}>
+<Box w="full" px="150px" py={8} >
 
+<HStack w="full" justify={"space-between"}>
 <VStack alignItems={"flex-start"}>
 <Heading as={"h1"} fontWeight={600} fontSize={"36px"} color={"rgba(0,19,37,0.92)"}>
 Choose Address
@@ -43,143 +44,139 @@ Detailed address will help our delivery partner reach your doorstep quickly
 </Text>
 
 </VStack>
+<Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/desktop-icons/header-address.svg">
 
+</Image>
+</HStack>
+
+<HStack  h="80vh" >
+
+
+
+<Center >
 <HStack>
 
 
+<Center>
+<VStack ref={btnRef} onClick={onOpen} h="170px" w="350px" justify={"center"} borderRadius={"10px"} color="#e80071" _hover={{background:"rgba(251,214,232,.5)",borderColor:"#e80071"}} fontWeight={600} border={"1px dashed #e0e0e0"}>
 
-<HStack>
-
-
-    <Center>
-    <VStack ref={btnRef} onClick={onOpen} h="170px" w="350px" justify={"center"} borderRadius={"10px"} color="#e80071" _hover={{background:"rgba(251,214,232,.5)",borderColor:"#e80071"}} fontWeight={600} border={"1px dashed #e0e0e0"}>
- 
-    <Icon fontSize={"24px"} as={BiPlus}  />
-      <Text>Add New Address</Text>
-    </VStack>
-    </Center>
+<Icon fontSize={"24px"} as={BiPlus}  />
+  <Text>Add New Address</Text>
+</VStack>
+</Center>
 
 
-    <VStack alignItems={"flex-start"} pl={8} h="170px" w="350px" justify={"center"}  _hover={{background:"rbga(230, 237, 247,0.9)"}} borderRadius={"10px"} border={"1px dashed #e0e0e0"}>
-      <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>Name</Text>
-      <Text  fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>town,street,State</Text>
-      <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>city</Text>
-      <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>8745858585</Text>
-      <HStack>
-          <Button  fontSize={"14px"} colorScheme="gray" variant={"outline"} size="sm" color="#3f414d"  fontWeight={500}>
-            Edit
-          </Button>
-          <Button colorScheme={"none"} color="#fff"  fontSize={"14px"}  variant={"outline"} size="sm" bgColor={"#fc2779"}  fontWeight={500}  rightIcon={<ArrowForwardIcon />}>
-            Deliver here
-          </Button>
-      </HStack>
-    </VStack>
+<VStack alignItems={"flex-start"} pl={8} h="170px" w="350px" justify={"center"}  _hover={{background:"rbga(230, 237, 247,0.9)"}} borderRadius={"10px"} border={"1px dashed #e0e0e0"}>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>Name</Text>
+  <Text  fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>town,street,State</Text>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>city</Text>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>8745858585</Text>
+  <HStack>
+      <Button  fontSize={"14px"} colorScheme="gray" variant={"outline"} size="sm" color="#3f414d"  fontWeight={500}>
+        Edit
+      </Button>
+      <Button colorScheme={"none"} color="#fff"  fontSize={"14px"}  variant={"outline"} size="sm" bgColor={"#fc2779"}  fontWeight={500}  rightIcon={<ArrowForwardIcon />}>
+        Deliver here
+      </Button>
+  </HStack>
+</VStack>
 
 
 </HStack>
- 
- <VStack  alignItems={"flex-start"}  w="350px" justify={"center"}>
 
-  <VStack w="full">
-  <Box w="full">
-<Accordion allowToggle>
+<VStack bgColor={"#fff"} pl="20px" alignItems={"flex-start"}  w="350px" justify={"center"}>
 
-
-
-  <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as="span" flex='1' textAlign='left'>
-   <HStack w="full" justify="space-between">
-  <HStack>
-  <Icon as={SlLocationPin} />
-        <Text>Bag</Text>
-  </HStack>
-
-     <Text>4 items</Text>
-
-   </HStack>
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel             css={{
-    '&::-webkit-scrollbar': {
-      width: "8px",
-  width:" 8px",
-    },
-    '&::-webkit-scrollbar-track': {
-     borderRadius: "7px",
-  backgroundColor: "#EBEBEB"
-    },
-  
-    '&::-webkit-scrollbar-thumb': {
-      borderRadius: "3px",
-  backgroundColor: "#C1BFC1"
-    },
-  }} pb={4} overflowY="scroll" maxHeight={"300px"}>
-     <CartProducts/>
-    </AccordionPanel>
-  </AccordionItem>
-
-
-
-</Accordion>
-</Box>
-
-
-
-
+<VStack w="full">
 <Box w="full">
 <Accordion allowToggle>
 
-  <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as="span" flex='1' textAlign='left'  w="full">
-   <HStack w="full" justifyContent={"space-between"}>
- 
-   <Icon as={TbCurrencyRupee} />
-  <Text>Price Details</Text>
 
 
-   </HStack>
+<AccordionItem>
+<h2>
+  <AccordionButton>
+    <Box as="span" flex='1' textAlign='left'>
+<HStack w="full" justify="space-between">
+<HStack>
+<Icon as={SlLocationPin} />
+    <Text>Bag</Text>
+</HStack>
 
-        </Box>
-        <AccordionIcon />
-       </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4} >
- <PaymentDetails/>
- <HStack>
+ <Text>4 items</Text>
 
-  <Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>
-  <VStack>
-    <Text>Earn 2432 Reward points</Text>
-    <Text>Get a discount on your next order</Text>
-  </VStack>
- </HStack>
+</HStack>
+    </Box>
+    <AccordionIcon />
+  </AccordionButton>
+</h2>
+<AccordionPanel             css={{
+'&::-webkit-scrollbar': {
+  width: "8px",
+width:" 8px",
+},
+'&::-webkit-scrollbar-track': {
+ borderRadius: "7px",
+backgroundColor: "#EBEBEB"
+},
 
-    </AccordionPanel>
-  </AccordionItem>
+'&::-webkit-scrollbar-thumb': {
+  borderRadius: "3px",
+backgroundColor: "#C1BFC1"
+},
+}} pb={4} overflowY="scroll" maxHeight={"300px"}>
+ <CartProducts/>
+</AccordionPanel>
+</AccordionItem>
+
+<AccordionItem>
+<h2>
+  <AccordionButton>
+    <Box as="span" flex='1' textAlign='left'  w="full">
+<HStack w="full" justifyContent={"space-between"}>
+
+<Icon as={TbCurrencyRupee} />
+<Text>Price Details</Text>
+
+
+</HStack>
+
+    </Box>
+    <AccordionIcon />
+   </AccordionButton>
+</h2>
+<AccordionPanel pb={4} >
+<PaymentDetails/>
+<HStack p={2}>
+
+<Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>
+<VStack spacing={"2px"} alignItems="flex-start">
+<Text color="rgba(0,19,37,.92)" fontSize={"14px"}>Earn 2432 Reward points</Text>
+<Text color="rgba(0,19,37,.64)" fontSize={"12px"}>Get a discount on your next order</Text>
+</VStack>
+</HStack>
+
+</AccordionPanel>
+</AccordionItem>
 
 </Accordion>
-<Text textAlign={"center"} w="full">You are saving ₹2265 on this order</Text>
 </Box>
 
-  </VStack>
 
- <HStack>
-  <VStack>
-    <Text>Buy authentic products. Pay</Text>
-    <Text> securely. Easy returns and exchange</Text>
-  </VStack>
-  <Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/BuyerAssurance.svg" width={"40px"}>
+</VStack>
 
-  </Image>
- </HStack>
+<HStack justify={"space-around"} p={2} w="full">
+<VStack fontSize={"12px"} color="rgba(0,19,37,.92)" spacing={1} alignItems={"flex-start"}>
+<Text>Buy authentic products. Pay</Text>
+<Text> securely. Easy returns and exchange</Text>
+</VStack>
+<Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/BuyerAssurance.svg" width={"40px"}>
 
- </VStack>
+</Image>
+</HStack>
+
+</VStack>
+
+</Center>
 
 
 </HStack>
@@ -232,14 +229,14 @@ Detailed address will help our delivery partner reach your doorstep quickly
     }}>
   
   
-              <VStack w="full">
+              <VStack w="full"  px={4}>
 
 
-   <VStack w="full">
-    <Text>Address</Text>
-    <Input w="full" placeholder='Pincode'></Input>
-    <Input w="full" placeholder='House/Flat/Office No.'></Input>
-    <Textarea w="full" h="200px" placeholder='Road Name/Area/Colony'></Textarea>
+   <VStack w="full" align={"flex-start"} py={2}>
+    <Text fontWeight={600} color="#282c3f" fontSize={"20px"}>Address</Text>
+    <Input variant={"filled"} focusBorderColor="#dedede"  w="full" placeholder='Pincode'></Input>
+    <Input  variant={"filled"}  focusBorderColor="#dedede"  w="full" placeholder='House/Flat/Office No.'></Input>
+    <Textarea  variant={"filled"}  focusBorderColor="#dedede"  w="full" h="150px" placeholder='Road Name/Area/Colony'></Textarea>
    </VStack>
 
    <HStack w="full" justify="space-between">
@@ -250,26 +247,25 @@ Detailed address will help our delivery partner reach your doorstep quickly
    </HStack>
 
 
-<VStack>
+   <VStack w="full" align={"flex-start"}  py={4}>
 
-  
+<VStack align={"flex-start"} spacing={0}>
+<Text  fontWeight={600} color="#282c3f" fontSize={"20px"}>Contact</Text>
+<Text fontSize={"12px"} color="rgba(0,19,37,.92)">Information provided here will be used to contact you for delivery updates </Text>
 </VStack>
+
+    <Input focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Name'></Input>
+    <Input focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Phone'></Input>
+    <Input focusBorderColor={"#dedede"} variant="filled" w="full"  placeholder='Email ID (Optional)'></Input>
+  </VStack>
 
               </VStack>
   
             </DrawerBody>
   
-            <DrawerFooter borderTop={"1px solid #dedede"}>
-              <HStack justifyContent={"space-between"} w="full">
-                <VStack  spacing={"0"} align="flex-start">
-                  <Text fontSize={"20px"} color="#000" fontWeight={500}>$3344</Text>
-                 <HStack spacing={"3px"}>
-                   <Text fontSize={"12px"} color={"rgba(0,19,37,.92)"}>Grand total</Text>
-                   <Icon  fontSize={"10px"} as={TfiInfoAlt} />
-                 </HStack>
-                </VStack>
-                <Button width={"40%"} color={"#fff"} bgColor="#fc2779" colorScheme={"none"} rightIcon={<ArrowForwardIcon />} onClick={onClose}>Proceed</Button>
-              </HStack>
+            <DrawerFooter borderTop={"1px solid #dedede"} >
+            <Button width={"80%"} color={"#fff"} m="auto" bgColor="#fc2779" colorScheme={"none"} rightIcon={<ArrowForwardIcon />} onClick={onClose}>Ship to this address</Button>
+
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
