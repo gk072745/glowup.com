@@ -1,30 +1,51 @@
-import React, { useEffect } from 'react'
-import ReactImageMagnify from 'react-image-magnify';
-import Magnifier from "react-magnifier";
+import React, { useEffect, useRef, useState } from 'react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, CustomCard, Box, HStack, Icon, Grid, GridItem, VStack, Text, Button, InputGroup, Input, InputRightElement, Tooltip, Tag, Badge, Image, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, StackDivider, Center, SimpleGrid } from "@chakra-ui/react"
 import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons"
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { CiHeart} from "react-icons/ci";
+import { CiHeart } from "react-icons/ci";
 import { BsCheck } from "react-icons/bs"
 import { BiInfoCircle } from "react-icons/bi"
 import { SiShopify } from "react-icons/si"
 import { GiReturnArrow } from "react-icons/gi"
 import { TiThumbsUp } from "react-icons/ti"
 import { TfiLocationPin } from "react-icons/tfi"
+import { useParams, useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 const SingleProductPage = () => {
+    const { id } = useParams()
+    const [singleProduct, setSingleProduct] = useState({})
+    const [pincode,setPin]=useState("")
+    const { brand, category, description, image_link, name, price, product_type, rating, tag_list } = singleProduct
+    const totalRating = Math.floor(Math.random() * 100) + 1
+    const mrp=Math.floor(price * 1.2)
 
+    useEffect(() => {
+        axios({
+            url: `https://periwinkle-sheep-hem.cyclic.app/products/product/${id}`,
+            method: "get"
+        }).then((res) => {
+            setSingleProduct(res.data.data)
+        })
+    }, [id])
+  
 
-
-
-
-    
-    
-    
-    
-    
-
+    const handlePin=(pin)=>{
+        axios(
+            {
+                url:"https://api.postalpincode.in/pincode/"+pin
+            }
+        ).then((res)=>{
+        if(res.data[0].PostOffice){
+          localStorage.setItem("Address",JSON.stringify(res.data[0].PostOffice[0]))
+        }else{
+            console.log(false)
+        }
+        }).catch((err)=>{
+            console.log("err")
+        })
+    }
 
 
 
@@ -42,7 +63,7 @@ const SingleProductPage = () => {
 
                 <Box w="full">
                     <Text w="full" py={4} fontWeight={500} color={"#888888"} fontSize={"14px"}>
-                        Home <Icon as={ChevronRightIcon}></Icon> Product <Icon as={ChevronRightIcon}></Icon> singleProduct
+                        Home <Icon as={ChevronRightIcon}></Icon> Product <Icon as={ChevronRightIcon}></Icon> {name}
                     </Text>
                 </Box>
 
@@ -54,7 +75,7 @@ const SingleProductPage = () => {
 
                         {/* wishlist */}
                         {/* image */}
-                        <Box bgColor={"#fff"} height="full" p={4} zIndex="1">
+                        <Box bgColor={"#fff"} height="full" p={4} zIndex="0">
                             <VStack w="full"  >
 
 
@@ -63,20 +84,9 @@ const SingleProductPage = () => {
                                 </Box>
 
                                 {/* image.................................. */}
-                                <Box height={"min-content"}>
-                                    {/* <Magnifier src={"https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076"} width={500} />; */}
-                                    <ReactImageMagnify {...{
-                                        smallImage: {
-                                            alt: 'Wristwatch by Ted Baker London',
-                                            isFluidWidth: true,
-                                            src: "https://images.unsplash.com/photo-1618614944895-fc409a83ad80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-                                        },
-                                        largeImage: {
-                                            src: "https://images.unsplash.com/photo-1618614944895-fc409a83ad80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-                                            width: 1200,
-                                            height: 1800
-                                        }
-                                    }} />
+                                <Box height={"min-content"} >
+                              
+                                    <Image h="300px" src={image_link} />
                                 </Box>
 
                             </VStack>
@@ -90,7 +100,7 @@ const SingleProductPage = () => {
                             <VStack w="full" textAlign={"left"} p={4} bgColor="#fff"  >
 
 
-                                <Text w="full" fontSize={"20px"} color={"#01325"} fontWeight={500}>Nykaa Skin Secrets Gold Sheet Mask + Nykaa Skin Potion 24k Gold Facial Oil Golden Glow Combo</Text>
+                                <Text w="full" fontSize={"20px"} color={"#01325"} fontWeight={500} noOfLines={2}>{description}</Text>
                                 <Text w="full" fontSize={"16px"} color={"#01325"} fontWeight={500}>(1 pcs)</Text>
 
 
@@ -98,22 +108,22 @@ const SingleProductPage = () => {
 
                                     <HStack divider={<StackDivider borderColor='gray.200' />} >
                                         <HStack spacing={"2px"}>
-                                            <Icon fontSize={"14px"} color="#001325" as={3 >= 1 ? AiFillStar : AiOutlineStar}></Icon>
-                                            <Icon fontSize={"14px"} color="#001325" as={3 >= 2 ? AiFillStar : AiOutlineStar}></Icon>
-                                            <Icon fontSize={"14px"} color="#001325" as={3 >= 3 ? AiFillStar : AiOutlineStar}></Icon>
-                                            <Icon fontSize={"14px"} color="#001325" as={3 >= 4 ? AiFillStar : AiOutlineStar}></Icon>
-                                            <Icon fontSize={"14px"} color="#001325" as={3 >= 5 ? AiFillStar : AiOutlineStar}></Icon>
-                                            <Text fontSize={"14px"} color="#001325"> 3.2/5</Text>
+                                            <Icon fontSize={"14px"} color="#001325" as={rating >= 1 ? AiFillStar : AiOutlineStar}></Icon>
+                                            <Icon fontSize={"14px"} color="#001325" as={rating >= 2 ? AiFillStar : AiOutlineStar}></Icon>
+                                            <Icon fontSize={"14px"} color="#001325" as={rating >= 3 ? AiFillStar : AiOutlineStar}></Icon>
+                                            <Icon fontSize={"14px"} color="#001325" as={rating >= 4 ? AiFillStar : AiOutlineStar}></Icon>
+                                            <Icon fontSize={"14px"} color="#001325" as={rating >= 5 ? AiFillStar : AiOutlineStar}></Icon>
+                                            <Text fontSize={"14px"} color="#001325"> {rating}/5</Text>
                                         </HStack>
-                                        <Text fontSize={"14px"} color="#001325" fontWeight={500}>19 ratings</Text>
+                                        <Text fontSize={"14px"} color="#001325" fontWeight={500}>{totalRating} ratings</Text>
                                     </HStack>
 
                                     <HStack spacing={"5px"} divider={<StackDivider borderColor='gray.200' />}>
                                         <HStack spacing={"4px"}>
                                             <Text fontSize={"16px"} fontWeight="500" color={"rgba(0,19,37,0.64)"} >MRP:</Text>
-                                            <Text fontSize={"16px"} fontWeight="500" color={"rgba(0,19,37,0.64)"} textDecoration={"line-through"}>₹ 2345</Text>
-                                            <Text fontSize={"20px"} fontWeight="600" color={"#001325"} >₹999</Text></HStack>
-                                        <Text fontSize={"16px"} fontWeight="500" color={"#068743"} >15% off</Text>
+                                            <Text fontSize={"16px"} fontWeight="500" color={"rgba(0,19,37,0.64)"} textDecoration={"line-through"}>${mrp}</Text>
+                                            <Text fontSize={"20px"} fontWeight="600" color={"#001325"} >${price}</Text></HStack>
+                                        <Text fontSize={"16px"} fontWeight="500" color={"#068743"} >{16}% off</Text>
 
                                     </HStack>
 
@@ -164,8 +174,10 @@ const SingleProductPage = () => {
                                                                 borderRadius="2px"
                                                                 focusBorderColor='rgba(84,84,84,0.2)'
                                                                 placeholder='Enter pincode'
+                                                               value={pincode}
+                                                               onChange={ (e)=>(setPin(e.target.value)) }
                                                             />
-                                                            <InputRightElement width='4.5rem'>
+                                                            <InputRightElement width='4.5rem' onClick={()=>handlePin(pincode)}>
                                                                 <Button color="#fc2779" variant={"unstyled"} h='1.75rem' size='sm' >
                                                                     check
                                                                 </Button>
@@ -268,44 +280,48 @@ const SingleProductPage = () => {
                             <Box>
                                 <Text py={"20px"} fontSize={"20px"} fontWeight={600} color={"#001325"}>Product Description</Text>
                                 <VStack alignItems={"flex-start"} p="15px" borderRadius={"3px"} bgColor={"#fff"}>
-                                    
+
                                     <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>
-                                        Lippie Pencil A long-wearing and high-intensity lip pencil that glides on easily and prevents feathering. Many of our Lippie Stix have a coordinating Lippie Pencil designed to compliment it perfectly, but feel free to mix and match!
+                                        {description}
                                     </Text>
 
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Category:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>Cosmatics</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>{category || product_type || name}</Text>
                                     </HStack>
 
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Title:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>Lippie Pencil</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>{name}</Text>
                                     </HStack>
 
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Price:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>$ 345</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>$ {price}</Text>
                                     </HStack>
 
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Rating:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>4.3</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>{rating}</Text>
                                     </HStack>
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Brand:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>sdafsdf</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>{brand}</Text>
                                     </HStack>
                                     <HStack>
                                         <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Product type:</Text>
-                                        <Text  color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>lip liner</Text>
+                                        <Text color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"}>{product_type}</Text>
                                     </HStack>
-                                 
+
 
                                     <HStack>
-                                        <Text  fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Tags:</Text>
-                                        <Badge>Cruelty free</Badge>
-                                        <Badge>Vegan</Badge>
+                                        <Text fontWeight={700} fontSize={"16px"} color="rgba(0,19,37,.72)">Tags:</Text>
+                                        {
+                                            tag_list?.map((el,i) => (
+                                                <Badge key={i}>{el}</Badge>
+
+                                            ))
+                                        }
                                     </HStack>
                                 </VStack>
                             </Box>
@@ -315,8 +331,8 @@ const SingleProductPage = () => {
 
 
                             <Box w="full" mb={12}>
-                                
-                                <Text  py={"20px"} fontSize={"20px"} fontWeight={600} color={"#001325"}>
+
+                                <Text py={"20px"} fontSize={"20px"} fontWeight={600} color={"#001325"}>
                                     Product Details
                                 </Text>
 
@@ -328,11 +344,11 @@ const SingleProductPage = () => {
                                     <TabPanels w="full">
                                         <TabPanel w="full">
                                             <VStack w="full" divider={<StackDivider borderColor='gray.200' />} spacing={4} alignItems="flex-start">
-                                                <HStack w="full" spacing={8} p={2}  divider={<StackDivider borderColor='gray.200' />}>
-                                                  
-                                                    <HStack  alignItems={"flex-start"}>
-                                                        <Heading as={"h1"} color="rgba(0,19,37,0.92)" fontWeight={600}  fontSize="36px">
-                                                            3.7/5
+                                                <HStack w="full" spacing={8} p={2} divider={<StackDivider borderColor='gray.200' />}>
+
+                                                    <HStack alignItems={"flex-start"}>
+                                                        <Heading as={"h1"} color="rgba(0,19,37,0.92)" fontWeight={600} fontSize="36px">
+                                                            {rating}/5
                                                         </Heading>
                                                         <VStack spacing={"0px"}>
                                                             <Text fontWeight={500} size={"16px"} color={"rgba(0,19,37,.92)"}>Overall Rating</Text>
@@ -351,21 +367,21 @@ const SingleProductPage = () => {
                                                 </HStack>
 
 
-                                                <HStack  alignItems={"flex-start"}>
+                                                <HStack alignItems={"flex-start"}>
 
                                                     <VStack w="30%">
                                                         <Text fontWeight={600} color="rgba(0, 19, 37, 0.92)">
                                                             Most Useful Review
                                                         </Text>
                                                         <HStack>
-                                                            <Image borderRadius="full" src="https://images-static.nykaa.com/prod-review/default_profile_image.png"  boxSize="35px"></Image>
+                                                            <Image borderRadius="full" src="https://images-static.nykaa.com/prod-review/default_profile_image.png" boxSize="35px"></Image>
                                                             <VStack>
                                                                 <Text fontWeight={500} fontSize="14px" color={"rgba(0, 19, 37, 0.72)"}>Athsha Beril</Text>
                                                                 <HStack spacing={"3px"}>
-                                                                
-                                                                        <Icon fontSize={"12px"} borderRadius="full" p={0} bgColor={"#fed0e2"} color="#fc2779" as={BsCheck}></Icon>
-                                                                 
-                                                                       <Text fontSize={"12px"} color="rgba(0,19,37,0.52)">Verified Buyers</Text>
+
+                                                                    <Icon fontSize={"12px"} borderRadius="full" p={0} bgColor={"#fed0e2"} color="#fc2779" as={BsCheck}></Icon>
+
+                                                                    <Text fontSize={"12px"} color="rgba(0,19,37,0.52)">Verified Buyers</Text>
                                                                 </HStack>
                                                             </VStack>
                                                         </HStack>
@@ -376,9 +392,9 @@ const SingleProductPage = () => {
                                                         <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>"Good Products"</Text>
                                                         <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={400}>Very good and affordable product my kid loves it. Brushing has become more fun for her.</Text>
                                                         <HStack cursor="pointer" border={"1px solid #dbd9de"} fontSize="18px" px="2" borderRadius={"3px"} color={"#fc2779"}>
-                                                                <Icon as={TiThumbsUp}></Icon>
-                                                                <Text>Helpful</Text>
-                                                            </HStack>
+                                                            <Icon as={TiThumbsUp}></Icon>
+                                                            <Text>Helpful</Text>
+                                                        </HStack>
                                                     </VStack>
 
                                                 </HStack>
@@ -395,32 +411,32 @@ const SingleProductPage = () => {
 
 
 
-                   <Box  w="20%" pt={"70px"}  position={"sticky"} top="80px">
-                   <Box    bgColor={"#fff"}>
-                            <VStack p={8} align="center" pt={12} justify={"center"} textAlign="center">
-                                <Image w="200px" src="https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076"></Image>
-                                <Text fontWeight={500} fontSize={"14px"} color="#001325">
-                                    Agaro Rex DLX Sonic Electric Toothbrush For
-                                </Text>
-                                <HStack>
-                                    <Text fontWeight={500} color="rgba(0,19,37,0.64)">MRP:</Text>
-                                    <Text fontWeight={600} fontSize="20px" color="#001325">$970</Text>
-                                </HStack>
+                        <Box w="20%" py={"60px"} position={"sticky"} top="0px">
+                            <Box bgColor={"#fff"}>
+                                <VStack p={8} align="center" pt={12} justify={"center"} textAlign="center">
+                                    <Image w="200px" src="https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076"></Image>
+                                    <Text fontWeight={500} fontSize={"14px"} color="#001325" noOfLines={2} >
+                                        {description}
+                                    </Text>
+                                    <HStack>
+                                        <Text fontWeight={500} color="rgba(0,19,37,0.64)">MRP:</Text>
+                                        <Text fontWeight={600} fontSize="20px" color="#001325">${mrp}</Text>
+                                    </HStack>
 
-                                <HStack spacing={"2px"}>
-                                    <Icon as={3 >= 1 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Icon as={3 >= 2 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Icon as={3 >= 3 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Icon as={3 >= 4 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Icon as={3 >= 5 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Text fontSize={"12px"} color="#6f7981">(7)</Text>
-                                </HStack>
-                            </VStack>
-                            <Button w="full" colorScheme={"none"}  bgColor={"#fc2779"} fontWeight={600} color="#fff" borderRadius={0}>
-                                Add to Bag
-                            </Button>
+                                    <HStack spacing={"2px"}>
+                                        <Icon as={rating >= 1 ? AiFillStar : AiOutlineStar}></Icon>
+                                        <Icon as={rating >= 2 ? AiFillStar : AiOutlineStar}></Icon>
+                                        <Icon as={rating >= 3 ? AiFillStar : AiOutlineStar}></Icon>
+                                        <Icon as={rating >= 4 ? AiFillStar : AiOutlineStar}></Icon>
+                                        <Icon as={rating >= 5 ? AiFillStar : AiOutlineStar}></Icon>
+                                        <Text fontSize={"12px"} color="#6f7981">({totalRating})</Text>
+                                    </HStack>
+                                </VStack>
+                                <Button w="full" colorScheme={"none"} bgColor={"#fc2779"} fontWeight={600} color="#fff" borderRadius={0}>
+                                    Add to Bag
+                                </Button>
+                            </Box>
                         </Box>
-                   </Box>
 
 
 
