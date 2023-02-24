@@ -5,7 +5,7 @@ import AllPages from '../Pages/AllPages/AllPages'
 import Login from '../Pages/login/Login'
 import SignupCard from '../Pages/login/userSignup'
 import SingleProductPage from '../Pages/SingleProductPage'
-const Routes = () => {
+const MainRoute = () => {
   return (
     <Routes>
          <Route path='/' element={<Home/>}/>
@@ -17,4 +17,4 @@ const Routes = () => {
   )
 }
 
-export default Routes
+export default MainRoute
