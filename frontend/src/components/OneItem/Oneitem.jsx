@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./oneitem.module.css"
+import { Badge } from '@chakra-ui/react'
+import axios from "axios"
 
 const Oneitem = (Props) => {
+  axios.defaults.withCredentials=true
   const {item} = Props;
  const [ratestar,setRatestar] = useState([])
  const [heart,setHeart] = useState("fa-regular fa-heart")
@@ -31,8 +34,16 @@ const AddToWishlist = () => {
   setHeart("fa-solid fa-heart")
 }
 
+const AddToCart = (item_id) => {
+   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`)
+}
+
   return (
     <div className={styles.oneitem_maindiv}>
+        <div className={styles.oneitem_maindiv_badge_div}>
+        <Badge style={{marginRight:"4px"}} >{item.category}</Badge>
+        <Badge colorScheme='pink'>{item.brand}</Badge>
+        </div>
         <img src={item.api_featured_image} alt="image" /> 
         <p className={styles.oneitem_maindiv_name}>{item.name}</p>
         <p>MRP : ${item.price}</p>
@@ -44,7 +55,7 @@ const AddToWishlist = () => {
         <div className={styles.oneitem_maindiv_button_div}>
           <button onClick={()=>AddToWishlist}><i className={heart} ></i></button>
           <button>Details</button>
-          <button>Cart</button>
+          <button onClick={()=>AddToCart(item._id)}>Cart</button>
         </div>
     </div>
   )

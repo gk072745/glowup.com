@@ -6,6 +6,12 @@
     border-radius: 0.6rem;
 }
 
+.oneitem_maindiv_badge_div{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .oneitem_maindiv>img{
     width: 70%;
     height: 50%;
@@ -71,4 +77,11 @@
 }
 
 
-
+@media screen and (max-width:500px) {
+    .oneitem_maindiv_button_div{
+        display: flex;
+        gap: 0.5rem;
+        font-size: 1.2rem;
+        bottom: 3%;
+    }
+}
