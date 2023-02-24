@@ -8,7 +8,6 @@
 }
 
 .allpage_product_with_sorting{
-    /* border: 1px solid black; */
     width: 80%;
     margin: auto;
     display: flex;
@@ -17,13 +16,38 @@
 
 .allpage_sorting_div{
     flex: 3;
-    /* border: 1px solid red; */
 }
+
+.allpage_sorting_div>div{
+    border: 1px solid black;
+    text-align: center;
+}
+
 
 .allpage_allproducts_div{
     flex: 8;
-    /* border: 1px solid blue; */
+    
+}
+
+.allpage_allproducts{
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 1rem;
 }
+
+.allpage_prev_and_next_div{
+    display: flex;
+     width: 20%;
+     margin: 2rem auto;
+     justify-content: space-between;
+}
+.allpage_prev_and_next_div>button{
+    background-color: #fc2779;
+    color: white;
+    padding: 0.4rem 0.9rem;
+    border-radius: .6rem;
+}
+.allpage_prev_and_next_div>button:hover{
+    background-color: #f50a64;
+}
+

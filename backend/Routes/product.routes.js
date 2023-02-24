@@ -13,7 +13,7 @@ productRouter.get("/", async (req, res) => {
 		page = 1;
 	}
 	if (limit === undefined || limit < 1) {
-		limit = 10;
+		limit = 12;
 	}
 	try {
 		let tmp = {};
@@ -55,11 +55,11 @@ productRouter.get("/", async (req, res) => {
 						: { price: order === "asc" ? 1 : -1 }
 				)
 				.limit(limit)
-				.skip(limit * page);
+				.skip(limit * (page - 1));
 		} else {
 			data = await ProductModel.find(tmp)
 				.limit(limit)
-				.skip(limit * page);
+				.skip(limit * (page - 1));
 		}
 		res.status(200);
 		res.send({
@@ -95,7 +95,7 @@ productRouter.get("/search", async (req, res) => {
 		page = 1;
 	}
 	if (limit === undefined || limit < 1) {
-		limit = 10;
+		limit = 12;
 	}
 	try {
 		let tmp = {
@@ -144,11 +144,11 @@ productRouter.get("/search", async (req, res) => {
 						: { price: order === "asc" ? 1 : -1 }
 				)
 				.limit(limit)
-				.skip(limit * page);
+				.skip(limit * (page - 1));
 		} else {
 			data = await ProductModel.find(tmp)
 				.limit(limit)
-				.skip(limit * page);
+				.skip(limit * (page - 1));
 		}
 		res.status(200);
 		res.send({

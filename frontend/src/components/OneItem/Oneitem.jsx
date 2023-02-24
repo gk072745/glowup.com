@@ -4,6 +4,7 @@ import styles from "./oneitem.module.css"
 const Oneitem = (Props) => {
   const {item} = Props;
  const [ratestar,setRatestar] = useState([])
+ const [heart,setHeart] = useState("fa-regular fa-heart")
 
   useEffect(()=>{
     let rate;
@@ -26,21 +27,24 @@ const Oneitem = (Props) => {
     setRatestar(arr);
   },[])
 
-
+const AddToWishlist = () => {
+  setHeart("fa-solid fa-heart")
+}
 
   return (
     <div className={styles.oneitem_maindiv}>
         <img src={item.api_featured_image} alt="image" /> 
-        <p>{item.name}</p>
-        <p>MRP : ₹{item.price}</p>
-        <div>
+        <p className={styles.oneitem_maindiv_name}>{item.name}</p>
+        <p>MRP : ${item.price}</p>
+        <div className={styles.oneitem_maindiv_star_div}>
          {ratestar.map((el,i)=>(
           <i className={el} key={i}></i>
          ))}
         </div>
-        <div>
-          <button><i className="fa-regular fa-heart"></i></button>
-          <button>Add To Cart</button>
+        <div className={styles.oneitem_maindiv_button_div}>
+          <button onClick={()=>AddToWishlist}><i className={heart} ></i></button>
+          <button>Details</button>
+          <button>Cart</button>
         </div>
     </div>
   )
