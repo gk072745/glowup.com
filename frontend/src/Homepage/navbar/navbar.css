@@ -24,8 +24,10 @@ margin: auto;
     width: auto;
 }
 
-
-
+:hover .new{
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
 
 /* Middle navbar pc*/
 
@@ -191,10 +193,11 @@ for tablet navbar */
         flex-wrap: wrap;
         display: flex;
         text-align: center;
+        width: auto;
     }
     .inside1{
        width: auto;
-       font-size: 16px;
+       font-size: 15px;
     }
     .box{
         margin-top: 10px;

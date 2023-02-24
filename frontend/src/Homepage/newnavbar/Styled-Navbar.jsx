@@ -162,23 +162,27 @@ button{
   #bottom {
       background-color: white;
       color: #000;
-      
+  
+
       ul {
       padding: 0px 2.7vw;
       border-bottom: 1px solid #dfdfdf;
       display: flex;
       align-items: center;
       list-style: none;
-    
+      justify-content:space-evenly;
+        
       a{
-        text-decoration: none;color:inherit
+        text-decoration: none;color:inherit;
+
       }
      li {
         flex-grow: 1;
         font-size: 15px;
-        padding: 10px 2px;
+        padding: 15px 2px;
         text-align: center;
-        cursor:pointer        
+        cursor:pointer;  
+             
       }
     }
     article {
@@ -186,18 +190,19 @@ button{
     background-color: white;
     color: rgb(92, 92, 92);
     display: flex;
-    margin: 0px 2.8vw;
+    margin: 0px 4.8vw;
     border-top:0;
-    
+    font-size: 18px;
     
     div {
-      padding-bottom:1px;
-      padding-right: 1.6vw;
+      padding-bottom:3px;
+      padding-right: 5.6vw;
       background-color: #fff;
+
       // flex-grow: 1;
       p {
-        margin: 0px 5px 5px;
-        font-size: 13px;
+        margin: 5px 8px 5px;
+        font-size: 15px;
         cursor:pointer;font-weight:500 !important;
         &:hover {
             color:#000;

@@ -16,16 +16,19 @@
       - e.l.f.
       - nyx
     - category : 
-      - "blush"
-      - "bronzer"
-      - "eyebrow"
-      - "eyeliner"
-      - "eyeshadow"
-      - "foundation"
-      - "lip_liner"
-      - "lipstick"
-      - "mascara"
-      - "nail_polish"
+      - "powder"
+      - "cream"
+      - "pencil"
+      - "liquid"
+      - "gel"
+      - "palette"
+      - "concealer"
+      - "contour"
+      - "bb_cc"
+      - "mineral"
+      - "highlighter"
+      - "lip_gloss"
+      - "lip_stain"
     - product_type :
       - "blush"
       - "bronzer"
@@ -60,7 +63,7 @@
 # user routes (/user)
   - "/register" for registering a new user. - **POST request**
   - Details required for registering a new user :
-      - username (Must be filled)
+      - name (Must be filled)
       - email (must be filled)
       - password (must be filled)
       - phone number( optional )
