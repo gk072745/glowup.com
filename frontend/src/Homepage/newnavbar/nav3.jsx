@@ -44,7 +44,7 @@ export default function Navbardrop() {
         <section id="bottom" onMouseOver={mouseOver} onMouseOut={mouseOut}>
           <ul>
             {listItems.map((i, index) => (
-              <Link to="/products" key={i.toString()}>
+              <Link to={`/product/${i}`} key={i.toString()}>
                 <li key={i.toString()} id={index} onMouseOver={() => setIndex(index)}>
                   {i}
                 </li>
@@ -55,9 +55,9 @@ export default function Navbardrop() {
             {data[index].map((items, i) => (
               <div key={i.toString()}>
                 {items.map((item, ind) => (
-                  <Link to="/products">
+                  <Link to="/product">
                     <p key={ind.toString()} className={ind === 0 ? "pink-para" : ""}>
-                      <Link to="/products">
+                      <Link to={`/product/${item}`}>
                         {item}
                       </Link>
                     </p>

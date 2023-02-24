@@ -1,16 +1,15 @@
 import './App.css';
-import CartDrawer from './Components/CartDrawer';
-import Address from './Pages/Address';
-import Payments from './Pages/Payments';
+import Footer from './Homepage/footer/footer';
 import MainRoute from './Routers/Routes';
+
 
 
 
 function App() {
   return (
     <div className="App">
-<Payments/>
-
+    <MainRoute/>
+    <Footer/>
     </div>
   );
 }
