@@ -3,12 +3,12 @@ require("dotenv").config();
 
 const userAuthenticate = async (req, res, next) => {
 	// const token = req.headers.authorization;
-	if (!req.headers.cookie) {
+	const { jwt_token } = req.cookies;
+	if (!jwt_token) {
 		res.status(401);
 		res.send({ statu: 401, message: "Please login first" });
 	} else {
-		let arr = req.headers.cookie.split("jwt_token=");
-		const token = arr[1];
+		const token = jwt_token;
 		if (token) {
 			jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 				if (err) res.send(err);
