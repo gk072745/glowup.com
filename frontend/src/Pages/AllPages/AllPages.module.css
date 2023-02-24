@@ -1,10 +1,12 @@
 .allpage_maindiv{
     background-color: #f3f3f3;
+   
 }
 
 .allpage_swiper_div{
     width: 100%;
     margin-bottom: 50px;
+    z-index: 0;
 }
 
 .allpage_product_with_sorting{

@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import { Box, Image } from "@chakra-ui/react";
 
 const images = [
-  "https://images-static.nykaa.com/uploads/a908e8ad-3bd3-4d87-bca2-2fca7c54bf98.jpg?tr=w-2400,cm-pad_resize",
+  "https://images-static.nykaa.com/uploads/67293912-4458-4335-8b34-65db722d91db.jpg?tr=w-2400,cm-pad_resize",
   "https://images-static.nykaa.com/uploads/722e2d8c-476e-4993-be69-a505143ceca2.jpg?tr=w-2400,cm-pad_resize",
   "https://images-static.nykaa.com/uploads/a908e8ad-3bd3-4d87-bca2-2fca7c54bf98.jpg?tr=w-2400,cm-pad_resize",
   "https://images-static.nykaa.com/uploads/9ef6a6c2-9107-487c-8a4b-e886becea619.jpg?tr=w-2400,cm-pad_resize",
