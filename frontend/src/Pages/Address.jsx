@@ -6,15 +6,15 @@ import { Box, Button, Center,  Drawer,
   DrawerContent,
   DrawerCloseButton,Select,Radio,Textarea,Switch, Heading, HStack, Text,Image, VStack,Icon,AccordionItem,Accordion,AccordionButton,AccordionPanel,AccordionIcon, useDisclosure, Input } from '@chakra-ui/react'
 import React from 'react'
-import OtherNavbar from '../Components/OtherNavbar'
+import OtherNavbar from '../components/OtherNavbar'
 import {BiPlus} from "react-icons/bi"
 import {SlLocationPin} from "react-icons/sl"
 import {TbCurrencyRupee} from "react-icons/tb"
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-import CartProducts from './../Components/CartProducts';
-import PaymentDetails from './../Components/PaymentDetails';
+import CartProducts from './../components/CartProducts';
+import PaymentDetails from './../components/PaymentDetails';
 import { useRef } from 'react';
-import AddressDrawer from '../Components/OneItem/AddressDrawer'
+import AddressDrawer from '../components/OneItem/AddressDrawer'
   import {BsArrowLeft} from "react-icons/bs"
   import {CiDiscount1} from "react-icons/ci"
   import {RxCross2} from "react-icons/rx"
