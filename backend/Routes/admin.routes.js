@@ -8,6 +8,13 @@ const adminRouter = express.Router();
 
 adminRouter.get("/products", async (req, res) => {
 	const { category, brand, sort, order, product_type } = req.query;
+	let { page, limit } = req.query;
+	if (page === undefined || page < 1) {
+		page = 1;
+	}
+	if (limit === undefined || limit < 1) {
+		limit = 12;
+	}
 	try {
 		let tmp = {};
 		if (category && brand) {
@@ -39,21 +46,30 @@ adminRouter.get("/products", async (req, res) => {
 			};
 		}
 		console.log(tmp);
+		const totalPages = await ProductModel.find(tmp);
 		let data = [];
 		if (sort) {
-			data = await ProductModel.find(tmp).sort(
-				sort === "rating"
-					? { rating: order === "asc" ? 1 : -1 }
-					: { price: order === "asc" ? 1 : -1 }
-			);
+			data = await ProductModel.find(tmp)
+				.limit(limit)
+				.skip(limit * (page - 1))
+				.sort(
+					sort === "rating"
+						? { rating: order === "asc" ? 1 : -1 }
+						: { price: order === "asc" ? 1 : -1 }
+				);
 		} else {
-			data = await ProductModel.find(tmp);
+			data = await ProductModel.find(tmp)
+				.limit(limit)
+				.skip(limit * (page - 1));
 		}
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
+			totalPages: Math.ceil(totalPages.length / limit),
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
@@ -61,24 +77,76 @@ adminRouter.get("/products", async (req, res) => {
 // * admin search route
 
 adminRouter.get("/search", async (req, res) => {
-	const { q } = req.query;
-	if (!q) {
-		res.send({ status: 400, message: "Please enter a valid search term" });
-	} else {
-		let tmp = {};
-		tmp = {
+	const { category, brand, sort, order, product_type, q } = req.query;
+	let { page, limit } = req.query;
+	if (page === undefined || page < 1) {
+		page = 1;
+	}
+	if (limit === undefined || limit < 1) {
+		limit = 12;
+	}
+	try {
+		let tmp = {
 			$or: [
 				{ name: { $regex: q, $options: "i" } },
 				{ brand: { $regex: q, $options: "i" } },
 				{ product_type: { $regex: q, $options: "i" } },
 			],
 		};
-		try {
-			let data = await ProductModel.find(tmp);
-			res.send({ status: 200, data: data });
-		} catch (error) {
-			res.send({ status: 400, error: error });
+		if (category && brand) {
+			tmp = {
+				...tmp,
+				$and: [
+					{
+						category: {
+							$regex: category,
+							$options: "i",
+						},
+					},
+					{
+						brand: {
+							$regex: brand,
+							$options: "i",
+						},
+					},
+				],
+			};
+		} else if (category) {
+			tmp = { ...tmp, category: { $regex: category, $options: "i" } };
+		} else if (brand) {
+			tmp = { ...tmp, brand: { $regex: brand, $options: "i" } };
 		}
+		if (product_type) {
+			tmp = {
+				...tmp,
+				product_type: { $regex: product_type, $options: "i" },
+			};
+		}
+		const totalPages = await ProductModel.find(tmp);
+		let data = [];
+		if (sort) {
+			data = await ProductModel.find(tmp)
+				.sort(
+					sort === "rating"
+						? { rating: order === "asc" ? 1 : -1 }
+						: { price: order === "asc" ? 1 : -1 }
+				)
+				.limit(limit)
+				.skip(limit * (page - 1));
+		} else {
+			data = await ProductModel.find(tmp)
+				.limit(limit)
+				.skip(limit * (page - 1));
+		}
+		res.status(200);
+		res.send({
+			status: 200,
+			data: data,
+			totalPages: Math.ceil(totalPages.length / limit),
+		});
+	} catch (error) {
+		res.status(400);
+		res.send({ status: 400, error: error });
 	}
 });
 
@@ -101,11 +169,13 @@ adminRouter.post("/addproduct", async (req, res) => {
 	try {
 		let product = new ProductModel(req.body);
 		await product.save();
+		res.status(201);
 		res.send({
 			status: 201,
 			message: `${name} has been successfully added to the list`,
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, message: error.message });
 	}
 });
@@ -114,8 +184,10 @@ adminRouter.post("/addproduct", async (req, res) => {
 adminRouter.post("/addmultiple", async (req, res) => {
 	try {
 		await ProductModel.insertMany(req.body);
+		res.status(201);
 		res.send({ message: "Success" });
 	} catch (error) {
+		res.status(400);
 		res.send({ message: error.message });
 	}
 });
@@ -125,11 +197,13 @@ adminRouter.post("/addmultiple", async (req, res) => {
 adminRouter.patch("/update/:id", async (req, res) => {
 	try {
 		await ProductModel.findByIdAndUpdate(req.params.id, req.body);
+		res.status(200);
 		res.send({
 			status: 200,
 			message: "Product has been successfully updated",
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, message: error.message });
 	}
 });
@@ -139,11 +213,13 @@ adminRouter.patch("/update/:id", async (req, res) => {
 adminRouter.delete("/delete/:id", async (req, res) => {
 	try {
 		await ProductModel.findByIdAndDelete(req.params.id);
+		res.status(201);
 		res.send({
-			status: 200,
+			status: 201,
 			message: "Product has been successfully deleted",
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, message: error.message });
 	}
 });
@@ -153,9 +229,11 @@ adminRouter.delete("/delete/:id", async (req, res) => {
 adminRouter.get("/users", async (req, res) => {
 	try {
 		let data = await UserModel.find();
+		res.status(200);
 		res.send({ status: 200, data: data });
 	} catch (error) {
-		res.send({ status: 404, error: error });
+		res.status(400);
+		res.send({ status: 400, error: error });
 	}
 });
 
@@ -164,8 +242,10 @@ adminRouter.get("/users", async (req, res) => {
 adminRouter.delete("/deleteuser/:id", async (req, res) => {
 	try {
 		await UserModel.findByIdAndDelete(id);
-		res.send({ status: 200, message: "User deleted" });
+		res.status(201);
+		res.send({ status: 201, message: "User deleted" });
 	} catch (error) {
+		res.status(404);
 		res.send({ status: 404, error: error });
 	}
 });

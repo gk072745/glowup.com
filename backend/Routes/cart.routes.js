@@ -4,7 +4,6 @@ const CartModel = require("../Models/Cartitems.model");
 
 const ProductModel = require("../Models/Product.model");
 
-
 const cartRouter = express.Router();
 
 cartRouter.get("/", async (req, res) => {
@@ -18,18 +17,20 @@ cartRouter.get("/", async (req, res) => {
 		}
 
 		let tmp = ids.map((id) => mongoose.Types.ObjectId(id));
-		console.log(tmp);
+		// console.log(tmp);
 		let data = await ProductModel.find({
 			_id: {
 				$in: tmp,
 			},
 		});
+		res.status(200);
 		res.send({
 			status: 200,
 			data: data,
 			cart: cart,
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, error: error });
 	}
 });
@@ -44,6 +45,7 @@ cartRouter.post("/add/:id", async (req, res) => {
 
 		if (item.length > 0) {
 			if (item[0].quantity >= 5) {
+				res.status(403);
 				res.send({
 					status: 403,
 					message: "Cannot add anymore of this item to cart",
@@ -53,6 +55,7 @@ cartRouter.post("/add/:id", async (req, res) => {
 					{ product_id: id },
 					{ $inc: { quantity: 1 } }
 				);
+				res.status(200);
 				res.send({
 					status: 200,
 					message: "Item already exists. Increased the quantity by 1",
@@ -64,13 +67,15 @@ cartRouter.post("/add/:id", async (req, res) => {
 				email: email,
 			});
 			await new_item.save();
+			res.status(200);
 			res.send({
 				status: 200,
 				message: `${id} has been added to the cart`,
 			});
 		}
 	} catch (error) {
-		res.send({ status: 500, message: error });
+		res.status(400);
+		res.send({ status: 400, message: error });
 	}
 });
 
@@ -79,16 +84,21 @@ cartRouter.post("/add/:id", async (req, res) => {
 cartRouter.patch("/update/:id", async (req, res) => {
 	const id = req.params.id;
 	const { email, quantity } = req.body;
+	console.log(req.body, id);
 	try {
 		await CartModel.findOneAndUpdate(
-			{ product_id: id },
+			{
+				$and: [{ email }, { product_id: id }],
+			},
 			{ quantity: quantity }
 		);
+		res.status(200);
 		res.send({
 			status: 200,
 			message: "Item updated successfully",
 		});
 	} catch (error) {
+		res.status(400);
 		res.send({ status: 400, message: error });
 	}
 });
@@ -99,13 +109,17 @@ cartRouter.delete("/delete/:id", async (req, res) => {
 	const id = req.params.id;
 	const { email } = req.body;
 	try {
-		await CartModel.findOneAndDelete({ product_id: id });
+		await CartModel.findOneAndDelete({
+			$and: [{ email }, { product_id: id }],
+		});
+		res.status(201);
 		res.send({
 			status: 201,
 			message: "Product deleted successfully",
 		});
 	} catch (error) {
-		res.send({ status: 404, message: error });
+		res.status(400);
+		res.send({ status: 400, message: error });
 	}
 });
 

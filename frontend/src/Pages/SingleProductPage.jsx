@@ -1,18 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactImageMagnify from 'react-image-magnify';
 import Magnifier from "react-magnifier";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, CustomCard, Box, HStack, Icon, Grid, GridItem, VStack, Text, Button, InputGroup, Input, InputRightElement, Tooltip, Tag, Badge, Image, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, StackDivider, Center, SimpleGrid } from "@chakra-ui/react"
 import { ChevronDownIcon, ChevronRightIcon } from "@chakra-ui/icons"
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { CiHeart, CiLocationOn } from "react-icons/ci";
+import { CiHeart} from "react-icons/ci";
 import { BsCheck } from "react-icons/bs"
 import { BiInfoCircle } from "react-icons/bi"
 import { SiShopify } from "react-icons/si"
 import { GiReturnArrow } from "react-icons/gi"
 import { TiThumbsUp } from "react-icons/ti"
+import { TfiLocationPin } from "react-icons/tfi"
 
 
 const SingleProductPage = () => {
+
+
+
+
+
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
     return (
         <div>
 
@@ -128,11 +148,11 @@ const SingleProductPage = () => {
                                         <VStack w="60%" alignItems={"flex-start"} >
 
                                             {
-                                                false ? (
+                                                true ? (
                                                     <VStack alignItems={"flex-start"} m="auto">
                                                         <HStack alignItems={"flex-start"}>
                                                             <Center>
-                                                                <Icon fontWeight={500} color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"} as={CiLocationOn}></Icon>
+                                                                <Icon fontWeight={500} color={"rgba(0, 19, 37, 0.72)"} fontSize={"18px"} as={TfiLocationPin}></Icon>
                                                                 <Text fontWeight={500} color={"rgba(0, 19, 37, 0.72)"} fontSize={"16px"} >Delivery Options</Text>
                                                             </Center>
                                                         </HStack>
@@ -157,7 +177,7 @@ const SingleProductPage = () => {
                                                     <VStack spacing={1} alignItems={"flex-start"}>
 
                                                         <HStack alignItems={"center"} spacing={"3px"}>
-                                                            <Icon fontSize={"24px"} as={CiLocationOn}></Icon>
+                                                            <Icon fontSize={"20px"} as={TfiLocationPin}></Icon>
                                                             <Text fontSize={"14px"} color="rgba(0,19,37,0.92)" fontWeight={500}>Delivery Options for</Text>
                                                             <Text fontSize={"14px"} color="#fc2779" pr={"10px"} fontWeight={500}>111111</Text>
                                                             <Button variant={"outline"} color="#fc2779" py="14px" fontSize={"16px"} size={"xs"} colorScheme="pink" borderColor={"#fc2779"} borderRadius="3px">Change</Button>
@@ -191,7 +211,6 @@ const SingleProductPage = () => {
                                                             <Text fontSize={"14px"} color="rgba(0,19,37,0.64)" >More Info</Text>
                                                         </HStack>
                                                     </VStack>
-
                                                 )
                                             }
 
@@ -241,9 +260,9 @@ const SingleProductPage = () => {
 
 
 
-                    <HStack>
+                    <HStack alignItems={"flex-start"}>
 
-                        <Box w="70%" >
+                        <Box w="80%" >
 
 
                             <Box>
@@ -295,69 +314,71 @@ const SingleProductPage = () => {
 
 
 
-                            <Box >
+                            <Box w="full" mb={12}>
+                                
                                 <Text  py={"20px"} fontSize={"20px"} fontWeight={600} color={"#001325"}>
                                     Product Details
                                 </Text>
-                                <Tabs bgColor={"#fff"}>
-                                    <TabList>
-                                        <Tab>Rating & Reviews</Tab>
+
+                                <Tabs bgColor={"#fff"} w="full">
+                                    <TabList >
+                                        <Tab fontWeight={500} fontSize={"16px"} borderColor={"#fc2779"} color="#fc2779">Rating & Reviews</Tab>
                                     </TabList>
 
-                                    <TabPanels>
-                                        <TabPanel>
-                                            <VStack>
-                                                <HStack>
-                                                    <HStack>
-                                                        <Heading as={"h1"} fontSize="40px">
+                                    <TabPanels w="full">
+                                        <TabPanel w="full">
+                                            <VStack w="full" divider={<StackDivider borderColor='gray.200' />} spacing={4} alignItems="flex-start">
+                                                <HStack w="full" spacing={8} p={2}  divider={<StackDivider borderColor='gray.200' />}>
+                                                  
+                                                    <HStack  alignItems={"flex-start"}>
+                                                        <Heading as={"h1"} color="rgba(0,19,37,0.92)" fontWeight={600}  fontSize="36px">
                                                             3.7/5
                                                         </Heading>
-                                                        <VStack>
-                                                            <Text>Overall Rating</Text>
-                                                            <Text>3 varified ratings</Text>
+                                                        <VStack spacing={"0px"}>
+                                                            <Text fontWeight={500} size={"16px"} color={"rgba(0,19,37,.92)"}>Overall Rating</Text>
+                                                            <Text fontWeight={400} size={"14px"} color={"rgba(0,19,37,.72)"}>3 varified ratings</Text>
                                                         </VStack>
                                                     </HStack>
 
-                                                    <VStack>
-                                                        <Text>
+                                                    <VStack align={"flex-start"} >
+                                                        <Text fontSize="14px" color={"rgba(0,19,37,.92)"} >
                                                             Write a review and wind 100 reward points!
                                                         </Text>
-                                                        <Button>
+                                                        <Button variant={"outline"} color="#fc2779" fontWeight={600} colorScheme="pink" size={"sm"} borderColor={"#dbd9de"} borderRadius="2px">
                                                             Write Review
                                                         </Button>
                                                     </VStack>
                                                 </HStack>
 
 
-                                                <HStack>
+                                                <HStack  alignItems={"flex-start"}>
 
-                                                    <VStack>
-                                                        <Text>
+                                                    <VStack w="30%">
+                                                        <Text fontWeight={600} color="rgba(0, 19, 37, 0.92)">
                                                             Most Useful Review
                                                         </Text>
                                                         <HStack>
-                                                            <Image src="https://images-static.nykaa.com/prod-review/default_profile_image.png" borderRadius={"full"} boxSize="30px"></Image>
+                                                            <Image borderRadius="full" src="https://images-static.nykaa.com/prod-review/default_profile_image.png"  boxSize="35px"></Image>
                                                             <VStack>
-                                                                <Text>Athsha Beril</Text>
-                                                                <HStack>
-                                                                    <Badge>
-                                                                        <Icon as={BsCheck}></Icon>
-                                                                    </Badge>
-                                                                    <Text>Verified Buyers</Text>
+                                                                <Text fontWeight={500} fontSize="14px" color={"rgba(0, 19, 37, 0.72)"}>Athsha Beril</Text>
+                                                                <HStack spacing={"3px"}>
+                                                                
+                                                                        <Icon fontSize={"12px"} borderRadius="full" p={0} bgColor={"#fed0e2"} color="#fc2779" as={BsCheck}></Icon>
+                                                                 
+                                                                       <Text fontSize={"12px"} color="rgba(0,19,37,0.52)">Verified Buyers</Text>
                                                                 </HStack>
                                                             </VStack>
                                                         </HStack>
                                                     </VStack>
 
-                                                    <VStack>
-                                                        <Badge>5 &#9733;</Badge>
-                                                        <Text>"Good Products"</Text>
-                                                        <Text>Very good and affordable product my kid loves it. Brushing has become more fun for her.
-                                                            <HStack>
+                                                    <VStack alignItems={"flex-start"}>
+                                                        <Badge bgColor={"#068743"} fontSize="16px" color="#fff" fontWeight={600}>5 &#9733;</Badge>
+                                                        <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>"Good Products"</Text>
+                                                        <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={400}>Very good and affordable product my kid loves it. Brushing has become more fun for her.</Text>
+                                                        <HStack cursor="pointer" border={"1px solid #dbd9de"} fontSize="18px" px="2" borderRadius={"3px"} color={"#fc2779"}>
                                                                 <Icon as={TiThumbsUp}></Icon>
                                                                 <Text>Helpful</Text>
                                                             </HStack>
-                                                        </Text>
                                                     </VStack>
 
                                                 </HStack>
@@ -374,28 +395,32 @@ const SingleProductPage = () => {
 
 
 
-                        <Box w="30%" bgColor={"#fff"} position={"sticky"} top="30px">
-                            <VStack>
+                   <Box  w="20%" pt={"70px"}  position={"sticky"} top="80px">
+                   <Box    bgColor={"#fff"}>
+                            <VStack p={8} align="center" pt={12} justify={"center"} textAlign="center">
                                 <Image w="200px" src="https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076"></Image>
-                                <Text>
+                                <Text fontWeight={500} fontSize={"14px"} color="#001325">
                                     Agaro Rex DLX Sonic Electric Toothbrush For
                                 </Text>
                                 <HStack>
-                                    <Text>MRP:</Text>
-                                    <Text>$970</Text>
-                                    <Text>$999</Text>
+                                    <Text fontWeight={500} color="rgba(0,19,37,0.64)">MRP:</Text>
+                                    <Text fontWeight={600} fontSize="20px" color="#001325">$970</Text>
                                 </HStack>
-                                <Text>60% Off</Text>
-                                <HStack>
+
+                                <HStack spacing={"2px"}>
                                     <Icon as={3 >= 1 ? AiFillStar : AiOutlineStar}></Icon>
                                     <Icon as={3 >= 2 ? AiFillStar : AiOutlineStar}></Icon>
                                     <Icon as={3 >= 3 ? AiFillStar : AiOutlineStar}></Icon>
                                     <Icon as={3 >= 4 ? AiFillStar : AiOutlineStar}></Icon>
                                     <Icon as={3 >= 5 ? AiFillStar : AiOutlineStar}></Icon>
-                                    <Text>(7)</Text>
+                                    <Text fontSize={"12px"} color="#6f7981">(7)</Text>
                                 </HStack>
                             </VStack>
+                            <Button w="full" colorScheme={"none"}  bgColor={"#fc2779"} fontWeight={600} color="#fff" borderRadius={0}>
+                                Add to Bag
+                            </Button>
                         </Box>
+                   </Box>
 
 
 
