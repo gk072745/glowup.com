@@ -5,6 +5,7 @@ import Mainnav from '../Homepage/mainnavbar/Navbar1'
 import SearchNav from '../Homepage/mainnavbar/Search'
 import Topnavbar from '../Homepage/navbar/topnav'
 import Navbardrop from '../Homepage/newnavbar/nav3'
+import Address from '../Pages/Address'
 import AllPages from '../Pages/AllPages/AllPages'
 import Login from '../Pages/login/Login'
 import SignupCard from '../Pages/login/userSignup'
@@ -22,7 +23,7 @@ const MainRoute = () => {
           </>
 
          }/>
-         <Route path="/product/:category" element={
+         <Route path="/product/:category?" element={
           <>
           <Topnavbar/>
           <Mainnav/>
@@ -31,7 +32,7 @@ const MainRoute = () => {
           <AllPages/>
           </>
           }  />
-         <Route path="/SingleProduct/:id" element={
+         <Route path="/singleproduct/:id" element={
           <>
           <Topnavbar/>
           <Mainnav/>
@@ -56,6 +57,13 @@ const MainRoute = () => {
           <SearchNav/>
           <Navbardrop/>
           <SignupCard/>
+          </>
+        } />
+         <Route path='/address' element={
+          <>
+     
+            <Address/>
+  
           </>
         } />
     </Routes>
