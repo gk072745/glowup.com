@@ -88,10 +88,16 @@ const AllPages = () => {
       setSecondimg("https://images-static.nykaa.com/uploads/5788cf03-3d8c-4ea5-b073-0b3d7f75beff.jpg?tr=w-1200,cm-pad_resize")
       setThirdimg("https://images-static.nykaa.com/uploads/aa8563b3-f20f-4541-a1f3-a7bace46ade0.jpg?tr=w-1200,cm-pad_resize")
     }
+    else {
+      setFirstimg("https://images-static.nykaa.com/uploads/984941d7-1f52-4fe1-8504-e19777cd8142.jpg?tr=w-1200,cm-pad_resize")
+      setSecondimg("https://images-static.nykaa.com/uploads/5788cf03-3d8c-4ea5-b073-0b3d7f75beff.jpg?tr=w-1200,cm-pad_resize")
+      setThirdimg("https://images-static.nykaa.com/uploads/aa8563b3-f20f-4541-a1f3-a7bace46ade0.jpg?tr=w-1200,cm-pad_resize")
+    }
 
     
     axios.get(`https://periwinkle-sheep-hem.cyclic.app/products?page=${page}${searchParams.get("category") ? `&category=${searchParams.get("category")}` : ``}${searchParams.get("brand") ? `&brand=${searchParams.get("brand")}` : ``}${searchParams.get("sort") ? `&sort=${searchParams.get("sort")}` : ``}${searchParams.get("order") ? `&order=${searchParams.get("order")}` : ``} `)  
       .then((res) => {
+        console.log(res);
         setTpage(res.data.totalPages)
         setProducts(res.data.data)
       })
