@@ -8,7 +8,7 @@ import "swiper/css/autoplay";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import styles from "./AllPages.module.css"
 import axios from "axios"
-import Oneitem from '../../components/OneItem/Oneitem';
+import Oneitem from '../../Components/OneItem/Oneitem';
 import {
   Accordion,
   AccordionItem,
