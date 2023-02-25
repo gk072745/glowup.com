@@ -30,7 +30,7 @@ import {
   } from "@chakra-ui/react";
   
   import { FaShoppingCart } from "react-icons/fa";
-  import { Link as RouterLink, NavLink } from "react-router-dom";
+  import { Link as NavLink, Navigate } from "react-router-dom";
   
   import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
  import logo from "../Glow.png"
@@ -79,6 +79,7 @@ import { useRef } from "react";
   
   export default function Mainnav() {
  
+
     const { isOpen, onToggle ,onOpen, onClose} = useDisclosure();
       const btnRef = useRef();
     return (
@@ -107,7 +108,7 @@ import { useRef } from "react";
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-            <Heading align={"left"} color="#000" border="1px solid lightgrey" w={120} boxShadow="rgba(0, 0, 0, 0.35) 0px 5px 15px">
+            <Heading align={"left"} color="#000" border="1px solid lightgrey" w={120} boxShadow="rgb(252,73,142) 0px 5px 15px">
               <NavLink to="/"><img width="100%" h="30px" src={logo} alt="" /></NavLink>
             </Heading>
   
@@ -320,7 +321,7 @@ import { useRef } from "react";
   }
   
   const DesktopNav = () => {
-    const linkHoverColor = useColorModeValue("#ff6f61", "white");
+   
     // const popoverContentBgColor = useColorModeValue("white", "gray.800");
   
     return (
@@ -352,6 +353,9 @@ import { useRef } from "react";
   };
   
   const MobileNav = () => {
+    const signingo=()=>{
+      return Navigate("/signup")
+    }
     return (
       <Stack p={4} display={{ md: "none" }} bg="#fff">
        
@@ -385,8 +389,9 @@ import { useRef } from "react";
             </Flex>
             <Button
               size={"sm"}
+              onClick={signingo}
             >
-              LogOut
+              Signin
             </Button>
           </Flex>
         <Divider />
@@ -440,7 +445,7 @@ import { useRef } from "react";
           >
             {children &&
               children.map((child) => (
-                <Link key={child.label} py={2} href={child.href}>
+                <Link key={child.label} py={2} to={child.href}>
                   {child.label}
                 </Link>
               ))}

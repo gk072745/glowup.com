@@ -1,6 +1,8 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { Box, Image } from "@chakra-ui/react";
+import {  useNavigate } from "react-router-dom";
+
 
 const images = [
   "https://images-static.nykaa.com/uploads/67293912-4458-4335-8b34-65db722d91db.jpg?tr=w-2400,cm-pad_resize",
@@ -13,11 +15,17 @@ const images = [
 
 
 const CarouselSlider = () => {
+  const navigate=useNavigate("/product")
+const link=()=>{
+ return navigate
+}
+
+
   return (
     <Carousel autoPlay infiniteLoop stopOnHover showIndicators={false}>
       {images.map((image,i) => (
-        <Box key={i}>
-          <Image src={image} alt='' width="" heigth=""/>
+        <Box key={image}>
+          <Image src={image} alt='' width="" heigth="" onClick={link} />
         </Box>
       ))}
     </Carousel>
