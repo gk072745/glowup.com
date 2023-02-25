@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import {
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_ERROR,
@@ -17,6 +18,7 @@ export const loginUser = async (dispatch, details) => {
 	dispatch({ type: USER_LOGIN_LOADING });
 	try {
 		let res = await axios.post(`${URL}/user/login`, details);
+		console.log(res);
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data.details });
 	} catch (err) {
 		dispatch({ type: USER_LOGIN_ERROR });
@@ -28,6 +30,7 @@ export const registerUser = async (dispatch, details) => {
 	try {
 		let res = await axios.post(`${URL}/user/register`, details);
 		console.log(res);
+		Cookies.set("jwt_token", res.data.token);
 		dispatch({ type: USER_REGISTER_SUCCESS });
 	} catch (error) {
 		dispatch({ type: USER_REGISTER_ERROR });
@@ -40,5 +43,16 @@ export const logoutUser = async (dispatch) => {
 		dispatch({ type: USER_LOGOUT_SUCCESS });
 	} catch (error) {
 		dispatch({ type: USER_LOGOUT_ERROR });
+	}
+};
+
+export const loggedIn = async (dispatch) => {
+	dispatch({ type: USER_LOGIN_LOADING });
+	try {
+		let res = await axios.get(`${URL}/user/`);
+		console.log(res.data);
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data.details });
+	} catch (error) {
+		dispatch({ type: USER_LOGIN_ERROR });
 	}
 };
