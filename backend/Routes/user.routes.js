@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const userRouter = express.Router();
 
-userRouter.get("/", async (req, res) => {
+userRouter.get("/getdetails", async (req, res) => {
 	const { email } = req.body;
 	try {
 		let data = await UserModel.find({ email });
@@ -31,11 +31,19 @@ userRouter.post("/login", async (req, res) => {
 						{ email: user[0].email },
 						process.env.JWT_SECRET
 					);
-					res.cookie("jwt_token", token, { httpOnly: true });
+					// res.setHeader("Set-Cookie", "isLoggedin=true");
+					res.cookie("jwt_token", token, {
+						path: "/",
+						httpOnly: true,
+						expires: new Date(Date.now() + 900000),
+						sameSite: "none",
+						secure: false,
+					});
 					res.status(200);
 					res.send({
 						status: 200,
 						token: token,
+						details: user[0],
 					});
 				} else {
 					res.status(401);
@@ -59,6 +67,7 @@ userRouter.post("/login", async (req, res) => {
 
 userRouter.post("/register", async (req, res) => {
 	const { name, email, password, phone_number } = req.body;
+	console.log(req.body);
 	try {
 		let user = await UserModel.find({ email });
 		if (user.length > 0) {

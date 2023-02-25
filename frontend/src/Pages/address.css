@@ -1,0 +1,76 @@
+@media screen and (max-width: 1250px) {
+
+    .mainAddresbox{
+    padding:10px 50px !important;
+    }
+    
+      }
+@media screen and (max-width: 900px) {
+    .plleftremoveclass{
+        padding: 20px;
+    }
+    .heightmanagesd{
+        margin-top: 50px;
+    }
+.templatemenagegd{
+    grid-template-columns:100% !important;
+}
+    
+      }
+
+
+      @media screen and (max-width: 700px) {
+.heightmanagesd{
+height: max-content !important;
+}
+
+
+
+.headingaddresdfsadf{
+    font-size: 28px;
+}
+   .addreswelcomelsdfsd{
+    font-size: 12px;
+   } 
+      }
+
+            @media screen and (max-width: 650px) {
+
+.addrespageijmagesdf{
+  width: 150px;  
+}
+
+      }
+
+      @media screen and (max-width: 600px) {
+
+        .addrespageijmagesdf{
+          width: 150px !important;  
+        }
+
+        .addresseditmanagetemp{
+        flex-direction: column !important;
+        gap: 40px !important;
+        }
+
+       .templatemenagegd{
+        gap:20px;
+       } 
+        
+              }
+
+      @media screen and (max-width: 520px) {
+
+        .addrespageijmagesdf{
+          width: 120px !important;  
+        }
+
+   
+        .mainAddresbox{
+            padding:20px 20px !important;
+            }
+   .plleftremoveclass{
+    padding: 0% !important;
+   }
+        
+              }

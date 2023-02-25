@@ -1,0 +1,122 @@
+
+
+
+@media screen and (max-width: 1000px) {
+    .imageLogodsf{
+width: 80px;
+padding: 10px 0px;
+    }
+    .textnavbardsf{
+        font-size: 14px
+    }
+    .navbarmidlleimg{
+        width: 30px;
+    }
+
+    .navbarlastimg{
+        width: 18px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .imageLogodsf{
+width: 70px !important;
+padding: 5px 0px;
+    }
+    .textnavbardsf{
+        font-size: 14px
+    }
+    .navbarmidlleimg{
+        width: 20px;
+    }
+
+    .navbarlastimg{
+        width: 15px;
+    }
+  }
+
+  @media screen and (max-width: 740px) {
+    .imageLogodsf{
+        width: 65px;
+padding: 5px 0px;
+    }
+    .textnavbardsf{
+        font-size: 12px
+    }
+    .navbarmidlleimg{
+        width: 15px;
+    }
+
+    .navbarlastimg{
+        width: 12px;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    .middleothernavbardfssf{
+        width: 50% !important;
+    }
+    .imageLogodsf{
+        width: 65px;
+        padding: 5px 0px;
+    }
+    .textnavbardsf{
+        font-size: 12px
+    }
+    .navbarmidlleimg{
+        width: 15px;
+    }
+
+    .navbarlastimg{
+        width: 12px;
+    }
+  }
+  @media screen and (max-width: 530px) {
+    .middleothernavbardfssf{
+        width: 50% !important;
+        justify-content: space-around !important;
+    }
+    .imageLogodsf{
+        width: 65px;
+        padding: 5px 0px;
+    }
+    .textnavbardsf{
+        font-size: 12px
+    }
+    .navbarmidlleimg{
+        width: 15px;
+    }
+
+    .navbarlastimg{
+        width: 12px;
+    }
+    .navbarSignupsdaf{
+        display: none !important;
+    }
+  }
+  @media screen and (max-width: 440px) {
+    .lastlogoText{
+        display: none !important;
+    }
+    .middleothernavbardfssf{
+        width: 50% !important;
+        justify-content: space-around !important;
+    }
+    .imageLogodsf{
+        width: 65px;
+        padding: 5px 0px;
+    }
+    .textnavbardsf{
+        font-size: 12px
+    }
+    .navbarmidlleimg{
+        width: 15px;
+    }
+
+    .navbarlastimg{
+        width: 12px;
+    }
+    .navbarSignupsdaf{
+        display: none !important;
+    }
+  }
