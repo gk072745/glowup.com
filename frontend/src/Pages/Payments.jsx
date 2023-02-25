@@ -1,10 +1,413 @@
-import React from 'react'
+import { Box, GridItem,Image ,Grid, Center,Accordion,Icon,Text,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,HStack,VStack, Input, Checkbox, FormControl, FormLabel, FormHelperText, FormErrorMessage, Button,} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import OtherNavbar from '../components/OtherNavbar'
+import {MdRadioButtonUnchecked,MdRadioButtonChecked} from "react-icons/md"
+import {AiOutlineCreditCard} from "react-icons/ai"
+import {SlLocationPin} from "react-icons/sl"
+import {TbCurrencyRupee} from "react-icons/tb"
+import {MdCardGiftcard} from "react-icons/md"
+import {FaHandHoldingUsd} from "react-icons/fa"
+import PaymentDetails from '../components/PaymentDetails'
+import del from "../Assets/del.png"
+import CartProducts from '../components/CartProducts'
+import "./payment.css"
+
 
 const Payments = () => {
+
+  const [cardNo, setCard] = useState(null)
+  const handleCardChange = (e) => setCard(e.target.value)
+  const [date, setdate] = useState(null)
+  const handledateChange = (e) => setdate(e.target.value)
+  const [cvv, setCVV] = useState(null)
+  const handleCVV = (e) => setCVV(e.target.value)
+  const [giftNo, setgiftNo] = useState(null)
+  const handleGiftChange = (e) => setgiftNo(e.target.value)
+  const [pin, setpin] = useState(null)
+  const handlePinChange = (e) => setpin(e.target.value)
+
+
+  const isError = cardNo === ''
+  const isError2 = date === ''
+  const isError3 = cvv === ''
+  const isError4 = giftNo === ''
+  const isError5 = pin === ''
+
   return (
 <>
 <OtherNavbar/>
+<Box minH="80vh">
+<Center>
 
+<Grid w="full" templateColumns='70% 30%' className='paymentMAin' gap={6} p="100px">
+
+
+<GridItem w='100%' >
+<Accordion allowToggle defaultIndex={0}>
+
+<AccordionItem >
+    {({ isExpanded }) => (
+      <>
+        <h2>
+          <AccordionButton>
+
+
+            <Box as="span" flex='1' textAlign='left'>
+
+
+     <HStack spacing={"20px"}>
+
+
+  <Icon as={AiOutlineCreditCard} fontSize={"20px"} />
+
+
+  <VStack align={"flex-start"} spacing={0}>
+    <Text color={"rgba(0,19,37,0.92)"} fontWeight={500} >
+         Credit/Debit Card
+    </Text>
+    <Text color={"rgba(0,19,37,0.64)"} fontSize={"12px"}>
+    Visa, Mastercard, Rupay & more
+    </Text>
+
+  </VStack>
+
+
+     </HStack>
+
+            </Box>
+            {isExpanded ? (
+             <Icon as={MdRadioButtonChecked} color="#fc2779" />
+            ) : (
+              <Icon as={MdRadioButtonUnchecked} />
+            )}
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+        
+        <VStack align={"flex-start"} spacing={4}>
+
+        <HStack>
+          <Text letterSpacing={"1px"} fontWeight={600} fontSize={"10px"} color="rgba(0, 19, 37, 0.64)">WE ACCEPT</Text>
+          <Image w="30px"  src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/VISA.svg"></Image>
+          <Image w="30px" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/mastercard.svg"></Image>
+          <Image w="30px" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/Rupay.svg"></Image>
+          <Image w="30px" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/WeAccept/AMEX.svg"></Image>
+        </HStack>
+      
+      
+  
+
+
+        <FormControl isInvalid={isError}>
+
+      <Input className='inputsizeasdf' bgColor="rgb(245,245,246)" fontSize={"14px"}  variant={"filled"} focusBorderColor="#f3f3f3" placeholder={"Card Number"} type='text' maxLength={12} value={cardNo} onChange={handleCardChange} />
+      {!isError ? (
+        <FormHelperText fontSize={"12px"}>
+          Enter Card No.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage fontSize={"12px"} color="#cb2121">Card No. is not valid.</FormErrorMessage>
+      )}
+    </FormControl>
+
+
+
+<HStack className='inputdftdg'>
+    <FormControl isInvalid={isError2}>
+
+<Input  className='inputsizeasdf'  bgColor="rgb(245,245,246)" fontSize={"14px"} focusBorderColor="#f3f3f3"  variant={"filled"}  type='text' placeholder='Expiry date (MM/YY)' maxLength={5} value={date} onChange={handledateChange} />
+{!isError2 ? (
+  <FormHelperText  fontSize={"12px"} >
+     Date is Required.
+  </FormHelperText>
+) : (
+  <FormErrorMessage  fontSize={"12px"} color="#cb2121">Required.</FormErrorMessage>
+)}
+</FormControl>
+
+
+
+
+<FormControl isInvalid={isError3}>
+
+<Input  className='inputsizeasdf'  fontSize={"14px"} bgColor="rgb(245,245,246)" focusBorderColor="#f3f3f3" variant={"filled"}  type='text' maxLength={4} value={cvv} onChange={handleCVV}  placeholder={"CVV"} />
+{!isError3 ? (
+  <FormHelperText  fontSize={"12px"}>
+  Cvv is Required.
+</FormHelperText>
+) : (
+  <FormErrorMessage  fontSize={"12px"} color="#cb2121"> Required. </FormErrorMessage>
+)}
+</FormControl>
+
+   
+    </HStack>
+
+
+    <HStack>
+    <Checkbox focusBorderColor={"pink"} defaultChecked>
+       <Text  className='savecardpayment' fontWeight={500} fontSize={"12px"} color={"rgba(0,19,37,.92)"}>Save this card securely for future
+</Text>
+</Checkbox>
+<Text color="#5198ff"  fontWeight={500} fontSize={"12px"} >Know More</Text>
+    </HStack> 
+
+    <Button className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+      Pay $ 234
+    </Button>
+        </VStack>
+
+
+        </AccordionPanel>
+      </>
+    )}
+  </AccordionItem>
+{/* .................... */}
+
+<AccordionItem >
+    {({ isExpanded }) => (
+      <>
+        <h2>
+          <AccordionButton>
+
+
+            <Box as="span" flex='1' textAlign='left'>
+
+
+     <HStack spacing={"20px"}>
+
+
+  <Icon as={MdCardGiftcard} fontSize={"20px"} />
+
+
+  <VStack align={"flex-start"} spacing={0}>
+    <Text color={"rgba(0,19,37,0.92)"} fontWeight={500} >
+         Gift Card
+    </Text>
+    <Text color={"rgba(0,19,37,0.64)"} fontSize={"12px"}>
+    One card for all Nykaa apps
+    </Text>
+
+  </VStack>
+
+
+     </HStack>
+
+            </Box>
+            {isExpanded ? (
+             <Icon as={MdRadioButtonChecked} color="#fc2779" />
+            ) : (
+              <Icon as={MdRadioButtonUnchecked} />
+            )}
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+        
+        <VStack align={"flex-start"} spacing={4}>
+
+
+      
+      
+  
+
+
+        <FormControl isInvalid={isError4}>
+
+      <Input  className='inputsizeasdf'   bgColor="rgb(245,245,246)" fontSize={"14px"}  variant={"filled"} focusBorderColor="#f3f3f3" placeholder={"Card Number"} type='text'  value={giftNo} onChange={handleGiftChange} />
+      {!isError4 ? (
+        <FormHelperText fontSize={"12px"}>
+          Enter Gift No.
+        </FormHelperText>
+      ) : (
+        <FormErrorMessage fontSize={"12px"} color="#cb2121">Gift No. is not valid.</FormErrorMessage>
+      )}
+    </FormControl>
+
+
+
+<HStack >
+    <FormControl isInvalid={isError5}>
+
+<Input   bgColor="rgb(245,245,246)" fontSize={"14px"} focusBorderColor="#f3f3f3"  variant={"filled"}  type='text' placeholder='PIN' maxLength={5} value={pin} onChange={handlePinChange} />
+
+  </FormControl>
+
+
+
+
+<Button colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+      Proceed
+</Button>
+
+
+
+   
+    </HStack>
+
+        </VStack>
+
+
+        </AccordionPanel>
+      </>
+    )}
+  </AccordionItem>
+{/* .................... */}
+
+<AccordionItem>
+    {({ isExpanded }) => (
+      <>
+        <h2>
+          <AccordionButton>
+
+
+            <Box as="span" flex='1' textAlign='left'>
+
+
+     <HStack spacing={"20px"}>
+
+
+  <Icon as={FaHandHoldingUsd} fontSize={"20px"} />
+
+
+  <VStack align={"flex-start"} spacing={0}>
+    <Text color={"rgba(0,19,37,0.92)"} fontWeight={500} >
+         Cash on Delivery
+    </Text>
+    <Text color={"rgba(0,19,37,0.64)"} fontSize={"12px"}>
+    Pay at your doorstep
+    </Text>
+
+  </VStack>
+
+
+     </HStack>
+
+            </Box>
+            {isExpanded ? (
+             <Icon as={MdRadioButtonChecked} color="#fc2779" />
+            ) : (
+              <Icon as={MdRadioButtonUnchecked} />
+            )}
+          </AccordionButton>
+        </h2>
+        <AccordionPanel pb={4}>
+        
+    
+ <VStack>
+  <Image src={del} boxSize={"300px"}></Image>
+  <Button colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+      Proceed
+</Button>
+ </VStack>
+
+        </AccordionPanel>
+      </>
+    )}
+  </AccordionItem>
+
+
+</Accordion>
+
+</GridItem>
+{/* ............................................ */}
+
+  <GridItem w='100%'  >
+  <VStack className='productdetailsvstak' bgColor={"#fff"} pl="20px" alignItems={"flex-start"}  w="350px" justify={"center"}>
+
+<VStack w="full">
+<Box w="full">
+<Accordion allowToggle>
+
+
+
+<AccordionItem>
+<h2>
+  <AccordionButton>
+    <Box as="span" flex='1' textAlign='left'>
+<HStack w="full" justify="space-between">
+<HStack>
+<Icon as={SlLocationPin} />
+    <Text>Bag</Text>
+</HStack>
+
+ <Text>4 items</Text>
+
+</HStack>
+    </Box>
+    <AccordionIcon />
+  </AccordionButton>
+</h2>
+<AccordionPanel             css={{
+'&::-webkit-scrollbar': {
+  width: "8px",
+width:" 8px",
+},
+'&::-webkit-scrollbar-track': {
+ borderRadius: "7px",
+backgroundColor: "#EBEBEB"
+},
+
+'&::-webkit-scrollbar-thumb': {
+  borderRadius: "3px",
+backgroundColor: "#C1BFC1"
+},
+}} pb={4} overflowY="scroll" maxHeight={"300px"}>
+ <CartProducts/>
+</AccordionPanel>
+</AccordionItem>
+
+<AccordionItem>
+<h2>
+  <AccordionButton>
+    <Box as="span" flex='1' textAlign='left'  w="full">
+<HStack w="full" justifyContent={"space-between"}>
+
+<Icon as={TbCurrencyRupee} />
+<Text>Price Details</Text>
+
+
+</HStack>
+
+    </Box>
+    <AccordionIcon />
+   </AccordionButton>
+</h2>
+<AccordionPanel pb={4} >
+<PaymentDetails/>
+<HStack p={2}>
+
+<Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>
+<VStack spacing={"2px"} alignItems="flex-start">
+<Text color="rgba(0,19,37,.92)" fontSize={"14px"}>Earn 2432 Reward points</Text>
+<Text color="rgba(0,19,37,.64)" fontSize={"12px"}>Get a discount on your next order</Text>
+</VStack>
+</HStack>
+
+</AccordionPanel>
+</AccordionItem>
+
+</Accordion>
+</Box>
+
+
+</VStack>
+
+<HStack justify={"space-around"} p={2} w="full" cla>
+<VStack fontSize={"12px"} color="rgba(0,19,37,.92)" spacing={1} w="full" alignItems={"flex-start"}>
+<Text>Buy authentic products. Pay</Text>
+<Text> securely. Easy returns and exchange</Text>
+</VStack>
+<Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/BuyerAssurance.svg" width={"40px"}>
+
+</Image>
+</HStack>
+
+</VStack>
+  </GridItem>
+</Grid>
+</Center>
+
+</Box>
 
 </>
   )

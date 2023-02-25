@@ -1,10 +1,4 @@
-import { Box, Button, Center,  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,Select,Radio,Textarea,Switch, Heading, HStack, Text,Image, VStack,Icon,AccordionItem,Accordion,AccordionButton,AccordionPanel,AccordionIcon, useDisclosure, Input } from '@chakra-ui/react'
+import { Box, Button, Center,  Drawer, DrawerBody, DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,Grid,DrawerCloseButton,Select,Radio,Textarea,Switch, Heading, HStack, Text,Image, VStack,Icon,AccordionItem,Accordion,AccordionButton,AccordionPanel,AccordionIcon, useDisclosure, Input } from '@chakra-ui/react'
 import React from 'react'
 import OtherNavbar from '../components/OtherNavbar'
 import {BiPlus} from "react-icons/bi"
@@ -21,7 +15,7 @@ import AddressDrawer from '../components/OneItem/AddressDrawer'
   import {FaGreaterThan} from "react-icons/fa"
   import {TfiInfoAlt} from "react-icons/tfi"
 import { StackDivider } from '@chakra-ui/react';
-
+import "./address.css"
 
 
 const Address = () => {
@@ -32,33 +26,35 @@ const Address = () => {
   return (
 <>
 <OtherNavbar/>
-<Box w="full" px="150px" py={8} >
+<Box w="full" className='mainAddresbox' px="150px" py={8} >
 
 <HStack w="full" justify={"space-between"}>
 <VStack alignItems={"flex-start"}>
-<Heading as={"h1"} fontWeight={600} fontSize={"36px"} color={"rgba(0,19,37,0.92)"}>
+<Heading className='headingaddresdfsadf' as={"h1"} fontWeight={600} fontSize={"36px"} color={"rgba(0,19,37,0.92)"}>
 Choose Address
 </Heading>
-<Text fontSize={"14px"} color={"rgba(0,19,37,0.64)"}>
+<Text className='addreswelcomelsdfsd' fontSize={"14px"} color={"rgba(0,19,37,0.64)"}>
 Detailed address will help our delivery partner reach your doorstep quickly
 </Text>
 
 </VStack>
-<Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/desktop-icons/header-address.svg">
+<Image className='addrespageijmagesdf' src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/desktop-icons/header-address.svg">
 
 </Image>
 </HStack>
 
-<HStack  h="80vh" >
+<Grid w="full" className='heightmanagesd'  h="80vh" >
 
 
 
-<Center >
-<HStack>
+<Center className='templatemenagegd' w="full" display={"Grid"} gridTemplateColumns={"60% 40%"}  >
+
+  {/* ................................ */}
+<HStack w="full" className='addresseditmanagetemp'>
 
 
-<Center>
-<VStack ref={btnRef} onClick={onOpen} h="170px" w="350px" justify={"center"} borderRadius={"10px"} color="#e80071" _hover={{background:"rgba(251,214,232,.5)",borderColor:"#e80071"}} fontWeight={600} border={"1px dashed #e0e0e0"}>
+<Center w="full">
+<VStack ref={btnRef} onClick={onOpen} h="170px" w="full" justify={"center"} borderRadius={"10px"} color="#e80071" _hover={{background:"rgba(251,214,232,.5)",borderColor:"#e80071"}} fontWeight={600} border={"1px dashed #e0e0e0"}>
 
 <Icon fontSize={"24px"} as={BiPlus}  />
   <Text>Add New Address</Text>
@@ -66,7 +62,7 @@ Detailed address will help our delivery partner reach your doorstep quickly
 </Center>
 
 
-<VStack alignItems={"flex-start"} pl={8} h="170px" w="350px" justify={"center"}  _hover={{background:"rbga(230, 237, 247,0.9)"}} borderRadius={"10px"} border={"1px dashed #e0e0e0"}>
+<VStack w="full" alignItems={"flex-start"} pl={8} h="170px" justify={"center"}  _hover={{background:"rbga(230, 237, 247,0.9)"}} borderRadius={"10px"} border={"1px dashed #e0e0e0"}>
   <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>Name</Text>
   <Text  fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>town,street,State</Text>
   <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>city</Text>
@@ -83,8 +79,9 @@ Detailed address will help our delivery partner reach your doorstep quickly
 
 
 </HStack>
+  {/* ................................ */}
 
-<VStack bgColor={"#fff"} pl="20px" alignItems={"flex-start"}  w="350px" justify={"center"}>
+<VStack w="full" className='plleftremoveclass' bgColor={"#fff"} pl="20px" alignItems={"flex-start"}   justify={"center"}>
 
 <VStack w="full">
 <Box w="full">
@@ -165,10 +162,12 @@ backgroundColor: "#C1BFC1"
 </VStack>
 
 <HStack justify={"space-around"} p={2} w="full">
-<VStack fontSize={"12px"} color="rgba(0,19,37,.92)" spacing={1} alignItems={"flex-start"}>
+
+<VStack w="full" fontSize={"12px"} color="rgba(0,19,37,.92)" spacing={1} alignItems={"flex-start"}>
 <Text>Buy authentic products. Pay</Text>
 <Text> securely. Easy returns and exchange</Text>
 </VStack>
+
 <Image src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/BuyerAssurance.svg" width={"40px"}>
 
 </Image>
@@ -179,7 +178,7 @@ backgroundColor: "#C1BFC1"
 </Center>
 
 
-</HStack>
+</Grid>
 
 </Box>
 
