@@ -8,6 +8,10 @@ import CardItem from './Home components/CardItem';
 import TwoCard from './Home components/Homedata/twocard';
 import { afterTopBrands } from './Home components/Homedata/afterTopBrands';
 import ONeCard from './Home components/onecard';
+import { FeaturedBrands } from './Home components/Homedata/FeatureBrands';
+import FiveCard from './Home components/fivecard';
+import { BeautyAdvice } from './Home components/Homedata/BeautyAdvice';
+import { OnlyAtNykaa } from './Home components/Homedata/onlyatnaykaa';
 
 const Home = () => {
 
@@ -53,6 +57,7 @@ const Home = () => {
           />
         ))}
       </ThreeCard>
+      <h1 className='headings'>Feature Brands</h1>
       <ONeCard>
       <Image
         src="https://images-static.nykaa.com/uploads/2adda7a5-567a-4db1-b408-06c96be60287.jpg?tr=w-2400,cm-pad_resize"
@@ -62,7 +67,64 @@ const Home = () => {
         height=""
       />
       </ONeCard>
- 
+   
+      <FiveCard>
+      {FeaturedBrands.map(({ src, text, disc }, i) => (
+        <CardItem
+          key={i}
+          src={src}
+          h1Size={"20px"}
+          h1Weight={"600"}
+          h1color={"black"}
+          h1={text}
+          h3Size={"16px"}
+          h3Weight={"500"}
+          h3color={"#5C6873"}
+          h3={disc}
+          paddingY={"20px"}
+          
+        />
+      ))}
+    </FiveCard>
+    <h1 className='headings'>Only At Nykaa</h1>
+    <ThreeCard>
+    {OnlyAtNykaa.map(({ src, h1, h3 }, i) => (
+      <CardItem
+        key={i}
+        src={src}
+        h1Size={"20px"}
+        h1Weight={"600"}
+        h1color={"black"}
+        h1={h1}
+        h3Size={"16px"}
+        h3Weight={"500"}
+        h3color={"#5C6873"}
+        h3={h3}
+        paddingY={"20px"}
+      />
+    ))}
+  </ThreeCard>
+
+    <h1 className='headings'>Beauty Advice</h1>
+    <Box marginTop={"3rem"} marginBottom="2rem">
+      <TwoCard>
+        {BeautyAdvice.map(({ src, text, disc }, i) => (
+          <CardItem
+            key={i}
+            h1Size={"16px"}
+            h1Weight={"600"}
+            h1color="black"
+            h1={text}
+            h3={disc}
+            h3Size={"16px"}
+            h3Weight="500"
+            h3color={"#E80071"}
+            src={src}
+            paddingY={"20px"}
+          />
+        ))}
+      </TwoCard>
+   </Box>    
     </>
   )
 }
