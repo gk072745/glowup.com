@@ -13,10 +13,12 @@ import {
 	Text,
 	useColorModeValue,
 	Link,
+	Alert,
+	AlertIcon,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
+import axios from "axios";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -25,10 +27,29 @@ const divStyles = {
 
 export default function SignupCard() {
 	const [showPassword, setShowPassword] = useState(false);
-	const { isLoggedin, login, userDetails } = useSelector(
-		(store) => store.userManager
-	);
-	console.log(isLoggedin, login, userDetails);
+	const [showPassword2, setShowPassword2] = useState(false);
+
+	const [username, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [match, setMatch] = useState(false);
+	const [check, setCheck] = useState("");
+
+	const handleSubmit = async () => {
+		const URL = "http://localhost:8080";
+		console.log(username, email, password);
+		axios.defaults.withCredentials = true;
+		let res = await axios.post(`${URL}/user/register`, {
+			name: username,
+			email: email,
+			password: password,
+		});
+		console.log(res);
+	};
+
+	useEffect(() => {
+		setMatch(check === password);
+	}, [check, password]);
 
 	return (
 		<Flex
@@ -54,23 +75,27 @@ export default function SignupCard() {
 						p={8}
 					>
 						<Stack spacing={4}>
-							<HStack>
-								<Box>
-									<FormControl id="firstName" isRequired>
-										<FormLabel>First Name</FormLabel>
-										<Input type="text" />
-									</FormControl>
-								</Box>
-								<Box>
-									<FormControl id="lastName">
-										<FormLabel>Last Name</FormLabel>
-										<Input type="text" />
-									</FormControl>
-								</Box>
-							</HStack>
+							<Box>
+								<FormControl id="firstName" isRequired>
+									<FormLabel>First Name</FormLabel>
+									<Input
+										type="text"
+										value={username}
+										onChange={(e) =>
+											setName(e.target.value)
+										}
+										autoComplete="off"
+									/>
+								</FormControl>
+							</Box>
 							<FormControl id="email" isRequired>
 								<FormLabel>Email address</FormLabel>
-								<Input type="email" />
+								<Input
+									type="email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									autoComplete="off"
+								/>
 							</FormControl>
 							<FormControl id="password" isRequired>
 								<FormLabel>Password</FormLabel>
@@ -78,6 +103,10 @@ export default function SignupCard() {
 									<Input
 										type={
 											showPassword ? "text" : "password"
+										}
+										value={password}
+										onChange={(e) =>
+											setPassword(e.target.value)
 										}
 									/>
 									<InputRightElement h={"full"}>
@@ -98,6 +127,43 @@ export default function SignupCard() {
 										</Button>
 									</InputRightElement>
 								</InputGroup>
+								<FormLabel my={3}>Confirm Password</FormLabel>
+								<InputGroup>
+									<Input
+										type={
+											showPassword2 ? "text" : "password"
+										}
+										value={check}
+										onChange={(e) =>
+											setCheck(e.target.value)
+										}
+									/>
+									<InputRightElement h={"full"}>
+										<Button
+											variant={"ghost"}
+											onClick={() =>
+												setShowPassword2(
+													(showPassword2) =>
+														!showPassword2
+												)
+											}
+										>
+											{showPassword2 ? (
+												<ViewIcon />
+											) : (
+												<ViewOffIcon />
+											)}
+										</Button>
+									</InputRightElement>
+								</InputGroup>
+								{match ? (
+									""
+								) : (
+									<Alert status="error" my={2}>
+										<AlertIcon />
+										Password doesn't match.
+									</Alert>
+								)}
 							</FormControl>
 							<Stack spacing={10} pt={2}>
 								<Button
@@ -106,8 +172,10 @@ export default function SignupCard() {
 									bg={"blue.400"}
 									color={"white"}
 									_hover={{
-										bg: "blue",
+										bg: match ? "blue" : "grey",
 									}}
+									onClick={handleSubmit}
+									disabled={match}
 								>
 									Sign up
 								</Button>

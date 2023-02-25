@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const userRouter = express.Router();
 
-userRouter.get("/", async (req, res) => {
+userRouter.get("/getdetails", async (req, res) => {
 	const { email } = req.body;
 	try {
 		let data = await UserModel.find({ email });
@@ -67,6 +67,7 @@ userRouter.post("/login", async (req, res) => {
 
 userRouter.post("/register", async (req, res) => {
 	const { name, email, password, phone_number } = req.body;
+	console.log(req.body);
 	try {
 		let user = await UserModel.find({ email });
 		if (user.length > 0) {
