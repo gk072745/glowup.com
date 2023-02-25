@@ -15,16 +15,6 @@ import axios from "axios";
 
 let initial_check = false;
 let initial_dets = {};
-const loader = async () => {
-	axios.defaults.withCredentials = true;
-	let dets = await axios.get("http://localhost:8080/user/");
-	initial_dets = dets.data.details;
-};
-
-if (Cookies.get("jwt_token")) {
-	initial_check = true;
-	loader();
-}
 
 const userInitialState = {
 	login: {
@@ -44,6 +34,7 @@ const userInitialState = {
 	},
 	userdetails: initial_dets,
 	isLoggedin: initial_check,
+	isAdmin: false,
 };
 
 export const userReducer = (state = userInitialState, { type, payload }) => {
@@ -78,6 +69,7 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
 				},
 				userdetails: { ...payload },
 				isLoggedin: true,
+				isAdmin: payload.isAdmin,
 			};
 		}
 		case USER_LOGOUT_LOADING: {

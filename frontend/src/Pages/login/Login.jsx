@@ -13,8 +13,10 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedIn, loginUser } from "../../redux/auth/auth.actions";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -26,14 +28,20 @@ export default function Login() {
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
 	const URL = "http://localhost:8080";
-	const handleSubmit = async () => {
-		let req = await axios.post(`${URL}/user/login`, {
-			email: email,
-			password: password,
-		});
+	const { isLoggedin, login, userDetails } = useSelector(
+		(store) => store.userManager
+	);
+	const dispatch = useDispatch();
 
-		console.log(req);
-		Cookies.set("jwt_token", req.data.token);
+	const handleSubmit = async () => {
+		// let req = await axios.post(`${URL}/user/login`, {
+		// 	email: email,
+		// 	password: password,
+		// });
+
+		// console.log(req);
+		// Cookies.set("jwt_token", req.data.token);
+		loginUser(dispatch, { email: email, password: password });
 	};
 
 	// ! experminetal => not reuired to keep
@@ -43,6 +51,12 @@ export default function Login() {
 	};
 
 	// ^ end of getstuff
+	useEffect(() => {
+		if (Cookies.get("jwt_token")) {
+			loggedIn(dispatch);
+		}
+	}, []);
+
 	return (
 		<Flex
 			minH={"100vh"}
