@@ -10,11 +10,25 @@ const adminAuthenticate = require("./Middlewares/AdminAuthenticator.middleware")
 const userAuthenticate = require("./Middlewares/Userauthenticate.middleware");
 const cartRouter = require("./Routes/cart.routes");
 const wishlistRouter = require("./Routes/wishlist.routes");
+var cookieParser = require("cookie-parser");
 // * middleware
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(function (req, res, next) {
+	res.header("Content-Type", "application/json;charset=UTF-8");
+	res.header("Access-Control-Allow-Credentials", true);
+	// res.header("Access-Control-Allow-Origin", "*");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept"
+	);
+	next();
+});
 
 app.use("/admin", adminAuthenticate);
+app.use("/user/getdetails", userAuthenticate);
 app.use("/cart", userAuthenticate);
 app.use("/wishlist", userAuthenticate);
 
@@ -33,4 +47,3 @@ app.listen(process.env.PORT, () => {
 	console.log("server listening on port " + process.env.PORT);
 	connectDB();
 });
-
