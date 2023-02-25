@@ -81,6 +81,7 @@ import { useRef } from "react";
  
 
     const { isOpen, onToggle ,onOpen, onClose} = useDisclosure();
+       const { isOpen:isOpenC, onOpen:onOpenC, onClose:onCloseC } = useDisclosure();
       const btnRef = useRef();
     return (
       <Box >
@@ -135,12 +136,12 @@ import { useRef } from "react";
                 color= "#fc2779"
                 fontSize={"20px"}
                 cursor="pointer"
-                ref={btnRef} onClick={onOpen}
+                ref={btnRef} onClick={onOpenC}
               />
               <Drawer
-                isOpen={isOpen}
+                isOpen={isOpenC}
                 placement="right"
-                onClose={onClose}
+                onClose={onCloseC}
                 finalFocusRef={btnRef}
               >
                 <DrawerOverlay />
@@ -150,7 +151,7 @@ import { useRef } from "react";
         
                     <HStack justify={"space-between"} alignItems="center">
                       <HStack spacing={4}>
-                        <Icon onClick={onClose} color="#151515" fontSize={"32px"} as={BsArrowLeft}/>
+                        <Icon onClick={onCloseC} color="#151515" fontSize={"32px"} as={BsArrowLeft}/>
                         <HStack>
                         <Text color="#151515" fontSize={"20px"} >Bag</Text>
                         <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>1 items</Text>
@@ -305,7 +306,7 @@ import { useRef } from "react";
                          <Icon  fontSize={"10px"} as={TfiInfoAlt} />
                        </HStack>
                       </VStack>
-                      <Button color={"#fff"} bgColor="#fc2779" colorScheme={"none"} rightIcon={<ArrowForwardIcon />} onClick={onClose}>Proceed</Button>
+                      <Button color={"#fff"} bgColor="#fc2779" colorScheme={"none"} rightIcon={<ArrowForwardIcon />} onClick={onCloseC}>Proceed</Button>
                     </HStack>
                   </DrawerFooter>
                 </DrawerContent>

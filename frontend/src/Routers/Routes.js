@@ -9,6 +9,7 @@ import Address from '../Pages/Address'
 import AllPages from '../Pages/AllPages/AllPages'
 import Login from '../Pages/login/Login'
 import SignupCard from '../Pages/login/userSignup'
+import Payments from '../Pages/Payments'
 import SingleProductPage from '../Pages/SingleProductPage'
 const MainRoute = () => {
   return (
@@ -63,6 +64,13 @@ const MainRoute = () => {
           <>
      
             <Address/>
+  
+          </>
+        } />
+         <Route path='/payment' element={
+          <>
+     
+            <Payments/>
   
           </>
         } />

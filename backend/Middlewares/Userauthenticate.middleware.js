@@ -4,6 +4,7 @@ require("dotenv").config();
 const userAuthenticate = async (req, res, next) => {
 	// const token = req.headers.authorization;
 	const { jwt_token } = req.cookies;
+	console.log(req.cookies);
 	if (!jwt_token) {
 		res.status(401);
 		res.send({ statu: 401, message: "Please login first" });

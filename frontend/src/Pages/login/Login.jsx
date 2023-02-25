@@ -12,9 +12,12 @@ import {
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
-import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { useSignIn, useSignOut } from "react-auth-kit";
+import { useIsAuthenticated } from "react-auth-kit";
+import { useNavigate } from "react-router-dom";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -26,23 +29,58 @@ export default function Login() {
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
 	const URL = "http://localhost:8080";
-	const handleSubmit = async () => {
-		let req = await axios.post(`${URL}/user/login`, {
-			email: email,
-			password: password,
-		});
 
-		console.log(req);
-		Cookies.set("jwt_token", req.data.token);
+	const navigate = useNavigate();
+
+	const signIn = useSignIn();
+	const isAuthenticated = useIsAuthenticated();
+	const signOut = useSignOut();
+	const toast = useToast();
+
+	const handleSubmit = async () => {
+		try {
+			let req = await axios.post(`${URL}/user/login`, {
+				email: email,
+				password: password,
+			});
+			signIn({
+				token: req.data.token,
+				expiresIn: 3600,
+				authState: { email, admin: req.data.details.isAdmin },
+			});
+			toast({
+				title: "Login success",
+				description: "You will be redirected to homepage shortly.",
+				status: "success",
+				duration: 2000,
+				isClosable: true,
+			});
+			// setTimeout(() => navigate("/"), 2000);
+			console.log(req);
+		} catch (err) {
+			toast({
+				title: "Something went wrong",
+				description: "Please check your details and try again.",
+				status: "error",
+				duration: 2000,
+				isClosable: true,
+			});
+		}
+		// Cookies.set("jwt_token", req.data.token);
+		// loginUser(dispatch, { email: email, password: password });
 	};
 
 	// ! experminetal => not reuired to keep
 	const getstuff = async () => {
-		let req = await axios.get(`${URL}/cart/`);
+		let req = await axios.get(`${URL}/user/getdetails`);
 		console.log(req);
 	};
 
+	const singout = async () => {
+		signOut();
+	};
 	// ^ end of getstuff
+
 	return (
 		<Flex
 			minH={"100vh"}
@@ -52,6 +90,9 @@ export default function Login() {
 		>
 			{/* for testing purposes */}
 			<button onClick={getstuff}>button</button>
+			<br />
+			<button onClick={singout}>sign out</button>
+			{isAuthenticated() ? "Yes" : "No"}
 			{/* end of test */}
 			<div style={divStyles}>
 				<Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>

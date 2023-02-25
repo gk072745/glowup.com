@@ -28,6 +28,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/admin", adminAuthenticate);
+app.use("/user/getdetails", userAuthenticate);
 app.use("/cart", userAuthenticate);
 app.use("/wishlist", userAuthenticate);
 
