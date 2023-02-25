@@ -40,6 +40,7 @@ userRouter.post("/login", async (req, res) => {
 						sameSite: "none",
 
 						secure: true,
+						domain: "http://localhost:3000",
 					});
 					res.status(200);
 					res.send({
