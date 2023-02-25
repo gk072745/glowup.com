@@ -1,4 +1,5 @@
 import { Flex, Heading, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const CardItem = ({
   src,
@@ -20,7 +21,7 @@ const CardItem = ({
       alignContent={"center"}
       borderRadius="md"
     >
-      <Image src={src} alt={h1} width="" height="" />
+    <Link to="/product"><Image src={src} alt={h1} width="" height="" /></Link>
       <Flex direction={"column"} gap="1" paddingY={paddingY} marginLeft="5">
         <Heading
           as={"h1"}
