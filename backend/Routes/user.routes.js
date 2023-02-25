@@ -38,9 +38,6 @@ userRouter.post("/login", async (req, res) => {
 						expires: new Date(Date.now() + 900000),
 
 						sameSite: "none",
-
-						secure: true,
-						domain: "http://localhost:3000",
 					});
 					res.status(200);
 					res.send({
