@@ -37,28 +37,34 @@ const AddToWishlist = () => {
 }
 
 const AddToCart = (item_id) => {
-  //  axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
-  //   Headers : {
-  //     "Cookie" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
-  //   }
-  //  })
+  //  axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`)
   //  .then((res)=>console.log(res))
   //  .catch((err)=>console.log(err))
-console.log("id",item_id);
 
-let obj = {
-  email : "n@gmail.com"
-}
-
-   fetch(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
+  fetch(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
     method : "POST",
-    body : JSON.stringify(obj),
     headers : {
-      "Cookie" : "jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
-    }
-   }).then((res)=>res.json())
-   .then((res)=>console.log(res))
-   .catch((err)=>console.log(err))
+             "Cookie" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
+          }
+  }).then((res)=>res.json())
+  .then((res)=>console.log(res))
+  .catch((err)=>console.log(err))
+
+// console.log("id",item_id);
+
+// let obj = {
+//   email : "n@gmail.com"
+// }
+
+//    fetch(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
+//     method : "POST",
+//     body : JSON.stringify(obj),
+//     headers : {
+//       "Cookie" : "jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
+//     }
+//    }).then((res)=>res.json())
+//    .then((res)=>console.log(res))
+//    .catch((err)=>console.log(err))
    
 }
 
