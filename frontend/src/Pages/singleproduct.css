@@ -1,0 +1,109 @@
+@media screen and (max-width: 1250px) {
+
+.discriptionboxasfd{
+    width: 75% !important;
+}
+
+.singleProductdivsdf{
+    width: 25% !important;
+}
+          }
+
+          @media screen and (max-width: 1100px) {
+.paddinghandleclass{
+    padding: 0px 50px !important;
+}
+        
+                      }
+
+@media screen and (max-width: 1030px) {
+              
+     .reviewuserprofilemanage{
+        width: 40% !important;
+     }                           
+  }
+@media screen and (max-width: 950px) {
+    .paddinghandleclass{
+        padding: 0px 20px !important;
+    }        
+                         
+  }
+@media screen and (max-width: 850px) {
+    .paddinghandleclass{
+        padding: 0px 20px !important;
+    }      
+    .gridhandlesdaf{
+        grid-template-columns: 100% !important;
+    }  
+    .singleProductdivsdf{
+        display: none;
+    }
+           .absulateaddcartbtn{
+            display: flex !important;
+           }  
+           .discriptionboxasfd{
+            width: 100% !important;
+           }            
+  }
+@media screen and (max-width: 700px) {
+    .ratingsdf{
+        width: 50%;
+    }
+    .reviewuserprofilemanage{
+        width: 70% !important;
+        align-items: flex-start;
+       
+    }
+    
+}
+
+@media screen and (max-width: 630px) {
+  
+.handlefontsadf{
+    font-size: 14px !important;
+}
+.headingrating{
+    font-size: 28px !important;
+}
+.handlefontsadf1{
+    font-size: 12px !important;
+}
+.logoasdfsdf{
+    font-size: 16px !important;
+}
+
+.textsizehandelsdfsdf{
+    font-size: 12px !important;
+}
+
+
+    
+}
+
+@media screen and (max-width: 550px) {
+  
+.inputwithdhandle{
+    width: 100% !important;
+}
+
+    
+}
+
+@media screen and (max-width: 530px) {
+  
+ .removeRevidsfaf{
+    display: none !important;
+ }
+    .formobilesize{
+        flex-direction: column !important;
+ gap: 10px;
+    }
+        
+    }
+@media screen and (max-width: 420px) {
+  
+    .paddinghandleclass{
+        padding: 0px 5px !important;
+        
+    }
+}
