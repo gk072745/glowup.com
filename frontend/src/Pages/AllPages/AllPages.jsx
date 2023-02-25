@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -8,7 +8,15 @@ import "swiper/css/autoplay";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import styles from "./AllPages.module.css";
 import axios from "axios";
-import Oneitem from "../../components/OneItem/Oneitem";
+import Oneitem from "../../Components/OneItem/Oneitem";
+import {
+	Accordion,
+	AccordionItem,
+	AccordionButton,
+	AccordionPanel,
+	AccordionIcon,
+	Box,
+} from "@chakra-ui/react";
 
 const AllPages = () => {
 	const { category } = useParams();
@@ -18,6 +26,8 @@ const AllPages = () => {
 	const [thirdimg, setThirdimg] = useState("");
 	const [page, setPage] = useState(1);
 	const [tpage, setTpage] = useState(0);
+	const [query, setQuery] = useState(true);
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
 		if (category === "makeup") {
@@ -130,18 +140,102 @@ const AllPages = () => {
 			setThirdimg(
 				"https://images-static.nykaa.com/uploads/aa8563b3-f20f-4541-a1f3-a7bace46ade0.jpg?tr=w-1200,cm-pad_resize"
 			);
+		} else {
+			setFirstimg(
+				"https://images-static.nykaa.com/uploads/984941d7-1f52-4fe1-8504-e19777cd8142.jpg?tr=w-1200,cm-pad_resize"
+			);
+			setSecondimg(
+				"https://images-static.nykaa.com/uploads/5788cf03-3d8c-4ea5-b073-0b3d7f75beff.jpg?tr=w-1200,cm-pad_resize"
+			);
+			setThirdimg(
+				"https://images-static.nykaa.com/uploads/aa8563b3-f20f-4541-a1f3-a7bace46ade0.jpg?tr=w-1200,cm-pad_resize"
+			);
 		}
 
 		axios
 			.get(
-				`https://periwinkle-sheep-hem.cyclic.app/products?page=${page}`
+				`https://periwinkle-sheep-hem.cyclic.app/products?page=${page}${
+					searchParams.get("category")
+						? `&category=${searchParams.get("category")}`
+						: ``
+				}${
+					searchParams.get("brand")
+						? `&brand=${searchParams.get("brand")}`
+						: ``
+				}${
+					searchParams.get("sort")
+						? `&sort=${searchParams.get("sort")}`
+						: ``
+				}${
+					searchParams.get("order")
+						? `&order=${searchParams.get("order")}`
+						: ``
+				} `
 			)
 			.then((res) => {
+				console.log(res);
 				setTpage(res.data.totalPages);
 				setProducts(res.data.data);
 			})
 			.catch((err) => console.log(err));
-	}, [category, page]);
+	}, [category, page, query]);
+
+	// search params set in url
+	const SortBy = (head, val, e) => {
+		let searchobj = {};
+		if (searchParams.get("category")) {
+			searchobj.category = searchParams.get("category");
+		}
+		if (searchParams.get("brand")) {
+			searchobj.brand = searchParams.get("brand");
+		}
+		if (searchParams.get("sort")) {
+			searchobj.sort = searchParams.get("sort");
+		}
+		if (searchParams.get("order")) {
+			searchobj.order = searchParams.get("order");
+		}
+
+		if (e.target.checked === true) {
+			if (head === "price") {
+				searchobj.sort = "price";
+				val === "asc"
+					? (searchobj.order = "asc")
+					: (searchobj.order = "dsc");
+			} else if (head === "rating") {
+				searchobj.sort = "rating";
+				val === "asc"
+					? (searchobj.order = "asc")
+					: (searchobj.order = "dsc");
+			} else if (head === "category") {
+				searchobj.category = val;
+			} else if (head === "brand") {
+				searchobj.brand = val;
+			}
+		} else if (e.target.checked === false) {
+			if (head === "price") {
+				if (searchobj.sort === head && searchobj.order === val) {
+					delete searchobj.sort;
+					delete searchobj.order;
+				}
+			} else if (head === "rating") {
+				if (searchobj.sort === head && searchobj.order === val) {
+					delete searchobj.sort;
+					delete searchobj.order;
+				}
+			} else if (head === "category") {
+				if (searchobj.category === val) {
+					delete searchobj.category;
+				}
+			} else if (head === "brand") {
+				if (searchobj.brand === val) {
+					delete searchobj.brand;
+				}
+			}
+		}
+		setSearchParams(searchobj);
+		setQuery(!query);
+	};
 
 	return (
 		<div className={styles.allpage_maindiv}>
@@ -185,28 +279,535 @@ const AllPages = () => {
 			<div className={styles.allpage_product_with_sorting}>
 				<div className={styles.allpage_sorting_div}>
 					<div>
-						<h1>Sort by...</h1>
-						<div>
-							<h2>By Name</h2>
+						<h1 className={styles.allpage_sorting_div_heading}>
+							Sort by...
+						</h1>
 
-							<input
-								id="AtoZ"
-								type="checkbox"
-								name="A to Z"
-								onChange={(e) => console.log(e)}
-							/>
-							<label for="AtoZ">A to Z </label>
-							<label>
-								<input
-									type="checkbox"
-									name="Z to A"
-									onChange={(e) =>
-										console.log(e.target.checked)
-									}
-								/>{" "}
-								Z to A
-							</label>
-						</div>
+						<Accordion
+							defaultIndex={
+								matchMedia("(max-width: 900px)").matches
+									? null
+									: [0, 1, 2, 3]
+							}
+							allowMultiple={
+								matchMedia("(max-width: 900px)").matches
+									? false
+									: true
+							}
+							allowToggle={
+								matchMedia("(max-width: 900px)").matches
+									? true
+									: false
+							}
+						>
+							<AccordionItem>
+								<h2>
+									<AccordionButton>
+										<Box
+											as="span"
+											flex="1"
+											textAlign="left"
+										>
+											By Price
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="asc"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("price", "asc", e)
+											}
+										/>
+										<label for="asc">Low To High </label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										{" "}
+										<input
+											className={styles.allpages_checkbox}
+											id="dec"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("price", "dsc", e)
+											}
+										/>
+										<label for="dec">High To Low</label>
+									</div>
+								</AccordionPanel>
+							</AccordionItem>
+
+							<AccordionItem>
+								<h2>
+									<AccordionButton>
+										<Box
+											as="span"
+											flex="1"
+											textAlign="left"
+										>
+											By Rating
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="ascr"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("rating", "asc", e)
+											}
+										/>
+										<label for="ascr">Low To High </label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="decr"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("rating", "dsc", e)
+											}
+										/>
+										<label for="decr">High To Low</label>
+									</div>
+								</AccordionPanel>
+							</AccordionItem>
+
+							<AccordionItem>
+								<h2>
+									<AccordionButton>
+										<Box
+											as="span"
+											flex="1"
+											textAlign="left"
+										>
+											By Category
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="lipstick"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy(
+													"category",
+													"LIPSTICK",
+													e
+												)
+											}
+										/>
+										<label for="lipstick">Lipstick </label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="powder"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "POWDER", e)
+											}
+										/>
+										<label for="powder">Powder</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="liquid"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "LIQUID", e)
+											}
+										/>
+										<label for="liquid">Liquid</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="pencil"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "PENCIL", e)
+											}
+										/>
+										<label for="pencil">Pencil</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="cream"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "CREAM", e)
+											}
+										/>
+										<label for="cream">Cream</label> <br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="Lip_Stain"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy(
+													"category",
+													"LIP_STAIN",
+													e
+												)
+											}
+										/>
+										<label for="Lip_Stain">Lip_Stain</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="lip_gloss"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy(
+													"category",
+													"LIP_GLOSS",
+													e
+												)
+											}
+										/>
+										<label for="lip_gloss">Lip_Gloss</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="palette"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "PALETTE", e)
+											}
+										/>
+										<label for="palette">Palette</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="mineral"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "MINERAL", e)
+											}
+										/>
+										<label for="mineral">Mineral</label>{" "}
+										<br />
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="gel"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("category", "GEL", e)
+											}
+										/>
+										<label for="gel">Gel</label>
+									</div>
+								</AccordionPanel>
+							</AccordionItem>
+
+							<AccordionItem>
+								<h2>
+									<AccordionButton>
+										<Box
+											as="span"
+											flex="1"
+											textAlign="left"
+										>
+											By Brand
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</h2>
+								<AccordionPanel pb={4}>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="colourpop"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "COLOURPOP", e)
+											}
+										/>
+										<label for="colourpop">Colourpop</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="almay"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "ALMAY", e)
+											}
+										/>
+										<label for="almay">Almay</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="anna_sui"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "ANNA SUI", e)
+											}
+										/>
+										<label for="anna_sui">Anna Sui</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="benefit"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "BENEFIT", e)
+											}
+										/>
+										<label for="benefit">Benefit</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="elf"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "E.L.F.", e)
+											}
+										/>
+										<label for="elf">E.L.F.</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="annabelle"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "ANNABELLE", e)
+											}
+										/>
+										<label for="annabelle">Annabelle</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="Cargo_cosmetics"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy(
+													"brand",
+													"CARGO COSMETICS",
+													e
+												)
+											}
+										/>
+										<label for="Cargo_cosmetics">
+											Cargo Cosmetics
+										</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="dr_haushchka"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy(
+													"brand",
+													"DR. HAUSCHKA",
+													e
+												)
+											}
+										/>
+										<label for="dr_haushchka">
+											Dr. Haushchka
+										</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="nyx"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "NYX", e)
+											}
+										/>
+										<label for="nyx">NYX</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="sante"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "SANTE", e)
+											}
+										/>
+										<label for="sante">Sante</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="maybelle"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "MAYBELLINE", e)
+											}
+										/>
+										<label for="maybelle">Maybelline</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="covergirl"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "COVERGIRL", e)
+											}
+										/>
+										<label for="covergirl">Covergirl</label>
+									</div>
+									<div
+										className={
+											styles.allpage_sorting_inputs
+										}
+									>
+										<input
+											className={styles.allpages_checkbox}
+											id="REVLON"
+											type="checkbox"
+											onChange={(e) =>
+												SortBy("brand", "REVLON", e)
+											}
+										/>
+										<label for="REVLON">Revlon</label>
+									</div>
+								</AccordionPanel>
+							</AccordionItem>
+						</Accordion>
 					</div>
 				</div>
 

@@ -14,21 +14,21 @@ let listItems = [
     [
     [
       "Face Primer",
-      "Foundation",
-      "Compact",
-      "Contour",
-      "Loose Powder",
-      "Tinted Moisturizer",
-      "Blush",
-      "Bronzer",
-      "BB & CC Cream"
+      "makeup",
+      "skin",
+      "hair",
+      "appliance",
+      "bath&body",
+      "natural",
+      "mom&baby",
+      "health&wellness"
 
     
     ],
       [
-        "Eyes",
-        "Eyeliner",
-        "Mascara",
+        "men",
+        "fragrance",
+        "popups",
         "Eye Shadow",
         "Eye Brow Enhancers",
         "Eye Primer",
