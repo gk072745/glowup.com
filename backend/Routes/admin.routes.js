@@ -250,4 +250,18 @@ adminRouter.delete("/deleteuser/:id", async (req, res) => {
 	}
 });
 
+// updating rating
+adminRouter.get("/updatemany", async (req, res) => {
+	try {
+		let data = await ProductModel.find({ rating: 2.3948542462851545 });
+		res.send(data);
+		// await ProductModel.updateMany(
+		// 	{ rating: 2.3948542462851545 },
+		// 	{ rating: 3.6 }
+		// );
+		// res.status(200).send("Ok");
+	} catch (error) {
+		res.send(error);
+	}
+});
 module.exports = adminRouter;
