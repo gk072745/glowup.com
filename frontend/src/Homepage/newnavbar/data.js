@@ -13,7 +13,7 @@ let listItems = [
   let data = [
     [
     [
-      "Face Primer",
+      
       "makeup",
       "skin",
       "hair",
@@ -21,14 +21,14 @@ let listItems = [
       "bath&body",
       "natural",
       "mom&baby",
-      "health&wellness"
-
+      "health&wellness",
+      "men",
+      "fragrance",
+      "popups",
     
     ],
       [
-        "men",
-        "fragrance",
-        "popups",
+        "Face Primer",
         "Eye Shadow",
         "Eye Brow Enhancers",
         "Eye Primer",
