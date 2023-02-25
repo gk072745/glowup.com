@@ -31,12 +31,12 @@ userRouter.post("/login", async (req, res) => {
 						{ email: user[0].email },
 						process.env.JWT_SECRET
 					);
-					// res.setHeader("Set-Cookie", "isLoggedin=true");
+					res.setHeader("Cache-Control", "private");
 					res.cookie("jwt_token", token, {
 						path: "/",
 						httpOnly: true,
 						expires: new Date(Date.now() + 900000),
-						sameSite: "None",
+						sameSite: "none",
 						secure: true,
 					});
 					res.status(200);
