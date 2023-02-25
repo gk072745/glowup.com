@@ -36,7 +36,9 @@ userRouter.post("/login", async (req, res) => {
 						path: "/",
 						httpOnly: true,
 						expires: new Date(Date.now() + 900000),
+
 						sameSite: "none",
+
 						secure: true,
 					});
 					res.status(200);
