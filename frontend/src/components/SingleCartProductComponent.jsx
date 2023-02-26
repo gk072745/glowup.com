@@ -3,7 +3,7 @@ import { Text,Icon,HStack,VStack,StackDivider,Box,Image } from "@chakra-ui/react
 import  {RxCross2} from "react-icons/rx"
 import axios from "axios"
 import Cookies from "js-cookie"
-export const SingleCartProductComponent=({_id,quantity, price, description,image_link,setTotalAmount, handleCartProducts})=>{
+export const SingleCartProductComponent=({_id,quantity, price, description,api_featured_image,setTotalAmount, handleCartProducts})=>{
     const [qty,setQty]=useState(quantity||1)
 useEffect(()=>{
 setTotalAmount((prev)=>prev+price*qty)
@@ -18,7 +18,6 @@ if(type=="inc"&&qty<4){
           Authorization: Cookies.get("jwt_token")
         }
     }).then((res)=>{
-        console.log(res)
          setTotalAmount((prev)=>Math.ceil(prev+price))
           setQty((prev)=>prev+1)    
  })
@@ -40,12 +39,13 @@ if(type=="inc"&&qty<4){
 
 const handleDeleteCartSingleP=()=>{
 
-    axios.delete(`https://periwinkle-sheep-hem.cyclic.app/cart/delete/${_id}`,null,
+    axios.delete(`https://periwinkle-sheep-hem.cyclic.app/cart/delete/${_id}`,
     {
        headers:{
          Authorization: Cookies.get("jwt_token")
        }
    }).then((res)=>{
+           setTotalAmount((prev)=>Math.floor(prev-price*qty))
       console.log(res.data)
       handleCartProducts()
     }).catch((err)=>{
@@ -57,7 +57,7 @@ const handleDeleteCartSingleP=()=>{
 return     <VStack w="full"   border={"1px solid #dedede"} borderRadius={"6px"} divider={<StackDivider borderColor='gray.200' />} >
 <HStack w={"full"}  p={"15px"}   align={"flex-start"}>
 <Box>
-<Image width={"230px"} src={image_link}></Image>
+<Image width={"250px"}  src={api_featured_image}></Image>
 </Box>
 <Text fontSize={"16px"} color="rgba(0,16,36,.92)" noOfLines={3} fontWeight={400}>
 {description}

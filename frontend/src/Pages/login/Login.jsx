@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
@@ -65,7 +66,7 @@ export default function Login() {
 				isClosable: true,
 			});
 			// setTimeout(() => navigate("/"), 2000);
-			loginUser(dispatch, { email: email, password: password });
+			loginUser(dispatch, { email, password });
 			console.log(req);
 		} catch (err) {
 			toast({
@@ -83,6 +84,9 @@ export default function Login() {
 	const getstuff = async () => {
 		let req = await axios.get(`${URL}/user/getdetails`, {
 			withCredentials: true,
+			headers: {
+				Authorization: Cookies.get("jwt_token"),
+			},
 		});
 		// fetch(`${URL}/user/getdetails`)
 		// 	.then((res) => res.json())
@@ -112,7 +116,7 @@ export default function Login() {
 			<button onClick={getstuff}>button</button>
 			<br />
 			<button onClick={singout}>sign out</button>
-			{isAuthenticated() ? "Yes" : "No"}
+			{isLoggedin ? "Yes" : "No"}
 			{/* end of test */}
 			<div style={divStyles}>
 				<Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>

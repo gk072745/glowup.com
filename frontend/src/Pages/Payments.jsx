@@ -30,6 +30,11 @@ const Payments = ( ) => {
   const handlePinChange = (e) => setpin(e.target.value)
   const [totalAmount, setTotalAmount] = useState(0)
   const [cartProducts, setCartProducts] = useState([])
+  let [isError,setIsError] =useState(false)
+  let [isError2,setIsError2]=useState(false) 
+  let [isError3,setIsError3]=useState(false) 
+  let [isError4,setIsError4]=useState(false) 
+  let [isError5,setIsError5]=useState(false) 
 
 const handleCartProduct=()=>{
 axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
@@ -51,12 +56,51 @@ useEffect(()=>{
 },[])
 
 
-  const isError = cardNo === ''
-  const isError2 = date === ''
-  const isError3 = cvv === ''
-  const isError4 = giftNo === ''
-  const isError5 = pin === ''
 
+
+  const handlePayment1=()=>{
+    const  [month,year]=date.split("/")
+
+    if(cardNo!==12||cardNo!= +cardNo){
+   setIsError(true)
+    }
+    if(+month>=13||+month<1||+year<1||+year>12||month!=+month){
+      setIsError2(true)
+
+    }
+      
+      if(cvv.length<3||cvv!=+cvv){
+        setIsError3(true)
+
+      }
+ else{
+  setIsError(false)
+  setIsError2(false)
+  setIsError3(false)
+  navigate("/")
+ }
+
+}
+
+const handlePayment2=()=>{
+  if(giftNo!="abcd"){
+    setIsError4(true)
+
+  }else if(pin!=12345){
+    setIsError5(true)
+
+
+  }else{
+    setIsError4(false)
+    setIsError5(false)
+
+    navigate("/")
+  }
+}
+
+const handlePayment3=()=>{
+  navigate("/")
+}
   return (
 <>
 <OtherNavbar/>
@@ -176,7 +220,7 @@ useEffect(()=>{
 <Text color="#5198ff"  fontWeight={500} fontSize={"12px"} >Know More</Text>
     </HStack> 
 
-    <Button onClick={()=>navigate("/")} className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+    <Button onClick={()=>handlePayment1()} className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Pay $ {totalAmount}
     </Button>
         </VStack>
@@ -259,7 +303,7 @@ useEffect(()=>{
 
 
 
-<Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+<Button onClick={()=>handlePayment2()} colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
 
@@ -319,7 +363,7 @@ useEffect(()=>{
     
  <VStack>
   <Image src={del} boxSize={"300px"}></Image>
-  <Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+  <Button onClick={()=>handlePayment3()} colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
  </VStack>

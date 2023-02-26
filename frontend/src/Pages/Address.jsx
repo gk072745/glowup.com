@@ -19,7 +19,20 @@ const Address = () => {
   const navigate=useNavigate()
   const [totalAmount, setTotalAmount] = useState(0)
   const [cartProducts, setCartProducts] = useState([])
+  const [pin,setPin]=useState("")
+  const [houseNo,setHouseNo]=useState("")
+  const [name,setName]=useState("")
+  const [area,setArea]=useState("")
+  const [phone,setphone]=useState("")
+  const [email,setEmail]=useState("")
   
+  const handlePin=(e)=>setPin(e.target.value)
+  const handleHouseNo=(e)=>setHouseNo(e.target.value)
+  const handleArea=(e)=>setArea(e.target.value)
+  const handleName=(e)=>setName(e.target.value)
+  const handlePhone=(e)=>setphone(e.target.value)
+  const handleEmail=(e)=>setEmail(e.target.value)
+
 const handleCartProduct=()=>{
 axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
   headers:{
@@ -34,10 +47,11 @@ console.log(err)
 })
 }
   
+const HandleSubmitedAddress=()=>{
 
-useEffect(()=>{
-  handleCartProduct()
-},[])
+}
+
+
 
   return (
 <>
@@ -80,10 +94,10 @@ Detailed address will help our delivery partner reach your doorstep quickly
 
 
 <VStack w="full" alignItems={"flex-start"} pl={8} h="170px" justify={"center"}  _hover={{background:"rbga(230, 237, 247,0.9)"}} borderRadius={"10px"} border={"1px dashed #e0e0e0"}>
-  <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>Name</Text>
-  <Text  fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>town,street,State</Text>
-  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>city</Text>
-  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>8745858585</Text>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.92)" fontWeight={500}>{name||"Govind Kumawat"}</Text>
+  <Text  fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>{houseNo||"Kachhwa"}</Text>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>{(area,pin)||"sikar, Rajasthan"}</Text>
+  <Text fontSize={"14px"} color="rgba(0,19,37,.64)" fontWeight={500}>{phone|| "+91 1234567890"}</Text>
   <HStack>
       <Button  fontSize={"14px"} colorScheme="gray" variant={"outline"} size="sm" color="#3f414d"  fontWeight={500}>
         Edit
@@ -253,9 +267,9 @@ backgroundColor: "#C1BFC1"
 
    <VStack w="full" align={"flex-start"} py={2}>
     <Text fontWeight={600} color="#282c3f" fontSize={"20px"}>Address</Text>
-    <Input variant={"filled"} focusBorderColor="#dedede"  w="full" placeholder='Pincode'></Input>
-    <Input  variant={"filled"}  focusBorderColor="#dedede"  w="full" placeholder='House/Flat/Office No.'></Input>
-    <Textarea  variant={"filled"}  focusBorderColor="#dedede"  w="full" h="150px" placeholder='Road Name/Area/Colony'></Textarea>
+    <Input variant={"filled"} value={pin} onChange={handlePin} focusBorderColor="#dedede"  w="full" placeholder='Pincode' ></Input>
+    <Input  variant={"filled"}  value={houseNo} onChange={handleHouseNo}  focusBorderColor={"#dedede"}  w="full" placeholder='House/Flat/Office No.'></Input>
+    <Textarea  variant={"filled"} value={area} onChange={handleArea}  focusBorderColor="#dedede"  w="full" h="150px" placeholder='Road Name/Area/Colony'></Textarea>
    </VStack>
 
    <HStack w="full" justify="space-between">
@@ -273,9 +287,9 @@ backgroundColor: "#C1BFC1"
 <Text fontSize={"12px"} color="rgba(0,19,37,.92)">Information provided here will be used to contact you for delivery updates </Text>
 </VStack>
 
-    <Input focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Name'></Input>
-    <Input focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Phone'></Input>
-    <Input focusBorderColor={"#dedede"} variant="filled" w="full"  placeholder='Email ID (Optional)'></Input>
+    <Input value={name} onChange={handleName} focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Name'></Input>
+    <Input value={phone} onChange={handlePhone} focusBorderColor={"#dedede"} variant="filled" w="full" placeholder='Phone'></Input>
+    <Input value={email} onChange={handleEmail} focusBorderColor={"#dedede"} variant="filled" w="full"  placeholder='Email ID (Optional)'></Input>
   </VStack>
 
               </VStack>
