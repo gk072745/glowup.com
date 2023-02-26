@@ -46,7 +46,8 @@ export default function SignupCard() {
 	const navigate = useNavigate();
 	// end router navigate
 	const handleSubmit = async () => {
-		const URL = "http://localhost:8080";
+		const URL = "https://periwinkle-sheep-hem.cyclic.app";
+	// const URL = "http://localhost:8080";
 		console.log(username, email, password);
 		axios.defaults.withCredentials = true;
 		let res = await axios.post(`${URL}/user/register`, {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SingleCartproduct = ({MRP, discount, id,images,img,price,rating,ratungT,size,title,type,setTotalAmount,setTotalMRP,setTotalMRPDiscount, handleCartProducts}) => {
+const singleCartproduct = () => {
 
     const handleQty=( e )=>{
         e=e.target.value
@@ -74,4 +74,4 @@ const SingleCartproduct = ({MRP, discount, id,images,img,price,rating,ratungT,si
   )
 }
 
-export default SingleCartproduct
+export default singleCartproduct

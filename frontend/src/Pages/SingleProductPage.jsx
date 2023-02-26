@@ -21,6 +21,7 @@ import {
   Center,
   SimpleGrid,
   useToast,
+  useToast,
 } from "@chakra-ui/react";
 import {  ChevronRightIcon } from "@chakra-ui/icons";
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -31,10 +32,12 @@ import { SiShopify } from "react-icons/si";
 import { GiReturnArrow } from "react-icons/gi";
 import { TiThumbsUp } from "react-icons/ti";
 import { TfiLocationPin } from "react-icons/tfi";
-import { useParams} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import "./singleproduct.css";
+import Cookies from "js-cookie";
 
 const SingleProductPage = () => {
   const toast=useToast()
@@ -42,35 +45,20 @@ const SingleProductPage = () => {
   const { id } = useParams();
   const [singleProduct, setSingleProduct] = useState({});
   const [pincode, setPin] = useState("");
-  const {
-    brand,
-    category,
-    description,
-    image_link,
-    name,
-    price,
-    product_type,
-    rating,
-    tag_list,
-  } = singleProduct;
+  const navigate=useNavigate()
+  const { brand,category,description,image_link,name,price,product_type,rating,tag_list,} = singleProduct;
   const totalRating = Math.floor(Math.random() * 100) + 1;
   const mrp = Math.floor(price * 1.2);
   
 
 
 
-  useEffect(() => {
-    axios({
-      url: `https://periwinkle-sheep-hem.cyclic.app/products/product/${id}`,
-    }).then((res) => {
-      setSingleProduct(res.data.data);
-    });
-  }, [id]);
 
 
 
 
 const handlePin = (pin) => {
+
     axios({
       url: "https://api.postalpincode.in/pincode/" + pin,
     })
@@ -90,13 +78,16 @@ const handlePin = (pin) => {
   };
 
 const handleAddcart=(id)=>{
-  axios({
-    url:`"https://periwinkle-sheep-hem.cyclic.app/cart/add/${id}`,
-    method:"post",
+
+  // if( !isLoggedin){
+  //  return navigate("/login")
+  // }
+  axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${id}`,null,{
     headers:{
-      // Authorization:token
+      Authorization: Cookies.get("jwt_token")
     }
-  }).then((res)=>{
+})
+.then((res)=>{
     toast({
       title: "Product successfully added in cart",
       variant:"top-accent",
@@ -107,15 +98,52 @@ const handleAddcart=(id)=>{
     })
    }).catch((err)=>{
     toast({
-      title: "Product already present in cart qty increased",
+      title: "Something went wrong!",
       variant:"top-accent",
       isClosable: true,
       position:'top-right',
       status:"error",
-      duration:1500,
+      duration:1500
     })
   })
 }
+
+const handleAddWishlist=(id)=>{
+  if(!isLoggedin) return navigate("/signup")
+  axios.post(`https://periwinkle-sheep-hem.cyclic.app/wishlist/add/${id}`,null,{
+    headers:{
+      Authorization: Cookies.get("jwt_token")
+    }
+})
+.then((res)=>{
+    toast({
+      title: "Product successfully added in wishlit",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"success",
+      duration:1500
+    })
+   }).catch((err)=>{
+    toast({
+      title: "Something went wrong!",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"error",
+      duration:1500
+    })
+  })
+}
+
+useEffect(() => {
+  axios({
+    url: `https://periwinkle-sheep-hem.cyclic.app/products/product/${id}`,
+  }).then((res) => {
+    setSingleProduct(res.data.data);
+  });
+}, [id]);
+
 
   return (
     <div>
@@ -149,7 +177,8 @@ const handleAddcart=(id)=>{
               <VStack w="full">
                 <Box w="full" textAlign={"right"}>
                   <Icon
-                    as={true ? AiFillHeart : CiHeart}
+                  onClick={()=>handleAddWishlist(id)}
+                    as={false ? AiFillHeart : CiHeart}
                     color={"#fc2779"}
                     fontSize={"32px"}
                   ></Icon>
@@ -289,6 +318,7 @@ const handleAddcart=(id)=>{
                         colorScheme={"pink"}
                         borderRadius={"2px"}
                         w="80%"
+                        onClick={()=>handleAddcart(id)}
                         onClick={()=>handleAddcart(id)}
                       >
                         Add to Bag
@@ -831,6 +861,8 @@ const handleAddcart=(id)=>{
                   borderRadius={0}
                   onClick={()=>handleAddcart(id)}
 
+                  onClick={()=>handleAddcart(id)}
+
                 >
                   Add to Bag
                 </Button>
@@ -847,10 +879,16 @@ const handleAddcart=(id)=>{
         <Box borderRadius={"0px 5px 5px 0px"} py={"7px"} w="75%"  bgColor="#fc2779" textAlign={"center"}>
                        
         <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
+                       
+        <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
         </Box>
       </HStack>
     </div>
   );
+
+
+
+
 
 
 
