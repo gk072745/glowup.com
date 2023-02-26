@@ -15,7 +15,7 @@ var cookieParser = require("cookie-parser");
 app.use(
 	cors({
 		credentials: true,
-		origin: "http://localhost:3000",
+		origin: true,
 		exposedHeaders: ["Set-cookie"],
 	})
 );
