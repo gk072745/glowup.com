@@ -1,5 +1,5 @@
 import { Box, Button, Center,  Drawer, DrawerBody, DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,Grid,DrawerCloseButton,Select,Radio,Textarea,Switch, Heading, HStack, Text,Image, VStack,Icon,AccordionItem,Accordion,AccordionButton,AccordionPanel,AccordionIcon, useDisclosure, Input } from '@chakra-ui/react'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import OtherNavbar from '../components/OtherNavbar'
 import {BiPlus} from "react-icons/bi"
 import {SlLocationPin} from "react-icons/sl"
@@ -7,25 +7,24 @@ import {TbCurrencyRupee} from "react-icons/tb"
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import CartProducts from './../components/CartProducts';
 import PaymentDetails from './../components/PaymentDetails';
-import { useRef } from 'react';
-import AddressDrawer from '../components/OneItem/AddressDrawer'
-  import {BsArrowLeft} from "react-icons/bs"
-  import {CiDiscount1} from "react-icons/ci"
-  import {RxCross2} from "react-icons/rx"
-  import {FaGreaterThan} from "react-icons/fa"
-  import {TfiInfoAlt} from "react-icons/tfi"
-import { StackDivider } from '@chakra-ui/react';
+import {RxCross2} from "react-icons/rx";
 import "./address.css"
+import { useNavigate } from 'react-router-dom'
 
 
 const Address = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const [totalMRP, setTotalMRP] = useState(0)
+  const [totalMRPDiscount, setTotalMRPDiscount] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(totalMRP - totalMRPDiscount)
 
+  const navigate=useNavigate()
 
   return (
 <>
 <OtherNavbar/>
+
 <Box w="full" className='mainAddresbox' px="150px" py={8} >
 
 <HStack w="full" justify={"space-between"}>
@@ -71,7 +70,7 @@ Detailed address will help our delivery partner reach your doorstep quickly
       <Button  fontSize={"14px"} colorScheme="gray" variant={"outline"} size="sm" color="#3f414d"  fontWeight={500}>
         Edit
       </Button>
-      <Button colorScheme={"none"} color="#fff"  fontSize={"14px"}  variant={"outline"} size="sm" bgColor={"#fc2779"}  fontWeight={500}  rightIcon={<ArrowForwardIcon />}>
+      <Button onClick={()=>navigate("/payment")} colorScheme={"none"} color="#fff"  fontSize={"14px"}  variant={"outline"} size="sm" bgColor={"#fc2779"}  fontWeight={500}  rightIcon={<ArrowForwardIcon />}>
         Deliver here
       </Button>
   </HStack>
@@ -121,7 +120,8 @@ backgroundColor: "#EBEBEB"
 backgroundColor: "#C1BFC1"
 },
 }} pb={4} overflowY="scroll" maxHeight={"300px"}>
- <CartProducts/>
+          <CartProducts setTotalAmount={setTotalAmount} setTotalMRP={setTotalMRP} setTotalMRPDiscount={setTotalMRPDiscount} />
+
 </AccordionPanel>
 </AccordionItem>
 
@@ -142,7 +142,8 @@ backgroundColor: "#C1BFC1"
    </AccordionButton>
 </h2>
 <AccordionPanel pb={4} >
-<PaymentDetails/>
+<PaymentDetails totalAmount={totalAmount} totalMRP={totalMRP} totalMRPDiscount={totalMRPDiscount} />
+
 <HStack p={2}>
 
 <Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>
@@ -268,7 +269,6 @@ backgroundColor: "#C1BFC1"
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
-
 
 </>
 

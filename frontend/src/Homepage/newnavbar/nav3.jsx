@@ -12,12 +12,14 @@ export default function Navbardrop() {
   let [index, setIndex] = useState(8);
 
   const mouseOver = (e) => {
-    e.currentTarget.classList.add("height");
+    console.log(e,1)
+    e.currentTarget.classList?.add("height");
   };
   // console.log(name);
 
   const mouseOut = (e) => {
-    e.currentTarget.classList.remove("height");
+    e.currentTarget.classList?.remove("height");
+
   };
 
   document.body.addEventListener("click", function (e) {
@@ -31,9 +33,9 @@ export default function Navbardrop() {
   });
 
   useEffect(() => {
-    document.querySelectorAll("li")[index].classList.add("li");
+    document.querySelectorAll("li")[index]?.classList?.add("li");
     return () => {
-      document.querySelectorAll("li")[index].classList.remove("li");
+      document.querySelectorAll("li")[index]?.classList?.remove("li");
     };
   });
 

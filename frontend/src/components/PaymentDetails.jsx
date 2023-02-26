@@ -1,33 +1,28 @@
-import {
+import {HStack, Text, VStack } from "@chakra-ui/react";
+  // import {ArrowForwardIcon} from "@chakra-ui/icons"
+  // import {BsArrowLeft} from "react-icons/bs"
+  // import {CiDiscount1} from "react-icons/ci"
+  // import {RxCross2} from "react-icons/rx"
+  // import {FaGreaterThan} from "react-icons/fa"
+  // import {TfiInfoAlt} from "react-icons/tfi"
+  // import { useRef } from "react";
+const PaymentDetails = ({ totalAmount,totalMRP,totalMRPDiscount}) => {
 
-    HStack,
-    Text,
-    VStack,
-
-  } from "@chakra-ui/react";
-  import {ArrowForwardIcon} from "@chakra-ui/icons"
-  import {BsArrowLeft} from "react-icons/bs"
-  import {CiDiscount1} from "react-icons/ci"
-  import {RxCross2} from "react-icons/rx"
-  import {FaGreaterThan} from "react-icons/fa"
-  import {TfiInfoAlt} from "react-icons/tfi"
-  import { useRef } from "react";
-const PaymentDetails = () => {
   return (
   <>
    <VStack  alignItems={"flex-start"}  w={"full"} border={"1px solid #dedede"} p={"15px"} borderRadius={"6px"} >
                 <Text fontSize={"18px"} color="#000" fontWeight={500}>Price Details</Text>
                 <HStack w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Bag MRP (2 items)</Text>
-                  <Text>$2345</Text>
+                  <Text>${totalMRP}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Bag Discount</Text>
-                  <Text>$2345</Text>
+                  <Text>${totalMRPDiscount}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Discount</Text>
-                  <Text>$2</Text>
+                  <Text>$0</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Shipping</Text>
@@ -38,7 +33,7 @@ const PaymentDetails = () => {
                 </HStack>
                 <HStack  w={"full"}  fontSize={"17px"} color="#000" fontWeight={500} justify={"space-between"}>
                   <Text>You Pay</Text>
-                  <Text >$2344</Text>
+                  <Text >${totalAmount}</Text>
                 </HStack>
           
               </VStack>
