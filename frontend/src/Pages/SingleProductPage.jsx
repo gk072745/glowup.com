@@ -20,6 +20,7 @@ import {
   StackDivider,
   Center,
   SimpleGrid,
+  useToast,
 } from "@chakra-ui/react";
 import {  ChevronRightIcon } from "@chakra-ui/icons";
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -32,9 +33,12 @@ import { TiThumbsUp } from "react-icons/ti";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useParams} from "react-router-dom";
 import axios from "axios";
+import { useSelector } from 'react-redux'
 import "./singleproduct.css";
 
 const SingleProductPage = () => {
+  const toast=useToast()
+  const {login,isLoggedin,isAdmin}=useSelector((store)=>store.userManager)
   const { id } = useParams();
   const [singleProduct, setSingleProduct] = useState({});
   const [pincode, setPin] = useState("");
@@ -51,17 +55,22 @@ const SingleProductPage = () => {
   } = singleProduct;
   const totalRating = Math.floor(Math.random() * 100) + 1;
   const mrp = Math.floor(price * 1.2);
+  
+
+
 
   useEffect(() => {
     axios({
       url: `https://periwinkle-sheep-hem.cyclic.app/products/product/${id}`,
-      method: "get",
     }).then((res) => {
       setSingleProduct(res.data.data);
     });
   }, [id]);
 
-  const handlePin = (pin) => {
+
+
+
+const handlePin = (pin) => {
     axios({
       url: "https://api.postalpincode.in/pincode/" + pin,
     })
@@ -79,6 +88,34 @@ const SingleProductPage = () => {
         console.log("err");
       });
   };
+
+const handleAddcart=(id)=>{
+  axios({
+    url:`"https://periwinkle-sheep-hem.cyclic.app/cart/add/${id}`,
+    method:"post",
+    headers:{
+      // Authorization:token
+    }
+  }).then((res)=>{
+    toast({
+      title: "Product successfully added in cart",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"success",
+      duration:1500
+    })
+   }).catch((err)=>{
+    toast({
+      title: "Product already present in cart qty increased",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"error",
+      duration:1500,
+    })
+  })
+}
 
   return (
     <div>
@@ -252,6 +289,7 @@ const SingleProductPage = () => {
                         colorScheme={"pink"}
                         borderRadius={"2px"}
                         w="80%"
+                        onClick={()=>handleAddcart(id)}
                       >
                         Add to Bag
                       </Button>
@@ -791,6 +829,8 @@ const SingleProductPage = () => {
                   fontWeight={600}
                   color="#fff"
                   borderRadius={0}
+                  onClick={()=>handleAddcart(id)}
+
                 >
                   Add to Bag
                 </Button>
@@ -805,11 +845,16 @@ const SingleProductPage = () => {
         <Button w="full" colorScheme={"none"}  borderRadius={0}  ><Icon color="#fc2779" fontSize="40px" as={false?AiFillHeart:CiHeart } /></Button>
         </Box>
         <Box borderRadius={"0px 5px 5px 0px"} py={"7px"} w="75%"  bgColor="#fc2779" textAlign={"center"}>
-        <Button  w="full" fontSize="20px" colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4}>Add to Bag</Text></Button>
+                       
+        <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
         </Box>
       </HStack>
     </div>
   );
+
+
+
+
 };
 
 export default SingleProductPage;

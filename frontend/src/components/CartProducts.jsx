@@ -1,6 +1,9 @@
 import React, { useEffect} from 'react'
 import { VStack,HStack,StackDivider,Box,Image,Text,Icon} from '@chakra-ui/react'
 import {RxCross2} from "react-icons/rx"
+import axios from "axios";
+import Cookies from "js-cookie"
+
 const CartProducts = ({setTotalMRPDiscount,setTotalMRP,setTotalAmount}) => {
 const cart={
   "status": 200,
@@ -113,6 +116,27 @@ cart.data?.map((el,i)=>{
 },[])
 
 
+
+const handleQty=( {id,quantity,price} )=>{
+
+  axios({
+method:"patch",
+url:`https://periwinkle-sheep-hem.cyclic.app/update/${id}`,
+data:{
+  quantity
+},
+headers:{
+  Authorization:Cookies.get("jwt_token")
+}
+
+  }).then((res)=>{
+    // getData()
+  }).catch((err)=>{
+    console.log(err)
+  })
+}
+
+
 // const handleQty=( {e,price} )=>{
 //   e=e.target.value
 //   setTotalMRP((prev)=> prev+MRP*(e-currentQty)  el.price*cart.cart[i].quantity)
@@ -120,6 +144,7 @@ cart.data?.map((el,i)=>{
 //   setTotalAmount((prev)=>prev+price*(e-currentQty))
 //   setCurrentQty(e)
 // }
+
 const handleDelete=(_id)=>{
   // axios({
   //   method:"delete",
@@ -161,9 +186,15 @@ const handleDelete=(_id)=>{
     <HStack   w={"full"} py={"5px"} px={"15px"} borderRadius={"6px"}  justifyContent={"space-between"}>
       <HStack>
         <Text>Quantity:</Text>
+
+ <Text cursor={"pointer"} onClick={()=>handleQty(el._id,cart.cart[id].quantity+1,el.price)}>+</Text>
+ <Text color="rgba(0,16,36,.92)" fontWeight={400}>{cart.cart[id].quantity}</Text>
+ <Text cursor={"pointer"} onClick={()=>handleQty(el._id,cart.cart[id].quantity-1,el.price)}>-</Text>
+
  <Text>+</Text>
  <Text color="rgba(0,16,36,.92)" fontWeight={400}>{cart.cart[id].quantity}</Text>
  <Text>-</Text>
+
        </HStack>
     <Text  fontSize={"16px"} color="rgba(0,16,36,.92)" fontWeight={400}>${el.price}</Text>
 
