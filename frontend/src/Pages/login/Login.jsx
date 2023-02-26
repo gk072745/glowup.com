@@ -25,10 +25,11 @@ const divStyles = {
 	padding: "20px",
 };
 export default function Login() {
-	axios.defaults.withCredentials = true;
+	// axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
 	const URL = "https://periwinkle-sheep-hem.cyclic.app";
+	// const URL = "http://localhost:8080";
 
 	const navigate = useNavigate();
 
@@ -72,7 +73,13 @@ export default function Login() {
 
 	// ! experminetal => not reuired to keep
 	const getstuff = async () => {
-		let req = await axios.get(`${URL}/user/getdetails`);
+		let req = await axios.get(`${URL}/user/getdetails`, {
+			withCredentials: true,
+		});
+		// fetch(`${URL}/user/getdetails`)
+		// 	.then((res) => res.json())
+		// 	.then((res) => console.log(res))
+		// 	.catch((err) => console.log(err));
 		console.log(req);
 	};
 

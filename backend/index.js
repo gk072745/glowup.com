@@ -12,7 +12,13 @@ const cartRouter = require("./Routes/cart.routes");
 const wishlistRouter = require("./Routes/wishlist.routes");
 var cookieParser = require("cookie-parser");
 // * middleware
-app.use(cors({ credentials: true, origin: true }));
+app.use(
+	cors({
+		credentials: true,
+		origin: true,
+		exposedHeaders: ["Set-cookie"],
+	})
+);
 app.use(express.json());
 app.use(cookieParser());
 
