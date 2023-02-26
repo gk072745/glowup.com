@@ -1,13 +1,16 @@
 import { Box,  HStack, Image,Text } from '@chakra-ui/react'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import logo from "../Assets/glow.png"
 import "./otherNavbar.css"
 const OtherNavbar = () => {
+const navigate=useNavigate()
+
   return (
  <Box w="full" px={"8"} py={1} borderBottom="1px solid #e0e0e0">
     <HStack w="full" justify={"space-between"}>
        
-              <Image  className='imageLogodsf' w="120px"  src={logo} />
+              <Image onClick={()=>navigate("/")} className='imageLogodsf' w="120px"  src={logo} />
         
 
 <HStack w="40%" className='middleothernavbardfssf' justifyContent={"space-between"}>

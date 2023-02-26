@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const userAuthenticate = async (req, res, next) => {
 	// const token = req.headers.authorization;
-	const { jwt_token } = req.cookies;
+	const jwt_token = req.headers.authorization;
 	console.log(req.cookies);
 	if (!jwt_token) {
 		res.status(401);

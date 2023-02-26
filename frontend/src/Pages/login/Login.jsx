@@ -17,6 +17,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const divStyles = {
@@ -25,10 +26,16 @@ const divStyles = {
 	padding: "20px",
 };
 export default function Login() {
-	axios.defaults.withCredentials = true;
+	// axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
+	// const URL = "https://periwinkle-sheep-hem.cyclic.app";
 	const URL = "http://localhost:8080";
+
+	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
+		(store) => store.userManager
+	);
+	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
@@ -36,7 +43,8 @@ export default function Login() {
 	const isAuthenticated = useIsAuthenticated();
 	const signOut = useSignOut();
 	const toast = useToast();
-
+	// something
+	// something
 	const handleSubmit = async () => {
 		try {
 			let req = await axios.post(`${URL}/user/login`, {
@@ -47,6 +55,7 @@ export default function Login() {
 				token: req.data.token,
 				expiresIn: 3600,
 				authState: { email, admin: req.data.details.isAdmin },
+				tokenType: "Bearer",
 			});
 			toast({
 				title: "Login success",
@@ -72,7 +81,13 @@ export default function Login() {
 
 	// ! experminetal => not reuired to keep
 	const getstuff = async () => {
-		let req = await axios.get(`${URL}/user/getdetails`);
+		let req = await axios.get(`${URL}/user/getdetails`, {
+			withCredentials: true,
+		});
+		// fetch(`${URL}/user/getdetails`)
+		// 	.then((res) => res.json())
+		// 	.then((res) => console.log(res))
+		// 	.catch((err) => console.log(err));
 		console.log(req);
 	};
 
@@ -80,7 +95,12 @@ export default function Login() {
 		signOut();
 	};
 	// ^ end of getstuff
-
+	useEffect(() => {
+		console.log(login, isLoggedin, userdetails);
+		if (isLoggedin) {
+			navigate("/");
+		}
+	}, []);
 	return (
 		<Flex
 			minH={"100vh"}

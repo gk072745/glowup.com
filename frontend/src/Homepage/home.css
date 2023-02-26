@@ -1,9 +1,8 @@
 .headings{
-    margin:auto;
-    font-size:25px;
+    font-size:30px;
     font-weight:600;
-    
-    
+    margin-left: 70px;
+    margin-top: 40px;
 }
 
 
@@ -11,7 +10,7 @@
 @media screen and (max-width:600px) {
     .headings{
         text-align:center;
-        
+        margin-left: 0px;
     }
     
 }

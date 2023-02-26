@@ -11,10 +11,14 @@ import PaymentDetails from '../components/PaymentDetails'
 import del from "../Assets/del.png"
 import CartProducts from '../components/CartProducts'
 import "./payment.css"
+import { useNavigate } from 'react-router-dom'
 
 
-const Payments = () => {
-
+const Payments = ( ) => {
+  const navigate=useNavigate()
+ const [totalMRP, setTotalMRP] = useState(0)
+  const [totalMRPDiscount, setTotalMRPDiscount] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(totalMRP - totalMRPDiscount)
   const [cardNo, setCard] = useState(null)
   const handleCardChange = (e) => setCard(e.target.value)
   const [date, setdate] = useState(null)
@@ -152,8 +156,8 @@ const Payments = () => {
 <Text color="#5198ff"  fontWeight={500} fontSize={"12px"} >Know More</Text>
     </HStack> 
 
-    <Button className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
-      Pay $ 234
+    <Button onClick={()=>navigate("/")} className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+      Pay $ {totalAmount}
     </Button>
         </VStack>
 
@@ -235,7 +239,7 @@ const Payments = () => {
 
 
 
-<Button colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+<Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
 
@@ -295,7 +299,7 @@ const Payments = () => {
     
  <VStack>
   <Image src={del} boxSize={"300px"}></Image>
-  <Button colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+  <Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
  </VStack>
@@ -352,7 +356,8 @@ backgroundColor: "#EBEBEB"
 backgroundColor: "#C1BFC1"
 },
 }} pb={4} overflowY="scroll" maxHeight={"300px"}>
- <CartProducts/>
+          <CartProducts setTotalAmount={setTotalAmount} setTotalMRP={setTotalMRP} setTotalMRPDiscount={setTotalMRPDiscount} />
+
 </AccordionPanel>
 </AccordionItem>
 
@@ -373,7 +378,7 @@ backgroundColor: "#C1BFC1"
    </AccordionButton>
 </h2>
 <AccordionPanel pb={4} >
-<PaymentDetails/>
+<PaymentDetails totalAmount={totalAmount} totalMRP={totalMRP} totalMRPDiscount={totalMRPDiscount} />
 <HStack p={2}>
 
 <Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>

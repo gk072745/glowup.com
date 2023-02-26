@@ -31,13 +31,14 @@ userRouter.post("/login", async (req, res) => {
 						{ email: user[0].email },
 						process.env.JWT_SECRET
 					);
-					// res.setHeader("Set-Cookie", "isLoggedin=true");
+					res.setHeader("Cache-Control", "private");
 					res.cookie("jwt_token", token, {
 						path: "/",
 						httpOnly: true,
 						expires: new Date(Date.now() + 900000),
 						sameSite: "none",
 						secure: false,
+						domain: "https://periwinkle-sheep-hem.cyclic.app",
 					});
 					res.status(200);
 					res.send({

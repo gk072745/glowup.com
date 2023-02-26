@@ -10,9 +10,6 @@ import {
 	USER_REGISTER_LOADING,
 } from "./auth.types";
 
-import Cookies from "js-cookie";
-import axios from "axios";
-
 let initial_check = false;
 let initial_dets = {};
 
@@ -60,6 +57,7 @@ export const userReducer = (state = userInitialState, { type, payload }) => {
 			};
 		}
 		case USER_LOGIN_SUCCESS: {
+			console.log(payload);
 			return {
 				...state,
 				login: {
