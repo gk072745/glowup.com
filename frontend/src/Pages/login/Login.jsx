@@ -62,11 +62,11 @@ export default function Login() {
 				title: "Login success",
 				description: "You will be redirected to homepage shortly.",
 				status: "success",
-				duration: 2000,
+				duration: 4000,
 				isClosable: true,
 			});
-			// setTimeout(() => navigate("/"), 2000);
 			loginUser(dispatch, { email, password });
+			setTimeout(() => navigate("/"), 3000);
 			console.log(req);
 		} catch (err) {
 			toast({
