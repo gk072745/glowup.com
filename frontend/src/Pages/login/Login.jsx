@@ -20,6 +20,7 @@ import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../redux/auth/auth.actions";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -32,11 +33,6 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 	const URL = "https://periwinkle-sheep-hem.cyclic.app";
 	// const URL = "http://localhost:8080";
-
-	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
-		(store) => store.userManager
-	);
-	const dispatch = useDispatch();
 
 	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
 		(store) => store.userManager
@@ -70,6 +66,7 @@ export default function Login() {
 				isClosable: true,
 			});
 			// setTimeout(() => navigate("/"), 2000);
+			loginUser(dispatch, { email, password });
 			console.log(req);
 		} catch (err) {
 			toast({
@@ -120,7 +117,7 @@ export default function Login() {
 			<button onClick={getstuff}>button</button>
 			<br />
 			<button onClick={singout}>sign out</button>
-			{isAuthenticated() ? "Yes" : "No"}
+			{isLoggedin ? "Yes" : "No"}
 			{/* end of test */}
 			<div style={divStyles}>
 				<Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>

@@ -16,6 +16,7 @@ import {
 	Alert,
 	AlertIcon,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -36,6 +37,7 @@ export default function SignupCard() {
 	const [password, setPassword] = useState("");
 	const [match, setMatch] = useState(false);
 	const [check, setCheck] = useState("");
+	const toast = useToast();
 	// redux store
 	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
 		(store) => store.userManager
@@ -47,15 +49,32 @@ export default function SignupCard() {
 	// end router navigate
 	const handleSubmit = async () => {
 		const URL = "https://periwinkle-sheep-hem.cyclic.app";
-	// const URL = "http://localhost:8080";
+		// const URL = "http://localhost:8080";
 		console.log(username, email, password);
 		axios.defaults.withCredentials = true;
-		let res = await axios.post(`${URL}/user/register`, {
-			name: username,
-			email: email,
-			password: password,
-		});
-		console.log(res);
+		try {
+			let res = await axios.post(`${URL}/user/register`, {
+				name: username,
+				email: email,
+				password: password,
+			});
+			console.log(res);
+			toast({
+				title: "Account created.",
+				description: "Please Login to your account.",
+				status: "success",
+				duration: 3000,
+				isClosable: true,
+			});
+		} catch (err) {
+			toast({
+				title: "Something went wrong",
+				description: "Please try again",
+				status: "error",
+				duration: 3000,
+				isClosable: true,
+			});
+		}
 	};
 	useEffect(() => {
 		if (isLoggedin) {
