@@ -13,7 +13,11 @@ const wishlistRouter = require("./Routes/wishlist.routes");
 var cookieParser = require("cookie-parser");
 // * middleware
 app.use(
-	cors({ credentials: true, origin: true, exposedHeaders: ["Set-cookie"] })
+	cors({
+		credentials: true,
+		origin: "http://localhost:3000",
+		exposedHeaders: ["Set-cookie"],
+	})
 );
 app.use(express.json());
 app.use(cookieParser());
