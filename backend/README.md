@@ -70,7 +70,7 @@
         
   - "/login" for logging in - **POST request**
       - returns a cookie with the token
-  - "/" returns the details of the logged in user - **GET request**
+  - "/getdetails" returns the details of the logged in user - **GET request**
   
 # admin routes (/admin)
   - "/products" gets the products from the db. Has the same queries as the products route - **GET request**
