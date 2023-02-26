@@ -28,7 +28,7 @@ export default function Login() {
 	axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
-	const URL = "http://localhost:8080";
+	const URL = "https://periwinkle-sheep-hem.cyclic.app";
 
 	const navigate = useNavigate();
 
