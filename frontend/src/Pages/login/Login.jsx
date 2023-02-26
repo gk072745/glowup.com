@@ -17,6 +17,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const divStyles = {
@@ -28,8 +29,13 @@ export default function Login() {
 	// axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
-	const URL = "https://periwinkle-sheep-hem.cyclic.app";
-	// const URL = "http://localhost:8080";
+	// const URL = "https://periwinkle-sheep-hem.cyclic.app";
+	const URL = "http://localhost:8080";
+
+	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
+		(store) => store.userManager
+	);
+	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
 
@@ -49,6 +55,7 @@ export default function Login() {
 				token: req.data.token,
 				expiresIn: 3600,
 				authState: { email, admin: req.data.details.isAdmin },
+				tokenType: "Bearer",
 			});
 			toast({
 				title: "Login success",
@@ -88,7 +95,12 @@ export default function Login() {
 		signOut();
 	};
 	// ^ end of getstuff
-
+	useEffect(() => {
+		console.log(login, isLoggedin, userdetails);
+		if (isLoggedin) {
+			navigate("/");
+		}
+	}, []);
 	return (
 		<Flex
 			minH={"100vh"}

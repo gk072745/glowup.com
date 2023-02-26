@@ -46,12 +46,17 @@ export const logoutUser = async (dispatch) => {
 	}
 };
 
-export const loggedIn = async (dispatch) => {
+export const loggedIn = async (dispatch, token) => {
 	dispatch({ type: USER_LOGIN_LOADING });
 	try {
-		let res = await axios.get(`${URL}/user/`);
+		console.log(token);
+		let res = await axios.get(`${URL}/user/getdetails`, {
+			headers: {
+				Authorization: token,
+			},
+		});
 		console.log(res.data);
-		dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data.details });
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data[0] });
 	} catch (error) {
 		dispatch({ type: USER_LOGIN_ERROR });
 	}
