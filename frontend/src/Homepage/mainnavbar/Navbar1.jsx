@@ -1,39 +1,9 @@
-import {
-    Box,
-    Flex,
-    Text,
-    IconButton,
-    Button,
-    Stack,
-    Collapse,
-    Icon,
-    Link,
-    Popover,
-    PopoverTrigger,
-    useColorModeValue,
-    useDisclosure,
-    Heading,
-    Divider,
-    Avatar,
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    HStack,
-    VStack,
-    Radio,
-    Image,
-    StackDivider,
-    Select
-  } from "@chakra-ui/react";
-  
-  import { FaShoppingCart } from "react-icons/fa";
-  import { Link as NavLink, Navigate, useNavigate } from "react-router-dom";
-  
-  import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
- import logo from "../Glow.png"
+import {Box,Flex,Text,IconButton,Button,Stack,Collapse,Icon,Link,Popover,PopoverTrigger,useColorModeValue,useDisclosure,Heading,Divider,Avatar,Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,HStack,VStack,Radio,Image,StackDivider,Select, useToast} from "@chakra-ui/react";
+
+import { FaShoppingCart } from "react-icons/fa";
+import { Link as NavLink, Navigate, useNavigate } from "react-router-dom";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import logo from "../Glow.png"
 import Buttonsign from "../navbar/button/buttonsignin";
 import {ArrowForwardIcon} from "@chakra-ui/icons"
 import {BsArrowLeft} from "react-icons/bs"
@@ -41,10 +11,13 @@ import {CiDiscount1} from "react-icons/ci"
 import {RxCross2} from "react-icons/rx"
 import {FaGreaterThan} from "react-icons/fa"
 import {TfiInfoAlt} from "react-icons/tfi"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CartProducts from "../../components/CartProducts";
 import PaymentDetails from "../../components/PaymentDetails";
-  
+import { useSelector } from "react-redux";
+import axios from "axios";
+ import Cookies from "js-cookie"; 
+ 
   const NAV_ITEMS = [
     {
       label: "Categories",
@@ -78,117 +51,44 @@ import PaymentDetails from "../../components/PaymentDetails";
 //       href: "/signup",
 //     },
 //   ];
-const cart={
-  "status": 200,
-  "data": [
-    {
-      "_id": "63f4af3dc4cbdf746de190b0",
-      "name": "Blotted Lip",
-      "brand": "colourpop",
-      "price": 5.5,
-      "description": "Blotted Lip Sheer matte lipstick that creates the perfect popsicle pout! Formula is lightweight, matte and buildable for light to medium coverage.",
-      "image_link": "https://cdn.shopify.com/s/files/1/1338/0845/products/brain-freeze_a_800x1200.jpg?v=1502255076",
-      "rating": 3.6,
-      "category": "lipstick",
-      "product_type": "lipstick",
-      "tag_list": [
-        "cruelty free",
-        "Vegan"
-      ],
-      "api_featured_image": "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/001/047/original/open-uri20180708-4-e7idod?1531087336",
-      "product_colors": [
-        {
-          "hex_value": "#B72227",
-          "_id": "63f4af3dc4cbdf746de190b1"
-        },
-        {
-          "hex_value": "#BB656B",
-          "_id": "63f4af3dc4cbdf746de190b2"
-        },
-        {
-          "hex_value": "#8E4140",
-          "_id": "63f4af3dc4cbdf746de190b3"
-        },
-        {
-          "hex_value": "#A12A33",
-          "_id": "63f4af3dc4cbdf746de190b4"
-        },
-        {
-          "hex_value": "#904550",
-          "_id": "63f4af3dc4cbdf746de190b5"
-        },
-        {
-          "hex_value": "#452222",
-          "_id": "63f4af3dc4cbdf746de190b6"
-        },
-        {
-          "hex_value": "#7C3F35",
-          "_id": "63f4af3dc4cbdf746de190b7"
-        }
-      ],
-      "__v": 0
-    },
-    {
-      "_id": "63f4b0bd4d0293ee034a546e",
-      "name": "Almay Intense i-Colour Play Up Liquid Liner",
-      "brand": "almay",
-      "price": 10.99,
-      "description": "\n\nPlay up your eye color with dramatic contrasting color! Define your eyes with bold color. Comes with a precision tip applicator so you can smoothly and easily create a high impact look. Features: \n\nHypoallergenic\nnon-irritating\nOphthalmologist\nClinically and allergy tested\nSuitable for contact lens wearers\n\n\n",
-      "image_link": "https://d3t32hsnjxo7q6.cloudfront.net/i/6cf30fccb626b5b1eacc9db7b29dc6c2_ra,w158,h184_pa,w158,h184.jpeg",
-      "rating": 4,
-      "category": "liquid",
-      "product_type": "eyeliner",
-      "tag_list": [],
-      "api_featured_image": "//s3.amazonaws.com/donovanbailey/products/api_featured_images/000/000/178/original/data?1514062276",
-      "product_colors": [
-        {
-          "hex_value": "#000000",
-          "colour_name": "Black Pearl for Hazel Eyes ",
-          "_id": "63f4b0bd4d0293ee034a546f"
-        },
-        {
-          "hex_value": "#6C446C",
-          "colour_name": "Purple Amethyst for Brown Eyes ",
-          "_id": "63f4b0bd4d0293ee034a5470"
-        }
-      ],
-      "__v": 0
-    }
-  ],
-  "cart": [
-    {
-      "_id": "63f8fe0aee96af72a6595e06",
-      "product_id": "63f4af3dc4cbdf746de190b0",
-      "email": "n@gmail.com",
-      "quantity": 1,
-      "__v": 0
-    },
-    {
-      "_id": "63f9d3c96ce1aa0b126a341e",
-      "product_id": "63f4b0334d0293ee034a544b",
-      "email": "n@gmail.com",
-      "quantity": 4,
-      "__v": 0
-    },
-    {
-      "_id": "63fa477ca5824730519490a3",
-      "product_id": "63f4b0bd4d0293ee034a546e",
-      "email": "n@gmail.com",
-      "quantity": 3,
-      "__v": 0
-    }
-  ]
-}
+
   export default function Mainnav() {
     
-
+    const {login,isLoggedin,isAdmin}=useSelector((store)=>store.userManager)
     const { isOpen, onToggle ,onOpen, onClose} = useDisclosure();
-       const { isOpen:isOpenC, onOpen:onOpenC, onClose:onCloseC } = useDisclosure();
-      const btnRef = useRef();
-      const navigate=useNavigate()
-      const [totalMRP, setTotalMRP] = useState(0)
-      const [totalMRPDiscount, setTotalMRPDiscount] = useState(0)
-      const [totalAmount, setTotalAmount] = useState(totalMRP - totalMRPDiscount)
+    const { isOpen:isOpenC, onOpen:onOpenC, onClose:onCloseC } = useDisclosure();
+    const btnRef = useRef();
+    const toast=useToast()
+    const navigate=useNavigate()
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [cartProducts, setCartProducts] = useState([])
+
+const handleCartProduct=()=>{
+  axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
+    headers:{
+      Authorization: Cookies.get("jwt_token")
+    }
+}
+).then((res)=>{
+  console.log(res.data)
+  setCartProducts(res.data)
+}).catch((err)=>{
+  console.log(err)
+})
+}
+
+
+
+useEffect(()=>{
+
+
+
+handleCartProduct()
+
+},[login,isLoggedin,isAdmin])
+
+
+
 
 
     return (
@@ -241,16 +141,21 @@ const cart={
         
        <Flex justify="space-around" m={"0 20px"} gap={"20px"} align="center" >
               <FaShoppingCart
+
                 color= "#fc2779"
                 fontSize={"20px"}
                 cursor="pointer"
-                ref={btnRef} onClick={onOpenC}
+                ref={btnRef} 
+                onClick={()=>{
+                
+                 onOpenC()
+                }}
               />
 
 
 
 
-
+{/* ...................................... */}
 
 
       <Drawer
@@ -298,7 +203,6 @@ const cart={
 
             <VStack>
 
-
               <HStack w={"full"} border={"1px solid #dedede"} p={"15px"} borderRadius={"6px"} justify={"space-around"}>
                 <Radio size="md" colorScheme="green" spacing={"15px"} >
                 <Text fontSize={"15px"} color="rgba(0,16,32,.92)">2000 Reward Points (₹20)</Text>
@@ -307,8 +211,10 @@ const cart={
                 <Text fontSize={"14px"} fontWeight={600} color="#fc2779">Apply</Text>
               </HStack>
 
+{/* ....................................................... */}
 
-          <CartProducts setTotalAmount={setTotalAmount} setTotalMRP={setTotalMRP} setTotalMRPDiscount={setTotalMRPDiscount} />
+          <CartProducts CartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
+{/* ....................................................... */}
 
 
 
@@ -325,9 +231,10 @@ const cart={
                 <Icon color="rgba(0,16,36,.92)" as={FaGreaterThan} />
               </HStack>
 
+{/* ....................................................... */}
 
-
-           <PaymentDetails totalAmount={totalAmount} totalMRP={totalMRP} totalMRPDiscount={totalMRPDiscount} />
+           <PaymentDetails totalAmount={totalAmount}  />
+{/* ....................................................... */}
 
               <VStack alignItems={"flex-start"}  spacing={0} w={"full"} border={"1px solid #dedede"} p={"10px"} borderRadius={"6px"}>
                 <Text  w="full" fontSize={"12px"} color={"rgba(0,19,37,.62)"} fontWeight={400} >Redeem to get a discount on your next order</Text>
@@ -360,6 +267,7 @@ const cart={
       </Drawer>
 
 
+{/* ...................................... */}
 
 
 
