@@ -21,6 +21,7 @@ import {
   Center,
   SimpleGrid,
   useToast,
+  useToast,
 } from "@chakra-ui/react";
 import {  ChevronRightIcon } from "@chakra-ui/icons";
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -33,6 +34,7 @@ import { TiThumbsUp } from "react-icons/ti";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+import { useSelector } from 'react-redux'
 import { useSelector } from 'react-redux'
 import "./singleproduct.css";
 import Cookies from "js-cookie";
@@ -316,6 +318,7 @@ useEffect(() => {
                         colorScheme={"pink"}
                         borderRadius={"2px"}
                         w="80%"
+                        onClick={()=>handleAddcart(id)}
                         onClick={()=>handleAddcart(id)}
                       >
                         Add to Bag
@@ -858,6 +861,8 @@ useEffect(() => {
                   borderRadius={0}
                   onClick={()=>handleAddcart(id)}
 
+                  onClick={()=>handleAddcart(id)}
+
                 >
                   Add to Bag
                 </Button>
@@ -874,10 +879,16 @@ useEffect(() => {
         <Box borderRadius={"0px 5px 5px 0px"} py={"7px"} w="75%"  bgColor="#fc2779" textAlign={"center"}>
                        
         <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
+                       
+        <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
         </Box>
       </HStack>
     </div>
   );
+
+
+
+
 
 
 
