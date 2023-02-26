@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const adminAuthenticate = async (req, res, next) => {
-	const { jwt_token } = req.cookies;
+	const jwt_token = req.headers.authorization;
+	console.log(jwt_token);
 	if (!jwt_token) {
 		res.status(401);
 		res.send({ statu: 401, message: "Please login first" });
