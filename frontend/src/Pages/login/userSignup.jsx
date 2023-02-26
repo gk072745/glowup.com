@@ -19,6 +19,8 @@ import {
 import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -34,7 +36,15 @@ export default function SignupCard() {
 	const [password, setPassword] = useState("");
 	const [match, setMatch] = useState(false);
 	const [check, setCheck] = useState("");
-
+	// redux store
+	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
+		(store) => store.userManager
+	);
+	const dispatch = useDispatch();
+	// redux end
+	// router navigate
+	const navigate = useNavigate();
+	// end router navigate
 	const handleSubmit = async () => {
 		const URL = "http://localhost:8080";
 		console.log(username, email, password);
@@ -46,7 +56,11 @@ export default function SignupCard() {
 		});
 		console.log(res);
 	};
-
+	useEffect(() => {
+		if (isLoggedin) {
+			navigate("/");
+		}
+	}, []);
 	useEffect(() => {
 		setMatch(check === password);
 	}, [check, password]);
@@ -183,7 +197,13 @@ export default function SignupCard() {
 							<Stack pt={6}>
 								<Text align={"center"}>
 									Already a user?{" "}
-									<Link color={"blue"}>Login</Link>
+									<Link
+										color={"blue"}
+										as={RouterLink}
+										to="/login"
+									>
+										Login
+									</Link>
 								</Text>
 							</Stack>
 						</Stack>

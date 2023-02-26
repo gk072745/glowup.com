@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
@@ -29,8 +30,8 @@ export default function Login() {
 	// axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
-	// const URL = "https://periwinkle-sheep-hem.cyclic.app";
-	const URL = "http://localhost:8080";
+	const URL = "https://periwinkle-sheep-hem.cyclic.app";
+	// const URL = "http://localhost:8080";
 
 	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
 		(store) => store.userManager
@@ -83,6 +84,9 @@ export default function Login() {
 	const getstuff = async () => {
 		let req = await axios.get(`${URL}/user/getdetails`, {
 			withCredentials: true,
+			headers: {
+				Authorization: Cookies.get("jwt_token"),
+			},
 		});
 		// fetch(`${URL}/user/getdetails`)
 		// 	.then((res) => res.json())
