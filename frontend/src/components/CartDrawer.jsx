@@ -29,6 +29,7 @@ import { useRef } from "react";
 import CartProducts from "./CartProducts";
 import PaymentDetails from "./PaymentDetails";
 
+
 const CartDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
@@ -57,7 +58,8 @@ const CartDrawer = () => {
                 <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>1 items</Text>
                 </HStack>
               </HStack>
-                <Text fontSize={"14px"} color="#fc2779" size="xs">View Wishlist</Text>
+              <Text fontSize={"14px"} color="#fc2779" size="xs"> View Wishlist</Text>
+                
             </HStack>
 
 

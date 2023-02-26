@@ -11,6 +11,7 @@ import Login from '../Pages/login/Login'
 import SignupCard from '../Pages/login/userSignup'
 import Payments from '../Pages/Payments'
 import SingleProductPage from '../Pages/SingleProductPage'
+import Wishlist from '../Pages/Wishlist/Wishlist'
 const MainRoute = () => {
   return (
     <Routes>
@@ -74,6 +75,7 @@ const MainRoute = () => {
   
           </>
         } />
+        <Route path='/wishlist' element={<Wishlist />} />
     </Routes>
   )
 }

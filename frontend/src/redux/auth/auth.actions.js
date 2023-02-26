@@ -12,7 +12,8 @@ import {
 	USER_REGISTER_LOADING,
 } from "./auth.types";
 
-const URL = "http://localhost:8080";
+// const URL = "http://localhost:8080";
+const URL = "https://periwinkle-sheep-hem.cyclic.app";
 
 export const loginUser = async (dispatch, details) => {
 	dispatch({ type: USER_LOGIN_LOADING });
