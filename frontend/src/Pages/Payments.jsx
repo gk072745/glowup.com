@@ -1,5 +1,5 @@
 import { Box, GridItem,Image ,Grid, Center,Accordion,Icon,Text,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,HStack,VStack, Input, Checkbox, FormControl, FormLabel, FormHelperText, FormErrorMessage, Button,} from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OtherNavbar from '../components/OtherNavbar'
 import {MdRadioButtonUnchecked,MdRadioButtonChecked} from "react-icons/md"
 import {AiOutlineCreditCard} from "react-icons/ai"
@@ -12,13 +12,12 @@ import del from "../Assets/del.png"
 import CartProducts from '../components/CartProducts'
 import "./payment.css"
 import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+ import Cookies from "js-cookie"; 
 
 
 const Payments = ( ) => {
   const navigate=useNavigate()
- const [totalMRP, setTotalMRP] = useState(0)
-  const [totalMRPDiscount, setTotalMRPDiscount] = useState(0)
-  const [totalAmount, setTotalAmount] = useState(totalMRP - totalMRPDiscount)
   const [cardNo, setCard] = useState(null)
   const handleCardChange = (e) => setCard(e.target.value)
   const [date, setdate] = useState(null)
@@ -29,6 +28,27 @@ const Payments = ( ) => {
   const handleGiftChange = (e) => setgiftNo(e.target.value)
   const [pin, setpin] = useState(null)
   const handlePinChange = (e) => setpin(e.target.value)
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [cartProducts, setCartProducts] = useState([])
+
+const handleCartProduct=()=>{
+axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
+  headers:{
+    Authorization: Cookies.get("jwt_token")
+  }
+}
+).then((res)=>{
+console.log(res.data)
+setCartProducts(res.data)
+}).catch((err)=>{
+console.log(err)
+})
+}
+  
+
+useEffect(()=>{
+  handleCartProduct()
+},[])
 
 
   const isError = cardNo === ''
@@ -324,7 +344,8 @@ const Payments = ( ) => {
 
 
 
-<AccordionItem>
+<AccordionItem onClick={()=> handleCartProduct()}>
+
 <h2>
   <AccordionButton>
     <Box as="span" flex='1' textAlign='left'>
@@ -334,7 +355,7 @@ const Payments = ( ) => {
     <Text>Bag</Text>
 </HStack>
 
- <Text>4 items</Text>
+ <Text>{cartProducts?.data?.length} items</Text>
 
 </HStack>
     </Box>
@@ -356,7 +377,8 @@ backgroundColor: "#EBEBEB"
 backgroundColor: "#C1BFC1"
 },
 }} pb={4} overflowY="scroll" maxHeight={"300px"}>
-          <CartProducts setTotalAmount={setTotalAmount} setTotalMRP={setTotalMRP} setTotalMRPDiscount={setTotalMRPDiscount} />
+                         <CartProducts cartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
+
 
 </AccordionPanel>
 </AccordionItem>
@@ -378,7 +400,7 @@ backgroundColor: "#C1BFC1"
    </AccordionButton>
 </h2>
 <AccordionPanel pb={4} >
-<PaymentDetails totalAmount={totalAmount} totalMRP={totalMRP} totalMRPDiscount={totalMRPDiscount} />
+<PaymentDetails totalAmount={totalAmount} cartProducts={cartProducts} />
 <HStack p={2}>
 
 <Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>

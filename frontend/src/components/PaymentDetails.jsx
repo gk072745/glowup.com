@@ -6,7 +6,7 @@ import {HStack, Text, VStack } from "@chakra-ui/react";
   // import {FaGreaterThan} from "react-icons/fa"
   // import {TfiInfoAlt} from "react-icons/tfi"
   // import { useRef } from "react";
-const PaymentDetails = ({ totalAmount}) => {
+const PaymentDetails = ({ totalAmount,cartProducts}) => {
            let totalMRP=Math.floor(totalAmount*1.2)
 
   return (
@@ -14,12 +14,12 @@ const PaymentDetails = ({ totalAmount}) => {
    <VStack  alignItems={"flex-start"}  w={"full"} border={"1px solid #dedede"} p={"15px"} borderRadius={"6px"} >
                 <Text fontSize={"18px"} color="#000" fontWeight={500}>Price Details</Text>
                 <HStack w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
-                  <Text>Bag MRP (2 items)</Text>
+                  <Text>Bag MRP ({cartProducts?.data?.length} items)</Text>
                   <Text>${totalMRP}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Bag Discount</Text>
-                  <Text>${totalMRP-totalAmount}</Text>
+                  <Text>${Math.floor(totalMRP-totalAmount)}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Discount</Text>

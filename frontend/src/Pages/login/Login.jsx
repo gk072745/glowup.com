@@ -19,6 +19,7 @@ import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../redux/auth/auth.actions";
 
 const divStyles = {
 	boxShadow: "1px 2px 9px #F4AAB9",
@@ -64,6 +65,7 @@ export default function Login() {
 				isClosable: true,
 			});
 			// setTimeout(() => navigate("/"), 2000);
+			loginUser(dispatch, { email: email, password: password });
 			console.log(req);
 		} catch (err) {
 			toast({
@@ -75,7 +77,6 @@ export default function Login() {
 			});
 		}
 		// Cookies.set("jwt_token", req.data.token);
-		// loginUser(dispatch, { email: email, password: password });
 	};
 
 	// ! experminetal => not reuired to keep

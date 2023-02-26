@@ -1,5 +1,4 @@
 import {Box,Flex,Text,IconButton,Button,Stack,Collapse,Icon,Link,Popover,PopoverTrigger,useColorModeValue,useDisclosure,Heading,Divider,Avatar,Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,HStack,VStack,Radio,Image,StackDivider,Select, useToast} from "@chakra-ui/react";
-
 import { FaShoppingCart } from "react-icons/fa";
 import { Link as NavLink, Navigate, useNavigate } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -17,6 +16,7 @@ import PaymentDetails from "../../components/PaymentDetails";
 import { useSelector } from "react-redux";
 import axios from "axios";
  import Cookies from "js-cookie"; 
+import { useIsAuthenticated } from "react-auth-kit";
  
   const NAV_ITEMS = [
     {
@@ -62,6 +62,7 @@ import axios from "axios";
     const navigate=useNavigate()
     const [totalAmount, setTotalAmount] = useState(0)
     const [cartProducts, setCartProducts] = useState([])
+    const isAuthenticated = useIsAuthenticated()
 
 const handleCartProduct=()=>{
   axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
@@ -79,17 +80,8 @@ const handleCartProduct=()=>{
 
 
 
-useEffect(()=>{
 
-
-
-handleCartProduct()
-
-},[login,isLoggedin,isAdmin])
-
-
-
-
+console.log(login,isLoggedin,isAdmin)
 
     return (
       <Box >
@@ -147,8 +139,14 @@ handleCartProduct()
                 cursor="pointer"
                 ref={btnRef} 
                 onClick={()=>{
-                
-                 onOpenC()
+                  console.log(isLoggedin)
+                 if(isLoggedin){
+                  handleCartProduct()
+                  onOpenC()
+             
+                 }else{
+                  navigate("/login")
+                 }
                 }}
               />
 
@@ -175,7 +173,7 @@ handleCartProduct()
                 <Icon onClick={onCloseC} color="#151515" fontSize={"32px"} as={BsArrowLeft}/>
                 <HStack>
                 <Text color="#151515" fontSize={"20px"} >Bag</Text>
-                <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>1 items</Text>
+                <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>{cartProducts?.data?.length} items</Text>
                 </HStack>
               </HStack>
                 <Text fontSize={"14px"} color="#fc2779" size="xs">View Wishlist</Text>
@@ -214,7 +212,7 @@ handleCartProduct()
 
 {/* ....................................................... */}
 
-          <CartProducts CartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
+          <CartProducts cartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
 {/* ....................................................... */}
 
 
@@ -234,7 +232,7 @@ handleCartProduct()
 
 {/* ....................................................... */}
 
-           <PaymentDetails totalAmount={totalAmount}  />
+           <PaymentDetails totalAmount={totalAmount} cartProducts={cartProducts} />
 {/* ....................................................... */}
 
               <VStack alignItems={"flex-start"}  spacing={0} w={"full"} border={"1px solid #dedede"} p={"10px"} borderRadius={"6px"}>

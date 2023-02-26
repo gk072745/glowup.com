@@ -1,27 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  HStack,
-  Icon,
-  VStack,
-  Text,
-  Button,
-  InputGroup,
-  Input,
-  InputRightElement,
-  Badge,
-  Image,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Heading,
-  StackDivider,
-  Center,
-  SimpleGrid,
-  useToast,
-  useToast,
+import {Box,HStack,Icon,VStack,Text,Button,InputGroup,Input,InputRightElement,Badge,Image,Tabs,TabList,Tab,TabPanels,TabPanel,Heading,StackDivider,Center,SimpleGrid,useToast,
+
 } from "@chakra-ui/react";
 import {  ChevronRightIcon } from "@chakra-ui/icons";
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -34,7 +13,6 @@ import { TiThumbsUp } from "react-icons/ti";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
-import { useSelector } from 'react-redux'
 import { useSelector } from 'react-redux'
 import "./singleproduct.css";
 import Cookies from "js-cookie";
@@ -318,7 +296,6 @@ useEffect(() => {
                         colorScheme={"pink"}
                         borderRadius={"2px"}
                         w="80%"
-                        onClick={()=>handleAddcart(id)}
                         onClick={()=>handleAddcart(id)}
                       >
                         Add to Bag
@@ -860,9 +837,6 @@ useEffect(() => {
                   color="#fff"
                   borderRadius={0}
                   onClick={()=>handleAddcart(id)}
-
-                  onClick={()=>handleAddcart(id)}
-
                 >
                   Add to Bag
                 </Button>
