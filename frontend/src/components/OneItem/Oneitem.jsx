@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from "./oneitem.module.css"
 import { Badge } from '@chakra-ui/react'
 import axios from "axios"
+import Cookies from "js-cookie"
 import {useNavigate} from "react-router-dom"
 
 const Oneitem = (Props) => {
@@ -37,10 +38,10 @@ const AddToWishlist = () => {
 }
 
 const AddToCart = (item_id) => {
-   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
-    headers : {
-      "Cookie" : "jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
-    }
+   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,null,{
+                headers:{
+                  Authorization: Cookies.get("jwt_token")
+                }
    })
    .then((res)=>console.log(res))
    .catch((err)=>console.log(err))

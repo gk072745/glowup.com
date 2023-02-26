@@ -1,7 +1,5 @@
 import React, { useEffect} from 'react'
 import { VStack,HStack,StackDivider,Box,Image,Text,Icon} from '@chakra-ui/react'
-import React, { useEffect} from 'react'
-import { VStack,HStack,StackDivider,Box,Image,Text,Icon} from '@chakra-ui/react'
 import {RxCross2} from "react-icons/rx"
 import axios from "axios";
 import Cookies from "js-cookie"
@@ -163,17 +161,11 @@ const handleDelete=(_id)=>{
 {
   cart.data?.map((el,id)=>{
     return     <VStack w="full"   border={"1px solid #dedede"} borderRadius={"6px"} divider={<StackDivider borderColor='gray.200' />} >
-<>
-{
-  cart.data?.map((el,id)=>{
-    return     <VStack w="full"   border={"1px solid #dedede"} borderRadius={"6px"} divider={<StackDivider borderColor='gray.200' />} >
     <HStack w={"full"}  p={"15px"}   align={"flex-start"}>
       <Box>
         <Image width={"230px"} src={el.image_link}></Image>
-        <Image width={"230px"} src={el.image_link}></Image>
       </Box>
       <Text fontSize={"16px"} color="rgba(0,16,36,.92)" noOfLines={3} fontWeight={400}>
-       {el.description}
        {el.description}
       </Text>
       <Icon as={RxCross2} />
@@ -188,16 +180,11 @@ const handleDelete=(_id)=>{
  <Text cursor={"pointer"} onClick={()=>handleQty(el._id,cart.cart[id].quantity-1,el.price)}>-</Text>
        </HStack>
     <Text  fontSize={"16px"} color="rgba(0,16,36,.92)" fontWeight={400}>${el.price}</Text>
-    <Text  fontSize={"16px"} color="rgba(0,16,36,.92)" fontWeight={400}>${el.price}</Text>
 
     </HStack>
   </VStack>
   })
-  })
 }
-
-</>
-  )}
 
 </>
   )}

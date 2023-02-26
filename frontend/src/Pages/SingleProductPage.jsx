@@ -35,6 +35,7 @@ import { useParams} from "react-router-dom";
 import axios from "axios";
 import { useSelector } from 'react-redux'
 import "./singleproduct.css";
+import Cookies from "js-cookie";
 
 const SingleProductPage = () => {
   const toast=useToast()
@@ -90,13 +91,12 @@ const handlePin = (pin) => {
   };
 
 const handleAddcart=(id)=>{
-  axios({
-    url:`"https://periwinkle-sheep-hem.cyclic.app/cart/add/${id}`,
-    method:"post",
+  axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${id}`,null,{
     headers:{
-      // Authorization:token
+      Authorization: Cookies.get("jwt_token")
     }
-  }).then((res)=>{
+})
+.then((res)=>{
     toast({
       title: "Product successfully added in cart",
       variant:"top-accent",
@@ -107,15 +107,44 @@ const handleAddcart=(id)=>{
     })
    }).catch((err)=>{
     toast({
-      title: "Product already present in cart qty increased",
+      title: "Something went wrong!",
       variant:"top-accent",
       isClosable: true,
       position:'top-right',
       status:"error",
-      duration:1500,
+      duration:1500
     })
   })
 }
+
+const handleAddWishlist=(id)=>{
+  axios.post(`https://periwinkle-sheep-hem.cyclic.app/wishlist/add/${id}`,null,{
+    headers:{
+      Authorization: Cookies.get("jwt_token")
+    }
+})
+.then((res)=>{
+    toast({
+      title: "Product successfully added in wishlit",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"success",
+      duration:1500
+    })
+   }).catch((err)=>{
+    toast({
+      title: "Something went wrong!",
+      variant:"top-accent",
+      isClosable: true,
+      position:'top-right',
+      status:"error",
+      duration:1500
+    })
+  })
+}
+
+
 
   return (
     <div>
