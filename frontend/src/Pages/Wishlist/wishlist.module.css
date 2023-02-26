@@ -1,0 +1,38 @@
+.wishlist_main_div{
+    background-color: #f3f3f3;
+
+}
+
+.wishlist_data{
+    width: 80%;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1.3rem;
+}
+
+.emptyWishlistMain {
+    margin-top: 9rem;
+    padding-bottom: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .emptyYourWishlist > h2 {
+    color: #231535;
+    font-family: "BegumRegular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2.4rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .emptyYourWishlist > p {
+    font-size: 2.4rem;
+    color: #231535;
+    font-family: "BegumMedium", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }  

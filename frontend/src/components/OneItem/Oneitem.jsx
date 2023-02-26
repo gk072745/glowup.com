@@ -3,11 +3,14 @@ import styles from "./oneitem.module.css"
 import { Badge } from '@chakra-ui/react'
 import axios from "axios"
 import {useNavigate} from "react-router-dom"
+import { useSelector } from 'react-redux'
+import Cookie from "js-cookie"
 
 const Oneitem = (Props) => {
   axios.defaults.withCredentials=true
   const {item} = Props;
  const [ratestar,setRatestar] = useState([])
+ const {login,isLoggedin,isAdmin}=useSelector((store)=>store.userManager)
  const [heart,setHeart] = useState("fa-regular fa-heart")
  const navigate = useNavigate();
 
@@ -32,43 +35,32 @@ const Oneitem = (Props) => {
     setRatestar(arr);
   },[])
 
-const AddToWishlist = () => {
-  setHeart("fa-solid fa-heart")
+const AddToWishlist = (item_id) => {
+  if(!isLoggedin){
+    return navigate("/signup")
+   }
+ 
+    axios.post(`https://periwinkle-sheep-hem.cyclic.app/wishlist/add/${item_id}`,null,{
+     headers : {
+       "Authorization" : Cookie.get("jwt_token")
+     }
+    })
+    .then((res)=>console.log(res))
+    .catch((err)=>console.log(err))
 }
 
 const AddToCart = (item_id) => {
-   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
+  if(!isLoggedin){
+   return navigate("/signup")
+  }
+
+   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,null,{
     headers : {
-      "Cookie" : "jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
+      "Authorization" : Cookie.get("jwt_token")
     }
    })
    .then((res)=>console.log(res))
    .catch((err)=>console.log(err))
-
-  // fetch(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
-  //   method : "POST",
-  //   headers : {
-  //            "Cookie" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
-  //         }
-  // }).then((res)=>res.json())
-  // .then((res)=>console.log(res))
-  // .catch((err)=>console.log(err))
-
-// console.log("id",item_id);
-
-// let obj = {
-//   email : "n@gmail.com"
-// }
-
-//    fetch(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,{
-//     method : "POST",
-//     body : JSON.stringify(obj),
-    // headers : {
-    //   "Cookie" : "jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5AZ21haWwuY29tIiwiaWF0IjoxNjc3MjYyMTg2fQ.bjVslEcGcUbZjvZ1S3B16dIYJRN4gGkQIOEQpRblgTU"
-    // }
-//    }).then((res)=>res.json())
-//    .then((res)=>console.log(res))
-//    .catch((err)=>console.log(err))
    
 }
 
@@ -87,7 +79,7 @@ const AddToCart = (item_id) => {
          ))}
         </div>
         <div className={styles.oneitem_maindiv_button_div}>
-          <button onClick={()=>AddToWishlist}><i className={heart} ></i></button>
+          <button onClick={()=>AddToWishlist(item._id)}><i className={heart} ></i></button>
           <button onClick={()=>navigate(`/singleproduct/${item._id}`)}>Details</button>
           <button onClick={()=>AddToCart(item._id)}>Cart</button>
         </div>

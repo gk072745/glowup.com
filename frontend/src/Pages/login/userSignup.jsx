@@ -36,7 +36,7 @@ export default function SignupCard() {
 	const [check, setCheck] = useState("");
 
 	const handleSubmit = async () => {
-		const URL = "http://localhost:8080";
+		const URL = "https://periwinkle-sheep-hem.cyclic.app";
 		console.log(username, email, password);
 		axios.defaults.withCredentials = true;
 		let res = await axios.post(`${URL}/user/register`, {

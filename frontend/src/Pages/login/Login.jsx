@@ -29,8 +29,8 @@ export default function Login() {
 	// axios.defaults.withCredentials = true;
 	const [email, setMail] = useState("");
 	const [password, setPassword] = useState("");
-	// const URL = "https://periwinkle-sheep-hem.cyclic.app";
-	const URL = "http://localhost:8080";
+	const URL = "https://periwinkle-sheep-hem.cyclic.app";
+	// const URL = "http://localhost:8080";
 
 	const { login, isLoggedin, isAdmin, userdetails } = useSelector(
 		(store) => store.userManager
