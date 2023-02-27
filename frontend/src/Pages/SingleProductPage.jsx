@@ -1082,7 +1082,6 @@ const SingleProductPage = () => {
                        
         <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
                        
-        <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
         </Box>
       </HStack>
     </div>

@@ -18,11 +18,11 @@ if(type=="inc"&&qty<4){
           Authorization: Cookies.get("jwt_token")
         }
     }).then((res)=>{
-         setTotalAmount((prev)=>Math.ceil(prev+price))
+         setTotalAmount((prev)=>Math.floor(prev+price))
           setQty((prev)=>prev+1)    
  })
 
-}else if(qty>2){
+}else if(qty>1){
     axios.patch(`https://periwinkle-sheep-hem.cyclic.app/cart/update/${_id}`,{quantity:qty-1},
     {
        headers:{
@@ -30,7 +30,7 @@ if(type=="inc"&&qty<4){
        }
    }).then((res)=>{
         console.log(res)
-        setTotalAmount((prev)=>prev-price)
+        setTotalAmount((prev)=>Math.floor(prev-price))
         setQty((prev)=>prev-1)    
 })
 }

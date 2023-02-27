@@ -43,7 +43,6 @@ axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
   }
 }
 ).then((res)=>{
-console.log(res.data)
 setCartProducts(res.data)
 }).catch((err)=>{
 console.log(err)

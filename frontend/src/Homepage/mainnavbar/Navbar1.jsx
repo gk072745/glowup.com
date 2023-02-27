@@ -71,8 +71,8 @@ const handleCartProduct=()=>{
     }
 }
 ).then((res)=>{
-  console.log(res.data)
   setCartProducts(res.data)
+  
 }).catch((err)=>{
   console.log(err)
 })
@@ -141,6 +141,7 @@ console.log(login,isLoggedin,isAdmin)
                 onClick={()=>{
                   console.log(isLoggedin)
                  if(isLoggedin){
+					setTotalAmount(0)
                   handleCartProduct()
                   onOpenC()
              
@@ -172,7 +173,7 @@ console.log(login,isLoggedin,isAdmin)
                 <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>{cartProducts?.data?.length} items</Text>
                 </HStack>
               </HStack>
-                <Text onClick={()=>isLoggedin?navigate("wishlist"):navigate("signup")} cursor={"pointer"} fontSize={"14px"} color="#fc2779" size="xs">View Wishlist</Text>
+                <Text onClick={()=>isLoggedin?navigate("/wishlist"):navigate("/signup")} cursor={"pointer"} fontSize={"14px"} color="#fc2779" size="xs">View Wishlist</Text>
             </HStack>
 
 

@@ -47,9 +47,7 @@ console.log(err)
 })
 }
   
-const HandleSubmitedAddress=()=>{
 
-}
 
 
 
@@ -120,7 +118,8 @@ Detailed address will help our delivery partner reach your doorstep quickly
 
 
 
-<AccordionItem onClick={()=> handleCartProduct()}>
+					
+<AccordionItem onClick={()=>{ handleCartProduct()}}>
 <h2>
   <AccordionButton>
     <Box as="span" flex='1' textAlign='left'>
