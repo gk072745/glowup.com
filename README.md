@@ -77,43 +77,43 @@ To run this application on your local system
 
 ### Home Page and Footer
 
-  ![image](./src/Assets/r1.png)
+  ![image](./frontend/src/Assets/r1.png)
 
-  <img width="1000" alt="Footer" src="./src/Assets/r2.png">
-
-
----
-
-### Products Section
-
-![image](./src/Assets/r3.png)
+  <img width="1000" alt="Footer" src="./frontend/src/Assets/r2.png">
 
 
 ---
 
 ### Products Section
 
-![image](./src/Assets/r6.png)
+![image](./frontend/src/Assets/r3.png)
+
+
+---
+
+### Products Section
+
+![image](./frontend/src/Assets/r6.png)
 
 
 ### Login Page/Signup Page
 
-## <img width="1000" alt="login" src="./src/Assets/r4.png">
-## <img width="1000" alt="login" src="./src/Assets/r5.png">
+## <img width="1000" alt="login" src="./frontend/src/Assets/r4.png">
+## <img width="1000" alt="login" src="./frontend/src/Assets/r5.png">
 
 ---
 ### Cart Section
-![image](./src/Assets/r7.png)
+![image](./frontend/src/Assets/r7.png)
 
 
 ---
 ### Address Section
-![image](./src/Assets/r8.png)
+![image](./frontend/src/Assets/r8.png)
 
 
 ---
 ### Payment Section
-![image](./src/Assets/r9.png)
+![image](./frontend/src/Assets/r9.png)
 
 
 
