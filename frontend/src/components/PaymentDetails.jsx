@@ -6,7 +6,8 @@ import {HStack, Text, VStack } from "@chakra-ui/react";
   // import {FaGreaterThan} from "react-icons/fa"
   // import {TfiInfoAlt} from "react-icons/tfi"
   // import { useRef } from "react";
-const PaymentDetails = ({ totalAmount,totalMRP,totalMRPDiscount}) => {
+const PaymentDetails = ({ totalAmount}) => {
+           let totalMRP=Math.floor(totalAmount*1.2)
 
   return (
   <>
@@ -18,7 +19,7 @@ const PaymentDetails = ({ totalAmount,totalMRP,totalMRPDiscount}) => {
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Bag Discount</Text>
-                  <Text>${totalMRPDiscount}</Text>
+                  <Text>${totalMRP-totalAmount}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Discount</Text>
