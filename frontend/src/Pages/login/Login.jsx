@@ -15,11 +15,13 @@ import {
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useSignIn, useSignOut } from "react-auth-kit";
 import { useIsAuthenticated } from "react-auth-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../redux/auth/auth.actions";
 import { loginUser } from "../../redux/auth/auth.actions";
 
 const divStyles = {
@@ -65,10 +67,8 @@ export default function Login() {
 				duration: 4000,
 				isClosable: true,
 			});
-
+			// setTimeout(() => navigate("/"), 2000);
 			loginUser(dispatch, { email, password });
-			setTimeout(() => navigate("/"), 3000);
-
 			console.log(req);
 		} catch (err) {
 			toast({
@@ -86,6 +86,9 @@ export default function Login() {
 	const getstuff = async () => {
 		let req = await axios.get(`${URL}/user/getdetails`, {
 			withCredentials: true,
+			headers: {
+				Authorization: Cookies.get("jwt_token"),
+			},
 			headers: {
 				Authorization: Cookies.get("jwt_token"),
 			},
@@ -118,6 +121,7 @@ export default function Login() {
 			<button onClick={getstuff}>button</button>
 			<br />
 			<button onClick={singout}>sign out</button>
+			{isLoggedin ? "Yes" : "No"}
 			{isLoggedin ? "Yes" : "No"}
 			{/* end of test */}
 			<div style={divStyles}>
