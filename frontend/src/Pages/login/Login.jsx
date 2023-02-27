@@ -65,8 +65,10 @@ export default function Login() {
 				duration: 4000,
 				isClosable: true,
 			});
+
 			loginUser(dispatch, { email, password });
 			setTimeout(() => navigate("/"), 3000);
+
 			console.log(req);
 		} catch (err) {
 			toast({
@@ -78,7 +80,6 @@ export default function Login() {
 			});
 		}
 		// Cookies.set("jwt_token", req.data.token);
-		// loginUser(dispatch, { email: email, password: password });
 	};
 
 	// ! experminetal => not reuired to keep

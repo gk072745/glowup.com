@@ -3,11 +3,13 @@ import { Navigate, useLocation } from "react-router-dom"
 
 
 export const PrivateRoute=({children})=>{
-    const isAuth=useSelector((store)=>store.AuthReducer.isAuth)
-    const location=useLocation()
+	const { login, isLoggedin, isAdmin } = useSelector(
+		(store) => store.userManager
+	);
 
-    if(!isAuth){
-        return <Navigate to={"/signup"}  state={{data:location.pathname}} replace />
+
+    if(!isLoggedin){
+        return <Navigate to={"/signup"}   />
     }
     return children
 }

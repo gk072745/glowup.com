@@ -1,35 +1,5 @@
-import {
-	Box,
-	Flex,
-	Text,
-	IconButton,
-	Button,
-	Stack,
-	Collapse,
-	Icon,
-	Link,
-	Popover,
-	PopoverTrigger,
-	useColorModeValue,
-	useDisclosure,
-	Heading,
-	Divider,
-	Avatar,
-	Drawer,
-	DrawerBody,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerOverlay,
-	DrawerContent,
-	HStack,
-	VStack,
-	Radio,
-	Image,
-	StackDivider,
-	Select,
-	useToast,
-} from "@chakra-ui/react";
 
+import {Box,Flex,Text,IconButton,Button,Stack,Collapse,Icon,Link,Popover,PopoverTrigger,useColorModeValue,useDisclosure,Heading,Divider,Avatar,Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,HStack,VStack,Radio,Image,StackDivider,Select, useToast} from "@chakra-ui/react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link as NavLink, Navigate, useNavigate } from "react-router-dom";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -46,30 +16,33 @@ import CartProducts from "../../components/CartProducts";
 import PaymentDetails from "../../components/PaymentDetails";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import Cookies from "js-cookie";
+ import Cookies from "js-cookie"; 
+import { useIsAuthenticated } from "react-auth-kit";
+ 
+  const NAV_ITEMS = [
+    {
+      label: "Categories",
+      href: "/product",
+    },
+    {
+      label: "Brands",
+      href: "/product",
+    },
+    {
+      label: "Luxe",
+      href: "/product",
+    },
+    {
+      label: "Nayka Fashion",
+      href: "/product",
+    },
+    {
+      label: "Beauty Advice",
+      href: "/product",
+    },
+  ];
+  
 
-const NAV_ITEMS = [
-	{
-		label: "Categories",
-		href: "/product",
-	},
-	{
-		label: "Brands",
-		href: "/product",
-	},
-	{
-		label: "Luxe",
-		href: "/product",
-	},
-	{
-		label: "Nayka Fashion",
-		href: "/product",
-	},
-	{
-		label: "Beauty Advice",
-		href: "/product",
-	},
-];
 
 //   const AUTH_ITEMS = [
 //     {
@@ -82,172 +55,134 @@ const NAV_ITEMS = [
 //     },
 //   ];
 
-export default function Mainnav() {
-	const { login, isLoggedin, isAdmin } = useSelector(
-		(store) => store.userManager
-	);
-	const { isOpen, onToggle, onOpen, onClose } = useDisclosure();
-	const {
-		isOpen: isOpenC,
-		onOpen: onOpenC,
-		onClose: onCloseC,
-	} = useDisclosure();
-	const btnRef = useRef();
-	const toast = useToast();
-	const navigate = useNavigate();
-	const [totalAmount, setTotalAmount] = useState(0);
-	const [cartProducts, setCartProducts] = useState([]);
 
-	const handleCartProduct = () => {
-		axios
-			.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`, {
-				headers: {
-					Authorization: Cookies.get("jwt_token"),
-				},
-			})
-			.then((res) => {
-				console.log(res.data);
-				setCartProducts(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
+  export default function Mainnav() {
+    
+    const {login,isLoggedin,isAdmin}=useSelector((store)=>store.userManager)
+    const { isOpen, onToggle ,onOpen, onClose} = useDisclosure();
+    const { isOpen:isOpenC, onOpen:onOpenC, onClose:onCloseC } = useDisclosure();
+    const btnRef = useRef();
+    const toast=useToast()
+    const navigate=useNavigate()
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [cartProducts, setCartProducts] = useState([])
+    const isAuthenticated = useIsAuthenticated()
 
-	useEffect(() => {
-		console.log(login, isLoggedin);
-		if (!isLoggedin) {
-			console.log("You must be logged in");
-		} else {
-			handleCartProduct();
-		}
-	}, [login, isLoggedin, isAdmin]);
+const handleCartProduct=()=>{
+  axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
+    headers:{
+      Authorization: Cookies.get("jwt_token")
+    }
+}
+).then((res)=>{
+  setCartProducts(res.data)
+  
+}).catch((err)=>{
+  console.log(err)
+})
+}
 
-	return (
-		<Box>
-			<Flex
-				bg={useColorModeValue("white", "gray.800")}
-				color={useColorModeValue("gray.600", "white")}
-				minH={"40px"}
-				py={{ base: 2 }}
-				px={{ base: 2 }}
-				borderBottom={1}
-				borderStyle={"solid"}
-				borderColor={useColorModeValue("gray.200", "gray.900")}
-				align={"center"}
-			>
-				<Flex ml={{ base: -2 }} display={{ base: "flex", md: "none" }}>
-					<IconButton
-						onClick={onToggle}
-						icon={
-							isOpen ? (
-								<CloseIcon w={3} h={3} />
-							) : (
-								<HamburgerIcon w={5} h={5} color="#fc498e" />
-							)
-						}
-						variant={"ghost"}
-						aria-label={"Toggle Navigation"}
-					/>
-				</Flex>
-				<Flex
-					flex={{ base: 1 }}
-					justify={{ base: "center", md: "start" }}
-				>
-					<Heading
-						align={"left"}
-						color="#000"
-						border="1px solid lightgrey"
-						w={120}
-						boxShadow="rgb(252,73,142) 0px 5px 15px"
-					>
-						<NavLink to="/">
-							<img width="100%" h="30px" src={logo} alt="" />
-						</NavLink>
-					</Heading>
 
-					<Flex
-						display={{ base: "none", md: "none", lg: "flex" }}
-						ml={10}
-						mr={10}
-					>
-						<DesktopNav />
-					</Flex>
-				</Flex>
-				<Stack
-					flex={{ base: 1, md: 0 }}
-					justify={"flex-end"}
-					direction={"row"}
-					spacing={2}
-					display={{ base: "none", md: "none", lg: "flex" }}
-				>
-					<Buttonsign />
-				</Stack>
 
-				<Flex
-					justify="space-around"
-					m={"0 20px"}
-					gap={"20px"}
-					align="center"
-				>
-					<FaShoppingCart
-						color="#fc2779"
-						fontSize={"20px"}
-						cursor="pointer"
-						ref={btnRef}
-						onClick={() => {
-							onOpenC();
-						}}
-					/>
+
+console.log(login,isLoggedin,isAdmin)
+
+    return (
+      <Box >
+      
+        <Flex 
+          bg={useColorModeValue("white", "gray.800")}
+          color={useColorModeValue("gray.600", "white")}
+          minH={"40px"}
+          py={{ base: 2 }}
+          px={{ base: 2 }}
+          borderBottom={1}
+          borderStyle={"solid"}
+          borderColor={useColorModeValue("gray.200", "gray.900")}
+          align={"center"}
+          
+        >
+          <Flex ml={{ base: -2 }} display={{ base: "flex", md: "none" }} >
+            <IconButton
+              onClick={onToggle}
+              icon={
+                isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} color="#fc498e" />
+              }
+              variant={"ghost"}
+              aria-label={"Toggle Navigation"}
+            />
+          </Flex>
+          <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+            <Heading align={"left"} color="#000" border="1px solid lightgrey" w={120} boxShadow="rgb(252,73,142) 0px 5px 15px">
+              <NavLink to="/"><img width="100%" h="30px" src={logo} alt="" /></NavLink>
+            </Heading>
+  
+            <Flex
+              display={{ base: "none", md: "none", lg: "flex" }}
+              ml={10}
+              mr={10}
+            >
+              <DesktopNav />
+            </Flex>
+          </Flex>
+            <Stack
+              flex={{ base: 1, md: 0 }}
+              justify={"flex-end"}
+              direction={"row"}
+              spacing={2}
+              display={{ base: "none", md: "none", lg: "flex" }}
+            >
+            <Buttonsign/>
+            </Stack>
+        
+       <Flex justify="space-around" m={"0 20px"} gap={"20px"} align="center" >
+              <FaShoppingCart
+
+                color= "#fc2779"
+                fontSize={"20px"}
+                cursor="pointer"
+                ref={btnRef} 
+                onClick={()=>{
+                  console.log(isLoggedin)
+                 if(isLoggedin){
+					setTotalAmount(0)
+                  handleCartProduct()
+                  onOpenC()
+             
+                 }else{
+                  navigate("/login")
+                 }
+                }}
+              />
 
 					{/* ...................................... */}
 
-					<Drawer
-						isOpen={isOpenC}
-						placement="right"
-						onClose={onCloseC}
-						finalFocusRef={btnRef}
-					>
-						{/* sdfsdf */}
-						<DrawerOverlay />
-						<DrawerContent maxW={"400"}>
-							<DrawerHeader borderBottom="1px solid #dedede">
-								<HStack
-									justify={"space-between"}
-									alignItems="center"
-								>
-									<HStack spacing={4}>
-										<Icon
-											onClick={onCloseC}
-											color="#151515"
-											fontSize={"32px"}
-											as={BsArrowLeft}
-										/>
-										<HStack>
-											<Text
-												color="#151515"
-												fontSize={"20px"}
-											>
-												Bag
-											</Text>
-											<Text
-												color={"rgba(0,16,36,.92)"}
-												fontWeight={300}
-												fontSize={"14px"}
-											>
-												1 items
-											</Text>
-										</HStack>
-									</HStack>
-									<Text
-										fontSize={"14px"}
-										color="#fc2779"
-										size="xs"
-									>
-										View Wishlist
-									</Text>
-								</HStack>
-							</DrawerHeader>
+      <Drawer
+        isOpen={isOpenC}
+        placement="right"
+        onClose={onCloseC}
+        finalFocusRef={btnRef}
+      >
+        {/* sdfsdf */}
+        <DrawerOverlay />
+        <DrawerContent maxW={"400"}>
+          <DrawerHeader borderBottom="1px solid #dedede">
+
+
+            <HStack justify={"space-between"} alignItems="center">
+              <HStack spacing={4}>
+                <Icon onClick={onCloseC} color="#151515" fontSize={"32px"} as={BsArrowLeft}/>
+                <HStack>
+                <Text color="#151515" fontSize={"20px"} >Bag</Text>
+                <Text color={"rgba(0,16,36,.92)"} fontWeight={300} fontSize={"14px"}>{cartProducts?.data?.length} items</Text>
+                </HStack>
+              </HStack>
+                <Text onClick={()=>isLoggedin?navigate("/wishlist"):navigate("/signup")} cursor={"pointer"} fontSize={"14px"} color="#fc2779" size="xs">View Wishlist</Text>
+            </HStack>
+
+
+          </DrawerHeader>
+
 
 							<DrawerBody
 								px={4}
@@ -300,12 +235,17 @@ export default function Mainnav() {
 
 									{/* ....................................................... */}
 
+
+          <CartProducts cartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
+{/* ....................................................... */}
+
 									<CartProducts
 										CartProducts={cartProducts}
 										handleCartProduct={handleCartProduct}
 										setTotalAmount={setTotalAmount}
 									/>
 									{/* ....................................................... */}
+
 
 									<HStack
 										alignItems={"center"}
@@ -351,8 +291,10 @@ export default function Mainnav() {
 
 									{/* ....................................................... */}
 
-									<PaymentDetails totalAmount={totalAmount} />
-									{/* ....................................................... */}
+
+           <PaymentDetails totalAmount={totalAmount} cartProducts={cartProducts} />
+{/* ....................................................... */}
+
 
 									<VStack
 										alignItems={"flex-start"}

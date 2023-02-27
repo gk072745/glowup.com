@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-	Box,
-	HStack,
-	Icon,
-	VStack,
-	Text,
-	Button,
-	InputGroup,
-	Input,
-	InputRightElement,
-	Badge,
-	Image,
-	Tabs,
-	TabList,
-	Tab,
-	TabPanels,
-	TabPanel,
-	Heading,
-	StackDivider,
-	Center,
-	SimpleGrid,
-	useToast,
+import {Box,HStack,Icon,VStack,Text,Button,InputGroup,Input,InputRightElement,Badge,Image,Tabs,TabList,Tab,TabPanels,TabPanel,Heading,StackDivider,Center,SimpleGrid,useToast,
+
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { AiFillHeart, AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -33,7 +13,7 @@ import { TiThumbsUp } from "react-icons/ti";
 import { TfiLocationPin } from "react-icons/tfi";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux'
 import "./singleproduct.css";
 import Cookies from "js-cookie";
 
@@ -370,29 +350,25 @@ const SingleProductPage = () => {
 									</Box>
 								</VStack>
 
-								<Box w="full">
-									<HStack
-										w="full"
-										divider={
-											<StackDivider borderColor="gray.200" />
-										}
-									>
-										<Box w="40%" textAlign={"center"}>
-											<Button
-												fontWeight={600}
-												color={"#fff"}
-												bgColor="#fc2779"
-												py={4}
-												colorScheme={"pink"}
-												borderRadius={"2px"}
-												w="80%"
-												onClick={() =>
-													handleAddcart(id)
-												}
-											>
-												Add to Bag
-											</Button>
-										</Box>
+                <Box w="full">
+                  <HStack
+                    w="full"
+                    divider={<StackDivider borderColor="gray.200" />}
+                  >
+                    <Box w="40%" textAlign={"center"}>
+                      <Button
+                        fontWeight={600}
+                        color={"#fff"}
+                        bgColor="#fc2779"
+                        py={4}
+                        colorScheme={"pink"}
+                        borderRadius={"2px"}
+                        w="80%"
+                        onClick={()=>handleAddcart(id)}
+                      >
+                        Add to Bag
+                      </Button>
+                    </Box>
 
 										<VStack
 											w="60%"
@@ -1070,122 +1046,54 @@ const SingleProductPage = () => {
 										</Text>
 									</HStack>
 
-									<HStack spacing={"2px"}>
-										<Icon
-											as={
-												rating >= 1
-													? AiFillStar
-													: AiOutlineStar
-											}
-										></Icon>
-										<Icon
-											as={
-												rating >= 2
-													? AiFillStar
-													: AiOutlineStar
-											}
-										></Icon>
-										<Icon
-											as={
-												rating >= 3
-													? AiFillStar
-													: AiOutlineStar
-											}
-										></Icon>
-										<Icon
-											as={
-												rating >= 4
-													? AiFillStar
-													: AiOutlineStar
-											}
-										></Icon>
-										<Icon
-											as={
-												rating >= 5
-													? AiFillStar
-													: AiOutlineStar
-											}
-										></Icon>
-										<Text fontSize={"12px"} color="#6f7981">
-											({totalRating})
-										</Text>
-									</HStack>
-								</VStack>
-								<Button
-									w="full"
-									colorScheme={"none"}
-									bgColor={"#fc2779"}
-									fontWeight={600}
-									color="#fff"
-									borderRadius={0}
-									onClick={() => handleAddcart(id)}
-								>
-									Add to Bag
-								</Button>
-							</Box>
-						</Box>
-					</HStack>
-				</Box>
-			</Box>
-			{/* ..................................... */}
-			<HStack
-				display={"none"}
-				className="absulateaddcartbtn"
-				borderRadius={"5px"}
-				fontWeight={600}
-				border={"1px solid #fc2779"}
-				w="95%"
-				m="auto"
-				spacing={0}
-				position={"sticky"}
-				mb={"20px"}
-				bottom={"20px"}
-			>
-				<Box
-					borderRadius={"5px 0px 0px 5px"}
-					py={"7px"}
-					bgColor="#fff"
-					w="25%"
-					textAlign={"center"}
-				>
-					<Button w="full" colorScheme={"none"} borderRadius={0}>
-						<Icon
-							color="#fc2779"
-							fontSize="40px"
-							as={false ? AiFillHeart : CiHeart}
-						/>
-					</Button>
-				</Box>
-				<Box
-					borderRadius={"0px 5px 5px 0px"}
-					py={"7px"}
-					w="75%"
-					bgColor="#fc2779"
-					textAlign={"center"}
-				>
-					<Button
-						w="full"
-						fontSize="20px"
-						onClick={() => handleAddcart(id)}
-						colorScheme={"none"}
-						color="#fff"
-					>
-						<Icon as={SiShopify} /> <Text pl={4}>Add to Bag</Text>
-					</Button>
+                  <HStack spacing={"2px"}>
+                    <Icon as={rating >= 1 ? AiFillStar : AiOutlineStar}></Icon>
+                    <Icon as={rating >= 2 ? AiFillStar : AiOutlineStar}></Icon>
+                    <Icon as={rating >= 3 ? AiFillStar : AiOutlineStar}></Icon>
+                    <Icon as={rating >= 4 ? AiFillStar : AiOutlineStar}></Icon>
+                    <Icon as={rating >= 5 ? AiFillStar : AiOutlineStar}></Icon>
+                    <Text fontSize={"12px"} color="#6f7981">
+                      ({totalRating})
+                    </Text>
+                  </HStack>
+                </VStack>
+                <Button
+                  w="full"
+                  colorScheme={"none"}
+                  bgColor={"#fc2779"}
+                  fontWeight={600}
+                  color="#fff"
+                  borderRadius={0}
+                  onClick={()=>handleAddcart(id)}
+                >
+                  Add to Bag
+                </Button>
+              </Box>
+            </Box>
+          </HStack>
+        </Box>
+      </Box>
+      {/* ..................................... */}
+      <HStack  display={"none"} className="absulateaddcartbtn" borderRadius={"5px"}   fontWeight={600} border={"1px solid #fc2779"}  w="95%" m="auto" spacing={0} position={"sticky"} mb={"20px"} bottom={"20px"} >
+        <Box  borderRadius={"5px 0px 0px 5px"}  py={"7px"} bgColor="#fff"  w="25%"  textAlign={"center"}> 
+        <Button w="full" colorScheme={"none"}  borderRadius={0}  ><Icon color="#fc2779" fontSize="40px" as={false?AiFillHeart:CiHeart } /></Button>
+        </Box>
+        <Box borderRadius={"0px 5px 5px 0px"} py={"7px"} w="75%"  bgColor="#fc2779" textAlign={"center"}>
+                       
+        <Button  w="full" fontSize="20px" onClick={()=>handleAddcart(id)} colorScheme={"none"}    color="#fff" ><Icon as={SiShopify} /> <Text pl={4} >Add to Bag</Text></Button>
+                       
+        </Box>
+      </HStack>
+    </div>
+  );
 
-					<Button
-						w="full"
-						fontSize="20px"
-						onClick={() => handleAddcart(id)}
-						colorScheme={"none"}
-						color="#fff"
-					>
-						<Icon as={SiShopify} /> <Text pl={4}>Add to Bag</Text>
-					</Button>
-				</Box>
-			</HStack>
-		</div>
-	);
+
+
+
+
+
+
+
 };
 
 export default SingleProductPage;

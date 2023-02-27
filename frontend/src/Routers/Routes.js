@@ -1,5 +1,6 @@
 import React from 'react'
 import {Routes,Route} from "react-router-dom"
+import OtherNavbar from '../components/OtherNavbar'
 import Home from '../Homepage/Home'
 import Mainnav from '../Homepage/mainnavbar/Navbar1'
 import SearchNav from '../Homepage/mainnavbar/Search'
@@ -12,6 +13,7 @@ import SignupCard from '../Pages/login/userSignup'
 import Payments from '../Pages/Payments'
 import SingleProductPage from '../Pages/SingleProductPage'
 import Wishlist from '../Pages/Wishlist/Wishlist'
+import { PrivateRoute } from './PrivateRoutes'
 const MainRoute = () => {
   return (
     <Routes>
@@ -62,20 +64,23 @@ const MainRoute = () => {
           </>
         } />
          <Route path='/address' element={
-          <>
+          <PrivateRoute>
      
             <Address/>
   
-          </>
+          </PrivateRoute>
         } />
          <Route path='/payment' element={
-          <>
+          <PrivateRoute>
      
             <Payments/>
   
-          </>
+          </PrivateRoute>
         } />
-        <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/wishlist' element={<PrivateRoute>
+          <OtherNavbar/>
+        <Wishlist />
+        </PrivateRoute>} />
     </Routes>
   )
 }

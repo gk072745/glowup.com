@@ -1,5 +1,5 @@
 import { Box, GridItem,Image ,Grid, Center,Accordion,Icon,Text,AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,HStack,VStack, Input, Checkbox, FormControl, FormLabel, FormHelperText, FormErrorMessage, Button,} from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OtherNavbar from '../components/OtherNavbar'
 import {MdRadioButtonUnchecked,MdRadioButtonChecked} from "react-icons/md"
 import {AiOutlineCreditCard} from "react-icons/ai"
@@ -12,13 +12,12 @@ import del from "../Assets/del.png"
 import CartProducts from '../components/CartProducts'
 import "./payment.css"
 import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+ import Cookies from "js-cookie"; 
 
 
 const Payments = ( ) => {
   const navigate=useNavigate()
- const [totalMRP, setTotalMRP] = useState(0)
-  const [totalMRPDiscount, setTotalMRPDiscount] = useState(0)
-  const [totalAmount, setTotalAmount] = useState(totalMRP - totalMRPDiscount)
   const [cardNo, setCard] = useState(null)
   const handleCardChange = (e) => setCard(e.target.value)
   const [date, setdate] = useState(null)
@@ -29,14 +28,78 @@ const Payments = ( ) => {
   const handleGiftChange = (e) => setgiftNo(e.target.value)
   const [pin, setpin] = useState(null)
   const handlePinChange = (e) => setpin(e.target.value)
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [cartProducts, setCartProducts] = useState([])
+  let [isError,setIsError] =useState(false)
+  let [isError2,setIsError2]=useState(false) 
+  let [isError3,setIsError3]=useState(false) 
+  let [isError4,setIsError4]=useState(false) 
+  let [isError5,setIsError5]=useState(false) 
+
+const handleCartProduct=()=>{
+axios.get(`https://periwinkle-sheep-hem.cyclic.app/cart/`,{
+  headers:{
+    Authorization: Cookies.get("jwt_token")
+  }
+}
+).then((res)=>{
+setCartProducts(res.data)
+}).catch((err)=>{
+console.log(err)
+})
+}
+  
+
+useEffect(()=>{
+  handleCartProduct()
+},[])
 
 
-  const isError = cardNo === ''
-  const isError2 = date === ''
-  const isError3 = cvv === ''
-  const isError4 = giftNo === ''
-  const isError5 = pin === ''
 
+
+  const handlePayment1=()=>{
+    const  [month,year]=date.split("/")
+
+    if(cardNo!==12||cardNo!= +cardNo){
+   setIsError(true)
+    }
+    if(+month>=13||+month<1||+year<1||+year>12||month!=+month){
+      setIsError2(true)
+
+    }
+      
+      if(cvv.length<3||cvv!=+cvv){
+        setIsError3(true)
+
+      }
+ else{
+  setIsError(false)
+  setIsError2(false)
+  setIsError3(false)
+  navigate("/")
+ }
+
+}
+
+const handlePayment2=()=>{
+  if(giftNo!="abcd"){
+    setIsError4(true)
+
+  }else if(pin!=12345){
+    setIsError5(true)
+
+
+  }else{
+    setIsError4(false)
+    setIsError5(false)
+
+    navigate("/")
+  }
+}
+
+const handlePayment3=()=>{
+  navigate("/")
+}
   return (
 <>
 <OtherNavbar/>
@@ -156,7 +219,7 @@ const Payments = ( ) => {
 <Text color="#5198ff"  fontWeight={500} fontSize={"12px"} >Know More</Text>
     </HStack> 
 
-    <Button onClick={()=>navigate("/")} className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+    <Button onClick={()=>handlePayment1()} className='creditcardbtn' colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Pay $ {totalAmount}
     </Button>
         </VStack>
@@ -239,7 +302,7 @@ const Payments = ( ) => {
 
 
 
-<Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+<Button onClick={()=>handlePayment2()} colorScheme={"pink"} w="200px" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
 
@@ -299,7 +362,7 @@ const Payments = ( ) => {
     
  <VStack>
   <Image src={del} boxSize={"300px"}></Image>
-  <Button onClick={()=>navigate("/")} colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
+  <Button onClick={()=>handlePayment3()} colorScheme={"pink"} w="200px" m="auto" color="#fff" fontWeight={600} focusBorderColor={"pink"} bgColor="#fc2779">
       Proceed
 </Button>
  </VStack>
@@ -324,7 +387,8 @@ const Payments = ( ) => {
 
 
 
-<AccordionItem>
+<AccordionItem onClick={()=> handleCartProduct()}>
+
 <h2>
   <AccordionButton>
     <Box as="span" flex='1' textAlign='left'>
@@ -334,7 +398,7 @@ const Payments = ( ) => {
     <Text>Bag</Text>
 </HStack>
 
- <Text>4 items</Text>
+ <Text>{cartProducts?.data?.length} items</Text>
 
 </HStack>
     </Box>
@@ -356,7 +420,8 @@ backgroundColor: "#EBEBEB"
 backgroundColor: "#C1BFC1"
 },
 }} pb={4} overflowY="scroll" maxHeight={"300px"}>
-          <CartProducts setTotalAmount={setTotalAmount} setTotalMRP={setTotalMRP} setTotalMRPDiscount={setTotalMRPDiscount} />
+                         <CartProducts cartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
+
 
 </AccordionPanel>
 </AccordionItem>
@@ -378,7 +443,7 @@ backgroundColor: "#C1BFC1"
    </AccordionButton>
 </h2>
 <AccordionPanel pb={4} >
-<PaymentDetails totalAmount={totalAmount} totalMRP={totalMRP} totalMRPDiscount={totalMRPDiscount} />
+<PaymentDetails totalAmount={totalAmount} cartProducts={cartProducts} />
 <HStack p={2}>
 
 <Image size="20px" borderRadius="full" src="https://adn-static1.nykaa.com/media/wysiwyg/Payments/DesktopRevamp_icons/Frame7143.svg"></Image>
