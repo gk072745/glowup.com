@@ -15,6 +15,7 @@ const PaymentDetails = ({ totalAmount,cartProducts}) => {
                 <Text fontSize={"18px"} color="#000" fontWeight={500}>Price Details</Text>
                 <HStack w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>
                   <Text>Bag MRP ({cartProducts?.data?.length} items)</Text>
+                  <Text>Bag MRP ({cartProducts?.data?.length} items)</Text>
                   <Text>${totalMRP}</Text>
                 </HStack>
                 <HStack  w="full" fontSize={"12px"} color={"rgba(0,19,37,.92)"} fontWeight={400}  justify={"space-between"}>

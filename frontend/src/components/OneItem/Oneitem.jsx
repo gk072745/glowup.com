@@ -1,94 +1,109 @@
-import React, { useEffect, useState } from 'react'
-import styles from "./oneitem.module.css"
-import { Badge } from '@chakra-ui/react'
-import axios from "axios"
-import {useNavigate} from "react-router-dom"
-import { useSelector } from 'react-redux'
-import Cookie from "js-cookie"
+import React, { useEffect, useState } from "react";
+import styles from "./oneitem.module.css";
+import { Badge } from "@chakra-ui/react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Cookie from "js-cookie";
 
 const Oneitem = (Props) => {
-  axios.defaults.withCredentials=true
-  const {item} = Props;
- const [ratestar,setRatestar] = useState([])
- const {login,isLoggedin,isAdmin}=useSelector((store)=>store.userManager)
- const [heart,setHeart] = useState("fa-regular fa-heart")
- const navigate = useNavigate();
+	axios.defaults.withCredentials = true;
+	const { item } = Props;
+	const [ratestar, setRatestar] = useState([]);
+	const { login, isLoggedin, isAdmin } = useSelector(
+		(store) => store.userManager
+	);
+	const [heart, setHeart] = useState("fa-regular fa-heart");
+	const navigate = useNavigate();
 
-  useEffect(()=>{
-    let rate;
-    if(item.rating===null){
-      rate = Math.ceil(Math.random()*5)
-    }else{
-      rate = Math.floor(item.rating)
-    }
+	useEffect(() => {
+		let rate;
+		if (item.rating === null) {
+			rate = Math.ceil(Math.random() * 5);
+		} else {
+			rate = Math.floor(item.rating);
+		}
 
-    let arr = [];
-    for(let i=0;i<5;i++){
-      if(rate>0){
-        arr.push("fa-solid fa-star")
-      }else{
-        arr.push("fa-regular fa-star")
-      }
-      rate--
-    }
-   
-    setRatestar(arr);
-  },[])
+		let arr = [];
+		for (let i = 0; i < 5; i++) {
+			if (rate > 0) {
+				arr.push("fa-solid fa-star");
+			} else {
+				arr.push("fa-regular fa-star");
+			}
+			rate--;
+		}
 
-const AddToWishlist = (item_id) => {
-  if(!isLoggedin){
-    return navigate("/signup")
-   }
- 
-    axios.post(`https://periwinkle-sheep-hem.cyclic.app/wishlist/add/${item_id}`,null,{
-     headers : {
-       "Authorization" : Cookie.get("jwt_token")
-     }
-    })
-    .then((res)=>console.log(res))
-    .catch((err)=>console.log(err))
-}
+		setRatestar(arr);
+	}, []);
 
-const AddToCart = (item_id) => {
-  if(!isLoggedin){
-   return navigate("/signup")
-  }
+	const AddToWishlist = (item_id) => {
+		if (!isLoggedin) {
+			return navigate("/signup");
+		}
 
-   axios.post(`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,null,{
-    headers : {
-      "Authorization" : Cookie.get("jwt_token")
-    }
-   })
-   .then((res)=>console.log(res))
-   .catch((err)=>console.log(err))
-   
-}
+		axios
+			.post(
+				`https://periwinkle-sheep-hem.cyclic.app/wishlist/add/${item_id}`,
+				null,
+				{
+					headers: {
+						Authorization: Cookie.get("jwt_token"),
+					},
+				}
+			)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	};
 
-  return (
-    <div className={styles.oneitem_maindiv}>
-        <div className={styles.oneitem_maindiv_badge_div}>
-        <Badge style={{marginRight:"4px"}} >{item.category}</Badge>
-        <Badge colorScheme='pink'>{item.brand}</Badge>
-        </div>
-        <img src={item.api_featured_image} alt="image" /> 
-        <p className={styles.oneitem_maindiv_name}>{item.name}</p>
-        <p>MRP : ${item.price}</p>
-        <div className={styles.oneitem_maindiv_star_div}>
-         {ratestar.map((el,i)=>(
-          <i className={el} key={i}></i>
-         ))}
-        </div>
-        <div className={styles.oneitem_maindiv_button_div}>
-          <button onClick={()=>AddToWishlist(item._id)}><i className={heart} ></i></button>
-          <button onClick={()=>navigate(`/singleproduct/${item._id}`)}>Details</button>
-          <button onClick={()=>AddToCart(item._id)}>Cart</button>
-        </div>
-    </div>
-  )
-}
+	const AddToCart = (item_id) => {
+		if (!isLoggedin) {
+			return navigate("/signup");
+		}
+
+		axios
+			.post(
+				`https://periwinkle-sheep-hem.cyclic.app/cart/add/${item_id}`,
+				null,
+				{
+					headers: {
+						Authorization: Cookie.get("jwt_token"),
+					},
+				}
+			)
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err));
+	};
+
+	return (
+		<div className={styles.oneitem_maindiv}>
+			<div className={styles.oneitem_maindiv_badge_div}>
+				<Badge style={{ marginRight: "4px" }}>{item.category}</Badge>
+				<Badge colorScheme="pink">{item.brand}</Badge>
+			</div>
+			<img src={item.api_featured_image} alt="image" />
+			<p className={styles.oneitem_maindiv_name}>{item.name}</p>
+			<p>MRP : ${item.price}</p>
+			<div className={styles.oneitem_maindiv_star_div}>
+				{ratestar.map((el, i) => (
+					<i className={el} key={i}></i>
+				))}
+			</div>
+			<div className={styles.oneitem_maindiv_button_div}>
+				<button onClick={() => AddToWishlist(item._id)}>
+					<i className={heart}></i>
+				</button>
+				<button onClick={() => navigate(`/singleproduct/${item._id}`)}>
+					Details
+				</button>
+				<button onClick={() => AddToCart(item._id)}>Cart</button>
+			</div>
+		</div>
+	);
+};
 
 export default Oneitem;
-
 
 //  const [item,setItem] = useState( {
 //     "_id": "63f4af3dc4cbdf746de190b0",

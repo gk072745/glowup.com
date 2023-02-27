@@ -1,3 +1,4 @@
+
 import {Box,Flex,Text,IconButton,Button,Stack,Collapse,Icon,Link,Popover,PopoverTrigger,useColorModeValue,useDisclosure,Heading,Divider,Avatar,Drawer,DrawerBody,DrawerFooter,DrawerHeader,DrawerOverlay,DrawerContent,HStack,VStack,Radio,Image,StackDivider,Select, useToast} from "@chakra-ui/react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link as NavLink, Navigate, useNavigate } from "react-router-dom";
@@ -41,6 +42,8 @@ import { useIsAuthenticated } from "react-auth-kit";
     },
   ];
   
+
+
 //   const AUTH_ITEMS = [
 //     {
 //       label: "Login",
@@ -51,6 +54,7 @@ import { useIsAuthenticated } from "react-auth-kit";
 //       href: "/signup",
 //     },
 //   ];
+
 
   export default function Mainnav() {
     
@@ -179,6 +183,7 @@ console.log(login,isLoggedin,isAdmin)
 
           </DrawerHeader>
 
+
 							<DrawerBody
 								px={4}
 								py={8}
@@ -230,8 +235,17 @@ console.log(login,isLoggedin,isAdmin)
 
 									{/* ....................................................... */}
 
+
           <CartProducts cartProducts={cartProducts} handleCartProduct={handleCartProduct} setTotalAmount={setTotalAmount}  />
 {/* ....................................................... */}
+
+									<CartProducts
+										CartProducts={cartProducts}
+										handleCartProduct={handleCartProduct}
+										setTotalAmount={setTotalAmount}
+									/>
+									{/* ....................................................... */}
+
 
 									<HStack
 										alignItems={"center"}
@@ -277,8 +291,10 @@ console.log(login,isLoggedin,isAdmin)
 
 									{/* ....................................................... */}
 
+
            <PaymentDetails totalAmount={totalAmount} cartProducts={cartProducts} />
 {/* ....................................................... */}
+
 
 									<VStack
 										alignItems={"flex-start"}
