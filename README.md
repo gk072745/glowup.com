@@ -4,8 +4,8 @@
 # Nykaa.com-Clone
 ## [Deployed URL](https://glowup-com.netlify.app/)
 ## glowup.com
--Ecommerce Website
-glowup.com is an indian Lifestyle Brand and E-commerce platform. It sells beauty, wellness and fashion products across websites, mobile apps and 100+ offline stores.glowup offers a well-curated selection of products across makeup, skincare, haircare, bath and body, fragrance, grooming appliances, personal care, and health and wellness categories from domestic, in-house, international, luxury and premium brands.
+
+Glowup.com is an indian Lifestyle Brand and E-commerce platform. It sells beauty, wellness and fashion products across websites, mobile apps and 100+ offline stores.glowup offers a well-curated selection of products across makeup, skincare, haircare, bath and body, fragrance, grooming appliances, personal care, and health and wellness categories from domestic, in-house, international, luxury and premium brands.
 
 
 ---
